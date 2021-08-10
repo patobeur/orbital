@@ -1,0 +1,89 @@
+:root {
+  --screenborder: 32px;
+  --outlined: 1px dotted rgba(255, 255, 255, 0.2);
+}
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+}
+
+body #lunar {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 100vh;
+  background: #06050c;
+  -webkit-perspective: 100vh;
+          perspective: 100vh;
+  overflow: hidden;
+}
+
+body #lunar #cosmos {
+  position: relative;
+  background-color: rgba(55, 53, 78, 0.342);
+  max-width: 100%;
+  max-height: 100%;
+  background-image: url(../img/grille_20px.png);
+  background-position: left top;
+  background-repeat: repeat;
+  overflow: hidden;
+}
+
+body #lunar.ddd {
+  -webkit-perspective: 1000vh;
+          perspective: 1000vh;
+}
+
+body #lunar.ddd #cosmos {
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-transform: rotateX(45deg);
+  transform: rotateX(45deg);
+  outline: 5px solid rgba(172, 255, 47, 0.116);
+  -webkit-transition: 10s -webkit-transform ease-in-out;
+  transition: 10s -webkit-transform ease-in-out;
+  transition: 10s transform ease-in-out;
+  transition: 10s transform ease-in-out, 10s -webkit-transform ease-in-out;
+}
+
+#pause {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  -webkit-transform: translat(-50%, -50%);
+          transform: translat(-50%, -50%);
+  background-color: yellowgreen;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  display: none;
+}
+
+#pause.active {
+  display: initial;
+}
+/*# sourceMappingURL=base.css.map */

@@ -1,0 +1,224 @@
+@charset "UTF-8";
+:root {
+  --solarsystemW: 35rem;
+  --solarsystemR: calc((365) * 0.1s);
+  --sunsystemW: calc(var(--solarsystemW) / 7);
+  --earthsystemW: calc(var(--solarsystemW) / 2);
+  --earthsystemR: calc((365 / 24) * 1s);
+  --eaarthsystemW: calc(var(--sunsystemW) / 2);
+  --moonsystemW: calc(var(--earthsystemW) / 2);
+  --moonsystemR: calc(var(--earthsystemR) / 2);
+  --mooonsystemW: calc(var(--eaarthsystemW) / 2);
+  --solar-outlined: 2px dotted rgba(255, 255, 255, 0.5);
+}
+
+#solarsystem {
+  position: absolute;
+  width: var(--solarsystemW);
+  height: var(--solarsystemW);
+  top: calc((100% - var(--solarsystemW)) / 2);
+  left: calc((100% - var(--solarsystemW)) / 2);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-animation: var(--solarsystemR) linear 0s infinite running orbiting;
+          animation: var(--solarsystemR) linear 0s infinite running orbiting;
+  outline: var(--solar-outlined);
+  border-radius: 50%;
+}
+
+#solarsystem * {
+  -webkit-transition: top 1s ease;
+  transition: top 1s ease;
+}
+
+#solarsystem #sunsystem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--sunsystemW);
+  height: var(--sunsystemW);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: var(--sunsystemW);
+  line-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#solarsystem:hover {
+  cursor: -webkit-grab;
+  cursor: grab;
+  -webkit-animation: var(--solarsystemR) linear 0s infinite paused orbiting;
+          animation: var(--solarsystemR) linear 0s infinite paused orbiting;
+  background-color: rgba(200, 255, 0, 0.02);
+}
+
+#solarsystem #earthsystem {
+  position: absolute;
+  width: var(--earthsystemW);
+  height: var(--earthsystemW);
+  top: calc((var(--earthsystemW) / 2) * -1);
+  left: calc((var(--earthsystemW) / 2));
+  -webkit-animation: var(--earthsystemR) linear 0s infinite running orbiting;
+          animation: var(--earthsystemR) linear 0s infinite running orbiting;
+  outline: var(--solar-outlined);
+  border-radius: 50%;
+}
+
+#solarsystem #earthsystem #eaarthsystem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--eaarthsystemW);
+  height: var(--eaarthsystemW);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: var(--eaarthsystemW);
+  line-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#solarsystem #earthsystem #moonsystem {
+  position: absolute;
+  width: var(--moonsystemW);
+  height: var(--moonsystemW);
+  top: calc(((var(--moonsystemW) / 2) * -1));
+  left: calc((var(--moonsystemW) / 2));
+  -webkit-animation: var(--moonsystemR) linear 0s infinite normal running orbiting;
+          animation: var(--moonsystemR) linear 0s infinite normal running orbiting;
+  outline: var(--solar-outlined);
+  border-radius: 50%;
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#solarsystem #earthsystem #moonsystem #mooonsystem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: var(--mooonsystemW);
+  height: var(--mooonsystemW);
+  font-size: var(--mooonsystemW);
+}
+
+#solarsystem #earthsystem #moonsystem #nautsystem {
+  position: absolute;
+  width: var(--mooonsystemW);
+  height: var(--mooonsystemW);
+  top: calc(var(--mooonsystemW) / -1.5);
+  -webkit-transform: rotate(52deg);
+          transform: rotate(52deg);
+  font-size: var(--mooonsystemW);
+}
+
+#solarsystem #earthsystem #moonsystem #nautsystem:before, #solarsystem #earthsystem #moonsystem #nautsystem:after {
+  position: absolute;
+  z-index: +1;
+  width: var(--mooonsystemW);
+  height: var(--mooonsystemW);
+  top: calc((var(--mooonsystemW)) * -2);
+  left: calc((var(--mooonsystemW)) * -1);
+  font-size: var(--mooonsystemW);
+  -webkit-transform: rotate(-50deg);
+          transform: rotate(-50deg);
+}
+
+#solarsystem #earthsystem #moonsystem #nautsystem:after {
+  content: "👨‍🚀";
+}
+
+#solarsystem #earthsystem #moonsystem #nautsystem:before {
+  content: "👩‍🚀";
+  left: 50%;
+}
+
+#solarsystem #earthsystem #moonsystem:hover {
+  cursor: -webkit-grab;
+  cursor: grab;
+  -webkit-animation: var(--moonsystemR) linear 0s infinite paused orbiting;
+          animation: var(--moonsystemR) linear 0s infinite paused orbiting;
+  background-color: rgba(146, 146, 146, 0.2);
+}
+
+#solarsystem #earthsystem:hover {
+  cursor: -webkit-grab;
+  cursor: grab;
+  -webkit-animation: var(--earthsystemR) linear 0s infinite paused orbiting;
+          animation: var(--earthsystemR) linear 0s infinite paused orbiting;
+  background-color: rgba(0, 52, 150, 0.2);
+}
+
+@-webkit-keyframes orbiting {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes orbiting {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes orbitingTranslated {
+  from {
+    -webkit-transform: rotate(0deg) translate(-50%, -50%);
+            transform: rotate(0deg) translate(-50%, -50%);
+  }
+  to {
+    -webkit-transform: rotate(360deg) translate(-50%, -50%);
+            transform: rotate(360deg) translate(-50%, -50%);
+  }
+}
+
+@keyframes orbitingTranslated {
+  from {
+    -webkit-transform: rotate(0deg) translate(-50%, -50%);
+            transform: rotate(0deg) translate(-50%, -50%);
+  }
+  to {
+    -webkit-transform: rotate(360deg) translate(-50%, -50%);
+            transform: rotate(360deg) translate(-50%, -50%);
+  }
+}
+/*# sourceMappingURL=solarsystem.css.map */

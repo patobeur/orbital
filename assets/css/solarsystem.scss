@@ -1,0 +1,150 @@
+:root {
+	--solarsystemW: 35rem;
+	--solarsystemR: calc((365) * 0.1s);
+	--sunsystemW: calc(var(--solarsystemW) / 7);
+
+	--earthsystemW: calc(var(--solarsystemW) / 2);
+	--earthsystemR: calc((365 / 24) * 1s);
+	--eaarthsystemW: calc(var(--sunsystemW) / 2);
+
+	--moonsystemW: calc(var(--earthsystemW) / 2);
+	--moonsystemR: calc(var(--earthsystemR) / 2);
+	--mooonsystemW: calc(var(--eaarthsystemW) / 2);
+	--solar-outlined: 2px dotted rgba(255, 255, 255, 0.5);
+}
+#solarsystem {
+	position: absolute;
+	width: var(--solarsystemW);
+	height: var(--solarsystemW);
+	top: calc((100% - var(--solarsystemW)) / 2);
+	left: calc((100% - var(--solarsystemW)) / 2);
+	transform-origin: center;
+	animation: var(--solarsystemR) linear 0s infinite running orbiting;
+	outline: var(--solar-outlined);
+	border-radius: 50%;
+	* {
+		transition: top 1s ease;
+	}
+	#sunsystem {
+		position: absolute;
+		top: 50%; //52%;
+		left: 50%;
+		width: var(--sunsystemW);
+		height: var(--sunsystemW);
+		transform: translate(-50%, -50%);
+		font-size: var(--sunsystemW);
+		line-height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	&:hover {
+		cursor: grab;
+		animation: var(--solarsystemR) linear 0s infinite paused orbiting;
+		background-color: rgba(200, 255, 0, 0.02);
+		// #sunsystem {
+		// 	top: 50%;
+		// }
+	}
+	#earthsystem {
+		position: absolute;
+		width: var(--earthsystemW);
+		height: var(--earthsystemW);
+		top: calc((var(--earthsystemW) / 2) * -1);
+		left: calc((var(--earthsystemW) / 2));
+		animation: var(--earthsystemR) linear 0s infinite running orbiting;
+		outline: var(--solar-outlined);
+		border-radius: 50%;
+		#eaarthsystem {
+			position: absolute;
+			top: 50%; //48%;
+			left: 50%;
+			width: var(--eaarthsystemW);
+			height: var(--eaarthsystemW);
+			transform: translate(-50%, -50%);
+			font-size: var(--eaarthsystemW);
+			line-height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#moonsystem {
+			position: absolute;
+			width: var(--moonsystemW);
+			height: var(--moonsystemW);
+			top: calc(((var(--moonsystemW) / 2) * -1));
+			left: calc((var(--moonsystemW) / 2));
+			animation: var(--moonsystemR) linear 0s infinite normal running orbiting;
+			outline: var(--solar-outlined);
+			border-radius: 50%;
+			z-index: 2;
+			display: flex;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			#mooonsystem {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: var(--mooonsystemW);
+				height: var(--mooonsystemW);
+				font-size: var(--mooonsystemW);
+			}
+			#nautsystem {
+				position: absolute;
+				width: var(--mooonsystemW);
+				height: var(--mooonsystemW);
+				top: calc(var(--mooonsystemW) / -1.5);
+				transform: rotate(52deg);
+				font-size: var(--mooonsystemW);
+				&:before,
+				&:after {
+					position: absolute;
+					z-index: +1;
+					width: var(--mooonsystemW);
+					height: var(--mooonsystemW);
+					top: calc((var(--mooonsystemW)) * -2);
+					left: calc((var(--mooonsystemW)) * -1);
+					font-size: var(--mooonsystemW);
+					transform: rotate(-50deg);
+				}
+				&:after {
+					content: "👨‍🚀";
+				}
+				&:before {
+					content: "👩‍🚀";
+					left: 50%;
+				}
+			}
+			&:hover {
+				cursor: grab;
+				animation: var(--moonsystemR) linear 0s infinite paused orbiting;
+				background-color: rgba(146, 146, 146, 0.2);
+			}
+		}
+		&:hover {
+			cursor: grab;
+			animation: var(--earthsystemR) linear 0s infinite paused orbiting;
+			background-color: rgba(0, 52, 150, 0.2);
+			// #eaarthsystem {
+			// 	top: 50%;
+			// }
+		}
+	}
+}
+@keyframes orbiting {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+@keyframes orbitingTranslated {
+	from {
+		transform: rotate(0deg) translate(-50%, -50%);
+	}
+	to {
+		transform: rotate(360deg) translate(-50%, -50%);
+	}
+}
