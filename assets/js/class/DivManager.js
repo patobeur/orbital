@@ -18,8 +18,9 @@ class DivManager {
 		let stringcss = '.sob,.mob {position: absolute;display: flex;align-items: center;justify-content: center;line-height: 100%;}'
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
-		stringcss += '.datas {background-color:rgba(255, 255, 255, 0.4);}'
+		stringcss += '.info {background-color:rgba(255, 255, 255, 0.4);}'
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
+		stringcss += '.rangea {border-radius:50%;}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
 		stringcss += '#pause.active {display: initial;}'
@@ -144,7 +145,7 @@ class DivManager {
 			(obj.objtype ? ' ' + obj.objtype : '') +
 			(obj.objdiv ? ' ' + obj.objdiv : '')
 		let elem = document.createElement('div')
-		elem.id = obj.objname + '-' + obj.immat;
+		elem.id = obj.objname + '' + obj.div + '-' + obj.immat;
 		// elem.style.top = (obj.posxyz.y - (obj.sizwhl.h / 2)) + this.IniDatas.px;
 		// elem.style.left = (obj.posxyz.x - (obj.sizwhl.w / 2)) + this.IniDatas.px;
 		elem.style.top = (obj.posxyz.y) + this.IniDatas.px;
@@ -158,17 +159,18 @@ class DivManager {
 
 		// range ----------------------------------------------
 		let elemrange = document.createElement('div')
-		elemrange.id = 'rangea-' + obj.immat;
+		elemrange.id = 'rangea' + obj.div + '-' + obj.immat;
 		elemrange.className = 'rangea'
 		elemrange.style.position = 'absolute';
 		elemrange.style.width = (obj.sizwhl.w * 3) + this.IniDatas.px
 		elemrange.style.height = (obj.sizwhl.h * 3) + this.IniDatas.px
+		elemrange.style.backgroundColor = obj.rangecolor ? obj.rangecolor : "rgba(255,255, 255, 0.05)"
 		elem.appendChild(elemrange)
 
 		// gravity zone  !!!-----------------------------------
 		if (obj.gravity) {
 			let elemgravity = document.createElement('div')
-			elemgravity.id = 'gravity-' + obj.immat;
+			elemgravity.id = 'gravity' + obj.div + '-' + obj.immat;
 			elemgravity.style.width = obj.gravity.range.w + this.IniDatas.px
 			elemgravity.style.height = obj.gravity.range.h + this.IniDatas.px
 			elemgravity.className = 'gravity'
@@ -178,7 +180,7 @@ class DivManager {
 		}
 		// content---------------------------------------------
 		let elemcontent = document.createElement('div')
-		elemcontent.id = 'content-' + obj.immat;
+		elemcontent.id = 'content' + obj.div + '-' + obj.immat;
 		elemcontent.className = 'content'
 		elemcontent.style.fontSize = (((obj.sizwhl.w) / 16)) + this.IniDatas.rem;
 		elemcontent.style.lineHeight = (((obj.sizwhl.w) / 16)) + this.IniDatas.rem;
@@ -191,28 +193,29 @@ class DivManager {
 		elemcontent.textContent = obj.textcontent
 		elem.appendChild(elemcontent)
 		// datas-----------------------------------------------
-		let elemdatas = document.createElement('div')
-		elemdatas.id = 'datas-' + obj.immat;
-		elemdatas.className = 'datas'
-		elemdatas.style.left = '0'
-		elemdatas.style.top = '-100%'
+
+		let eleminfo = document.createElement('div')
+		eleminfo.id = 'info' + obj.div + '-' + obj.immat;
+		eleminfo.className = 'info'
+		eleminfo.style.left = '0'
+		eleminfo.style.top = '-100%'
 		// elemdatas.style.width = obj.sizwhl.w + this.IniDatas.px
 		// elemdatas.style.height = obj.sizwhl.h + this.IniDatas.px
-		elemdatas.style.position = 'absolute';
+		eleminfo.style.position = 'absolute';
 		// elemdatas.style.backgroundColor = '';
 
 
 		let elempos = document.createElement('div')
-		elempos.id = 'dataspos-' + obj.immat;
+		elempos.id = 'datas' + obj.div + '-' + obj.immat;
 		elempos.textContent = 'x:0,y:0';
-		elemdatas.appendChild(elempos)
+		eleminfo.appendChild(elempos)
 
 
-		elem.appendChild(elemdatas)
+		elem.appendChild(eleminfo)
 
 		// center of obj --------------------------------------
 		let elemcenter = document.createElement('div')
-		elemcenter.id = 'center-' + obj.immat;
+		elemcenter.id = 'center' + obj.div + '-' + obj.immat;
 		elemcenter.className = 'center'
 		elem.appendChild(elemcenter)
 		console.log('created:' + obj.immat + ' / ' + obj.objtype + ' / ' + obj.objname + ' / ' + obj.classname)
@@ -234,36 +237,36 @@ class DivManager {
 	}
 	redrawAllMobs(allMobs) {
 		allMobs.forEach(obj => {
-			// if (obj.ia || obj.objtype === 'player') {
-			// console.log(obj)
-			let currentMob = document.getElementById(obj.objname + "-" + obj.immat);
-			// let elem = currentMob.querySelector(".mobinfo");
-			// if (elem) { elem.parentNode.removeChild(elem) }
-
-			currentMob.style.top = obj.posxyz.y + 'px';
-			currentMob.style.left = obj.posxyz.x + 'px';
-			// xpspan.textContent = this.getstars(obj.kills)
-			let divdata = document.getElementById('dataspos-' + obj.immat)
-			divdata.textContent = 'x:' + obj.posxyz.x + ',y:' + obj.posxyz.y + '';
-			if (obj.immat === 2) {
-				console.log(divdata)
+			if (obj.ia) {
+				let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
+				if (currentMob) {
+					currentMob.style.top = obj.posxyz.y + 'px';
+					currentMob.style.left = obj.posxyz.x + 'px';
+					// xpspan.textContent = this.getstars(obj.kills)
+					let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
+					if (divdata) {
+						divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + '';
+					}
+				}
+				else {
+					console.log('error')
+				}
 			}
-			// }
 		})
 	}
 	redrawAllSobs(allSobs) {
 		allSobs.forEach(obj => {
-			// if (obj.objtype === 'planete' || obj.objtype === 'satellite') {
-			let currentMob = document.getElementById(obj.objname + "-" + obj.immat);
-			// let elem = currentMob.querySelector(".mobinfo");
-			// if (elem) { elem.parentNode.removeChild(elem) }
+			if (obj.objtype === 'planete' || obj.objtype === 'satellite') {
+				let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
+				// let elem = currentMob.querySelector(".mobinfo");
+				// if (elem) { elem.parentNode.removeChild(elem) }
 
-			currentMob.style.top = obj.posxyz.y + 'px';
-			currentMob.style.left = obj.posxyz.x + 'px';
-			// xpspan.textContent = this.getstars(obj.kills)
-			let divdata = document.getElementById('dataspos-' + obj.immat)
-			divdata.textContent = 'x:' + obj.posxyz.x + ',y:' + obj.posxyz.y + '';
-			// }
+				currentMob.style.top = obj.posxyz.y + 'px';
+				currentMob.style.left = obj.posxyz.x + 'px';
+				// xpspan.textContent = this.getstars(obj.lv)
+				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
+				divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + '';
+			}
 		})
 	}
 	aleaEntreBornes(minimum, maximum) {

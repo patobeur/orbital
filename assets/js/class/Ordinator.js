@@ -14,12 +14,7 @@ class Ordinator {
 		setInterval(this.renderScene, this.DM.IniDatas.renderinterval)
 		// }
 
-		// this.DM.create_EveryBasics()
-		// console.log(this.MF.mobs)
-		// console.log(this.MF.sobs)
-		// this.DM.create_EveryBasics()
-		// this.DM.appendChild_SolarSystem()
-		// console.log(this.MF.mobs)
+
 	}
 	get_theta = () => {
 		return [
@@ -51,37 +46,33 @@ class Ordinator {
 			// this.checkWin()
 		}
 	}
-	EarthIA = () => {
-		if (this.gameOn && !this.pauseOn) { // if game start
-			for (let index = 0; index < this.MF.mobs.length; index++) {
-				let obj = this.MF.mobs[index];
-				if (obj.objname === 'earth') {
-					// console.log(obj)
-					// console.log(this.DM.aleaEntreBornes(-1, 1))
-					// this.get_NewDirection(obj)
-					// console.log(obj.objname, obj.posxyz.x, obj.posxyz.y)
-					// console.log(this.MF.sobs[obj.parentimmat[0]].objname, this.MF.sobs[obj.parentimmat[0]].posxyz.x, this.MF.sobs[obj.parentimmat[0]].posxyz.y)
-					// this.getNextOrbitPos({deg:22.5,orbiter:obj,center:this.MF.sobs[obj.parentimmat[0]]})
-				}
-
-			}
-		}
-	}
-	getNextOrbitPos = (obj) => {
+	get_NextOrbitPos = (obj) => {
+		let distance = false;
 		if (obj.tetha[0] > 360) {
-			obj.tetha[0] = 0
+			obj.tetha[0] = obj.tetha[0] - 360
 		}
 		if (obj.parentimmat) {
-			let Sun = this.MF.sobs[obj.parentimmat[0]]
-			//let SunDiv = document.getElementById('center-' + obj.parentimmat[0]).getBoundingClientRect()
+			let center = this.MF.sobs[obj.parentimmat[0]]
 			// sun pos
-			let SunX = Sun.posxyz.x + (obj.sizwhl.w / 2)
-			let SunY = Sun.posxyz.y + (obj.sizwhl.h / 2)
-			let SunW = Sun.gravity.range.w / 2
-			let SunH = Sun.gravity.range.h / 2
+			let centerX = center.posxyz.x + (obj.sizwhl.w / 2)
+			let centerY = center.posxyz.y + (obj.sizwhl.h / 2)
+			let centerW = center.gravity.range.w / 2
+			let centerH = center.gravity.range.h / 2
 			// new pos
-			let x2 = SunX + Math.round(SunW * (Math.cos(obj.tetha[0])));
-			let y2 = SunY + Math.round(SunH * (Math.sin(obj.tetha[0])));
+			let x2 = 0
+			let y2 = 0
+			if (obj.objtype === 'player') {
+				distance = this.get_distance(obj, this.MF.sobs[obj.parentimmat[0]])
+			}
+			if (distance > 0) {
+				console.log('player')
+				x2 = centerX + Math.round((distance) * (Math.cos(obj.tetha[0])));
+				y2 = centerY + Math.round((distance) * (Math.sin(obj.tetha[0])));
+			}
+			else {
+				x2 = centerX + Math.round(centerW * (Math.cos(obj.tetha[0])));
+				y2 = centerY + Math.round(centerH * (Math.sin(obj.tetha[0])));
+			}
 			// saving new pos in obj
 			obj.posxyz.x = x2 - (obj.sizwhl.w / 2)
 			obj.posxyz.y = y2 - (obj.sizwhl.h / 2)
@@ -97,78 +88,41 @@ class Ordinator {
 		}
 
 	}
-	// getNextOrbitPos = (obj) => {
-	// 	if (obj.tetha[0] > 360) {
-	// 		obj.tetha[0] = 0
-	// 	}
-	// 	if (obj.parentimmat) {
-
-	// 		let Sun = this.MF.sobs[obj.parentimmat[0]]
-	// 		let SunX = Sun.posxyz.x
-	// 		let SunY = Sun.posxyz.y
-	// 		let SunW = Sun.gravity.range.w / 2
-	// 		let SunH = Sun.gravity.range.h / 2
-	// 		let x2 = (SunX) + Math.round(SunW * (Math.cos(obj.tetha[0])));
-	// 		let y2 = (SunY) + Math.round(SunH * (Math.sin(obj.tetha[0])));
-	// 		obj.posxyz.x = x2// - (obj.sizwhl.w / 2)
-	// 		obj.posxyz.y = y2// - (obj.sizwhl.h / 2)
-	// 		obj.tetha[0] += .05
-	// 	}
-	// 	else {
-	// 		console.log('no parent immat')
-	// 	}
-
+	// getNextPos = (obj) => {
+	// 	let x = obj.posxyz.x
+	// 	let y = obj.posxyz.y
+	// 	obj.posxyz.x = (x * Math.cos(45)) - (y * Math.sin(45))
+	// 	obj.posxyz.y =(x * Math.sin(45)) + (y * Math.cos(45))
 	// }
-	getNextPos = (obj) => {
-		let x = obj.posxyz.x
-		let y = obj.posxyz.y
-		let d = obj.direction.deg
-		// console.log(obj.direction)
-
-		// console.log(x, y, d)
-
-		let x2 = (x * Math.cos(45)) - (y * Math.sin(45))
-		let y2 = (x * Math.sin(45)) + (y * Math.cos(45))
-		obj.posxyz.x = x2
-		obj.posxyz.y = y2
-		// obj.posxyz.x += 2
-		// obj.posxyz.y -= 2
-		// console.log(x2, y2)
-
-	}
 	//
 	mobsIA = () => {
 		if (this.gameOn && !this.pauseOn) { // if game start
 			for (let index = 0; index < this.MF.mobs.length; index++) {
 				let obj = this.MF.mobs[index];
-				if (obj.ia) {
-					// console.log(obj)
-					// console.log(this.DM.aleaEntreBornes(-1, 1))
+				if (obj.ia && !obj.parentimmat) {
 					this.get_NewDirection(obj)
 					this.get_NewPosition(obj)
-					this.checkpos(obj)
+					this.check_PosOut(obj)
 				}
-				if (obj.objtype === 'player') {
-					this.get_NewDirection(obj)
-					// console.log(obj)
-					// console.log(this.DM.aleaEntreBornes(-1, 1))
-					// this.get_NewDirection(obj)
-
-					// this.getNextPos(obj)
-					// this.getNextOrbitPos(obj)
+				// else if (obj.objtype === 'player') {
+				// 	this.get_NewDirection(obj)
+				// 	this.get_NewPosition(obj)
+				// 	this.check_PosOut(obj)
+				// }
+				if (obj.parentimmat && obj.direction) {
+					// console.log(obj.objname)
 					this.get_NewDirection(obj)
 					this.get_NewPosition(obj)
-					this.checkpos(obj)
+					// this.check_PosOut(obj)
+					this.get_NextOrbitPos(obj)
 				}
 
 			}
 			for (let index = 0; index < this.MF.sobs.length; index++) {
 				let obj = this.MF.sobs[index];
-				if (obj.parentimmat) {//} || obj.objtype === 'satellite')) {
-					// console.log(obj.parentimmat)
-					this.getNextOrbitPos(obj)
+				if (obj.parentimmat && obj.direction) {
+					this.get_NextOrbitPos(obj)
 				}
-
 			}
 		}
 	}
@@ -177,7 +131,6 @@ class Ordinator {
 			let marge = (360 / 8)
 			let nex = this.DM.aleaEntreBornes(-obj.direction.agility, obj.direction.agility) * marge
 			let nd = obj.direction.deg += nex
-			// let nd = this.DM.aleaEntreBornes(0, 360)
 			nd = nd > 360 ? 0 : nd
 			nd = nd < 0 ? 360 : nd
 			obj.direction.deg = nd
@@ -187,28 +140,15 @@ class Ordinator {
 			obj.direction.currentdelay = 0
 		}
 	}
-	checkpos(obj) {
-		if (obj.posxyz.x > this.DM.IniDatas.cosmosSize.w) { obj.posxyz.x = 1 - obj.sizwhl.w }
-		if (obj.posxyz.x <= 0 - obj.sizwhl.w) { obj.posxyz.x = this.DM.IniDatas.cosmosSize.w }
-
-		if (obj.posxyz.y <= 0 - obj.sizwhl.h) { obj.posxyz.y = this.DM.IniDatas.cosmosSize.h }
-		if (obj.posxyz.y > this.DM.IniDatas.cosmosSize.h + obj.sizwhl.h) { obj.posxyz.y = 1 }
-		// if (worldType === "mirrored") {
-		// }
-		// else if (worldType === "closed") {
-		// 	if (obj.posxyz.x < 0) { obj.posxyz.x = 0; ant.state[1] = "recenter" }
-		// 	if (obj.posxyz.x >= playGroundSize.w - (obj.sizwhl.w2[0])) { obj.posxyz.x = playGroundSize.w - (obj.sizwhl.w2[0]); ant.state[1] = "recenter" }
-		// 	if (obj.posxyz.y < 0) { obj.posxyz.y = 0; ant.state[1] = "recenter" }
-		// 	if (obj.posxyz.y >= playGroundSize.h - (obj.sizwhl.w2[1])) { obj.posxyz.y = playGroundSize.h - (obj.sizwhl.w2[1]); ant.state[1] = "recenter" }
-		// }
+	get_distance = (a, b) => {
+		let AB = (a.posxyz.x + (a.sizwhl.w / 2)) - (b.posxyz.x + (b.sizwhl.w / 2))
+		let AC = (a.posxyz.y + (a.sizwhl.h / 2)) - (b.posxyz.y + (b.sizwhl.h / 2))
+		return Math.sqrt((AB * AB) + (AC * AC))
 	}
 	get_NewPosition = (obj) => {
 		let ratioDir = parseInt(obj.direction.deg / 360 * 1000) / 1000 // 0.0 to 1
 		let velocityX = obj.velxyz.x
 		let velocityY = obj.velxyz.y
-		// let velocityZ = ant.velxyz[2]
-
-		// console.log(obj.direction.deg, '+', ratioDir)
 		// north
 		if ((ratioDir > 0.9375 && ratioDir <= 1) || (ratioDir >= 0 && ratioDir <= 0.0625)) { obj.direction.compass = "N"; obj.posxyz.y -= velocityY }
 		// north est
@@ -226,13 +166,22 @@ class Ordinator {
 		// north 
 		if (ratioDir > 0.8125 && ratioDir <= 0.9375) { obj.direction.compass = "NW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
 
-		// if (ratioDir > 0.6875 && ratioDir < 0.9375) {
-		// 	console.log(obj.direction.deg, obj.direction.compass)
-		// }
-		// is the mob running out playground
-
-		this.checkpos(obj)
+		this.check_PosOut(obj)
 		this.num++
+	}
+	check_PosOut(obj) {
+		if (obj.posxyz.x > this.DM.IniDatas.cosmosSize.w) { obj.posxyz.x = 1 - obj.sizwhl.w }
+		if (obj.posxyz.x <= 0 - obj.sizwhl.w) { obj.posxyz.x = this.DM.IniDatas.cosmosSize.w }
+		if (obj.posxyz.y <= 0 - obj.sizwhl.h) { obj.posxyz.y = this.DM.IniDatas.cosmosSize.h }
+		if (obj.posxyz.y > this.DM.IniDatas.cosmosSize.h + obj.sizwhl.h) { obj.posxyz.y = 1 }
+		// else if (worldType === "closed") {
+		// 	if (obj.posxyz.x < 0) { obj.posxyz.x = 0; ant.state[1] = "recenter" }
+		// 	if (obj.posxyz.x >= playGroundSize.w - (obj.sizwhl.w2[0])) { obj.posxyz.x = playGroundSize.w - (obj.sizwhl.w2[0]); ant.state[1] = "recenter" }
+		// 	if (obj.posxyz.y < 0) { obj.posxyz.y = 0; ant.state[1] = "recenter" }
+		// 	if (obj.posxyz.y >= playGroundSize.h - (obj.sizwhl.w2[1])) { obj.posxyz.y = playGroundSize.h - (obj.sizwhl.w2[1]); ant.state[1] = "recenter" }
+		// }
+		// else if (worldType === "bounce") {
+		// }
 	}
 	setPause() {
 		if (this.pauseOn === true) {
