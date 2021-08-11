@@ -42,13 +42,14 @@ class Ordinator {
 		];
 	}
 	renderScene = () => {
-		//if (!this.Pause && this.GameOn && this.playersIdList.length > 0) {
-		this.mobsIA()
-		this.DM.redrawAllMobs(this.MF.mobs)
-		this.DM.redrawAllSobs(this.MF.sobs)
-		// this.EarthIA()
-		// this.redrawAllMobs()
-		// this.checkWin()
+		if (!this.pauseOn) {
+			this.mobsIA()
+			this.DM.redrawAllMobs(this.MF.mobs)
+			this.DM.redrawAllSobs(this.MF.sobs)
+			// this.EarthIA()
+			// this.redrawAllMobs()
+			// this.checkWin()
+		}
 	}
 	EarthIA = () => {
 		if (this.gameOn && !this.pauseOn) { // if game start
@@ -84,7 +85,7 @@ class Ordinator {
 			// saving new pos in obj
 			obj.posxyz.x = x2 - (obj.sizwhl.w / 2)
 			obj.posxyz.y = y2 - (obj.sizwhl.h / 2)
-			if (obj.dir > 0) {
+			if (obj.orbitdir > 0) {
 				obj.tetha[0] = obj.tetha[0] + obj.tetha[2]
 			}
 			else {

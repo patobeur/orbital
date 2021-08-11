@@ -35,7 +35,7 @@ class MobFactory {
 			status: { dead: false, immune: false, immune1rd: false, shield: false, mooving: false, gravity: false },
 			tetha: objdatas.tetha ?? false,
 			gravity: objdatas.gravity ?? false,
-			dir: objdatas.dir ?? false,
+			orbitdir: objdatas.orbitdir ?? false,
 			rangecolor: objdatas.objtype ? this.get_ColorByType(objdatas.objtype, "range") : false
 		}
 		if (obj.div === 'sob') {
@@ -77,7 +77,7 @@ class MobFactory {
 			sizwhl: { w: 32, h: 32, l: 32 },
 			parentimmat: false,
 			gravity: { range: { w: 400, h: 400 }, force: 1 },
-			dir: 1
+			orbitdir: 1
 		})
 		this.add_obj({
 			div: 'sob',
@@ -90,7 +90,7 @@ class MobFactory {
 			parentimmat: [0],
 			tetha: [0, 360, 0.01],
 			gravity: { range: { w: 50, h: 50 }, force: 1 },
-			dir: 0
+			orbitdir: 0
 		})
 		this.add_obj({
 			div: 'sob',
@@ -106,7 +106,7 @@ class MobFactory {
 			sizwhl: { w: 16, h: 16, l: 16 },
 			parentimmat: [1],
 			tetha: [0, 360, 0.03],
-			dir: 1
+			orbitdir: 1
 		})
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
@@ -119,19 +119,41 @@ class MobFactory {
 			parentimmat: false,
 			direction: { ratio: .75, deg: 45, delay: 120, currentdelay: 0, compass: [0, 0, 0, 0] },
 		})
-		for (let index = 0; index < 3; index++) {
-			this.add_obj({
-				div: 'mob', // mob is mobile or sob is static
-				ia: true,
-				objtype: 'fsaucer',
-				objname: 'ennemy',
-				classname: 'mob',
-				textcontent: '🛸',
-				posxyz: this.inidatas.get_randomPos(),
-				sizwhl: { w: 24, h: 24, l: 24 },
-				parentimmat: false
-			})
-		}
+		this.add_obj({
+			div: 'mob', // mob is mobile or sob is static
+			ia: true,
+			objtype: 'fsaucer',
+			objname: 'ennemy',
+			classname: 'mob',
+			textcontent: '🛸🛸',
+			posxyz: this.inidatas.get_randomPos(),
+			sizwhl: { w: 48, h: 24, l: 24 },
+			parentimmat: false
+		})
+		this.add_obj({
+			div: 'mob', // mob is mobile or sob is static
+			ia: true,
+			objtype: 'fsaucer',
+			objname: 'ennemy',
+			classname: 'mob',
+			textcontent: '🛸',
+			posxyz: this.inidatas.get_randomPos(),
+			sizwhl: { w: 50, h: 50, l: 50 },
+			parentimmat: false
+		})
+		// for (let index = 0; index < 3; index++) {
+		// 	this.add_obj({
+		// 		div: 'mob', // mob is mobile or sob is static
+		// 		ia: true,
+		// 		objtype: 'fsaucer',
+		// 		objname: 'ennemy',
+		// 		classname: 'mob',
+		// 		textcontent: '🛸',
+		// 		posxyz: this.inidatas.get_randomPos(),
+		// 		sizwhl: { w: 24, h: 24, l: 24 },
+		// 		parentimmat: false
+		// 	})
+		// }
 
 		this.inidatas.create_EveryBasics({ mobs: this.mobs, sobs: this.sobs })
 	}

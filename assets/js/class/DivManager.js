@@ -2,6 +2,7 @@
 // -----------------------------
 class DivManager {
 	constructor() {
+		this.ddd = ""
 		console.log('DivManager')
 		this.lunarDiv = this.checkAndGet_LunarDiv()
 		this.IniDatas = this.get_IniDatas()
@@ -16,10 +17,13 @@ class DivManager {
 	cssMaker = () => {
 		let stringcss = '.sob,.mob {position: absolute;display: flex;align-items: center;justify-content: center;line-height: 100%;}'
 		// stringcss += '.sob{z-index: -1;}'
-		stringcss += '* {outline: var(--outlined);}'
+		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
 		stringcss += '.datas {background-color:rgba(255, 255, 255, 0.4);}'
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
+		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
+		stringcss += '#pause.active {display: initial;}'
+
 		this.addCss(stringcss, 'sob-mob')
 	}
 	addCss(stringcss, styleid) {
@@ -54,6 +58,7 @@ class DivManager {
 	}
 	checkAndGet_LunarDiv = () => {
 		this.lunarDiv = document.getElementById('lunar')
+		this.lunarDiv.className = this.ddd
 		return this.lunarDiv ?? false
 	}
 	appendChild_Cosmos() {
@@ -134,7 +139,7 @@ class DivManager {
 		return xyz
 	}
 	get_ObjDomElem = (obj) => {
-		console.log(obj)
+
 		let classname = obj.classname +
 			(obj.objtype ? ' ' + obj.objtype : '') +
 			(obj.objdiv ? ' ' + obj.objdiv : '')
@@ -189,7 +194,7 @@ class DivManager {
 		let elemdatas = document.createElement('div')
 		elemdatas.id = 'datas-' + obj.immat;
 		elemdatas.className = 'datas'
-		elemdatas.style.right = '-150%'
+		elemdatas.style.left = '0'
 		elemdatas.style.top = '-100%'
 		// elemdatas.style.width = obj.sizwhl.w + this.IniDatas.px
 		// elemdatas.style.height = obj.sizwhl.h + this.IniDatas.px
@@ -210,6 +215,7 @@ class DivManager {
 		elemcenter.id = 'center-' + obj.immat;
 		elemcenter.className = 'center'
 		elem.appendChild(elemcenter)
+		console.log('created:' + obj.immat + ' / ' + obj.objtype + ' / ' + obj.objname + ' / ' + obj.classname)
 		return elem
 	}
 	create_EveryBasics(cosmosdatas) {
@@ -228,30 +234,36 @@ class DivManager {
 	}
 	redrawAllMobs(allMobs) {
 		allMobs.forEach(obj => {
-			if (obj.ia || obj.objtype === 'player') {
-				// console.log(obj)
-				let currentMob = document.getElementById(obj.objname + "-" + obj.immat);
-				// let elem = currentMob.querySelector(".mobinfo");
-				// if (elem) { elem.parentNode.removeChild(elem) }
+			// if (obj.ia || obj.objtype === 'player') {
+			// console.log(obj)
+			let currentMob = document.getElementById(obj.objname + "-" + obj.immat);
+			// let elem = currentMob.querySelector(".mobinfo");
+			// if (elem) { elem.parentNode.removeChild(elem) }
 
-				currentMob.style.top = obj.posxyz.y + 'px';
-				currentMob.style.left = obj.posxyz.x + 'px';
-				// xpspan.textContent = this.getstars(obj.kills)
-				document.getElementById('dataspos' + "-" + obj.immat).textContent = 'x:' + obj.posxyz.x + ',y:' + obj.posxyz.y + '';
+			currentMob.style.top = obj.posxyz.y + 'px';
+			currentMob.style.left = obj.posxyz.x + 'px';
+			// xpspan.textContent = this.getstars(obj.kills)
+			let divdata = document.getElementById('dataspos-' + obj.immat)
+			divdata.textContent = 'x:' + obj.posxyz.x + ',y:' + obj.posxyz.y + '';
+			if (obj.immat === 2) {
+				console.log(divdata)
 			}
+			// }
 		})
 	}
 	redrawAllSobs(allSobs) {
 		allSobs.forEach(obj => {
-			if (obj.objtype === 'planete' || obj.objtype === 'satellite') {
-				let currentMob = document.getElementById(obj.objname + "-" + obj.immat);
-				// let elem = currentMob.querySelector(".mobinfo");
-				// if (elem) { elem.parentNode.removeChild(elem) }
+			// if (obj.objtype === 'planete' || obj.objtype === 'satellite') {
+			let currentMob = document.getElementById(obj.objname + "-" + obj.immat);
+			// let elem = currentMob.querySelector(".mobinfo");
+			// if (elem) { elem.parentNode.removeChild(elem) }
 
-				currentMob.style.top = obj.posxyz.y + 'px';
-				currentMob.style.left = obj.posxyz.x + 'px';
-				// xpspan.textContent = this.getstars(obj.kills)
-			}
+			currentMob.style.top = obj.posxyz.y + 'px';
+			currentMob.style.left = obj.posxyz.x + 'px';
+			// xpspan.textContent = this.getstars(obj.kills)
+			let divdata = document.getElementById('dataspos-' + obj.immat)
+			divdata.textContent = 'x:' + obj.posxyz.x + ',y:' + obj.posxyz.y + '';
+			// }
 		})
 	}
 	aleaEntreBornes(minimum, maximum) {
