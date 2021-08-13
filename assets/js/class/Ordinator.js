@@ -109,13 +109,31 @@ class Ordinator {
 				// 	this.get_NewPosition(obj)
 				// 	this.check_PosOut(obj)
 				// }
-				if (obj.parentimmat && obj.direction) {
-					// console.log(obj.objname)
-					this.get_NewDirection(obj)
+				else if (obj.objtype === 'player') {//ia && obj.direction) {
+					if (obj.direction.way[0] === 1) {
+						obj.direction.deg = this.getNiceSpeed(obj, 0)
+					} // up
+					if (obj.direction.way[1] === 1) {
+						obj.direction.deg = this.getNiceDegrees(obj, 1)
+					} // right
+					if (obj.direction.way[2] === 1) {
+						obj.direction.deg = this.getNiceSpeed(obj, 2)
+					} // down
+					if (obj.direction.way[3] === 1) {
+						obj.direction.deg = this.getNiceDegrees(obj, 3)
+					} // left
+					obj.direction.way = [0, 0, 0, 0]
+
 					this.get_NewPosition(obj)
-					// this.check_PosOut(obj)
-					this.get_NextOrbitPos(obj)
+					// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg)
+					// obj.direction.compass = [0, 0, 0, 0]
+					this.check_PosOut(obj)
 				}
+				// else if (obj.parentimmat && obj.direction) {
+				// 	this.get_NewDirection(obj)
+				// 	this.get_NewPosition(obj)
+				// 	this.get_NextOrbitPos(obj)
+				// }
 
 			}
 			for (let index = 0; index < this.MF.sobs.length; index++) {
@@ -126,13 +144,52 @@ class Ordinator {
 			}
 		}
 	}
+	getNiceSpeed = (obj, type) => {
+		if (type === 0) {//accelerate
+			// agility ++ speedy
+			// or altitude ???
+			obj.velxyz.x += 1
+			obj.velxyz.y += 1
+		}
+		else if (type === 2) {//lower
+			// obj.direction.agility -- slower
+			// or altitude ???
+			obj.velxyz.x -= 1
+			obj.velxyz.y -= 1
+		}
+		else {
+			console.log('bug', obj.direction.deg, obj.direction.agility, type)
+		}
+	}
+	getNiceDegrees = (obj, type) => {
+		if (type === 3) {//left
+			return (obj.direction.deg - obj.direction.agility) < 0 ? 360 - obj.direction.deg - obj.direction.agility : obj.direction.deg - obj.direction.agility
+		}
+		else if (type === 1) {//right
+			return (obj.direction.deg + obj.direction.agility) >= 360 ? obj.direction.deg + obj.direction.agility - 360 : obj.direction.deg + obj.direction.agility
+		}
+
+		// else if (type === 0) {//top
+		// 	// agility ++ speedy
+		// 	// or altitude ???
+		// }
+		// else if (type === 2) {//bottom
+		// 	// obj.direction.agility -- slower
+		// 	// or altitude ???
+		// }
+		// else {
+		// 	console.log('bug', obj.direction.deg, obj.direction.agility, type)
+		// }
+	}
 	get_NewDirection = (obj) => {
 		if (obj.direction.currentdelay < 1) {
+
 			let marge = (360 / 8)
 			let nex = this.DM.aleaEntreBornes(-obj.direction.agility, obj.direction.agility) * marge
 			let nd = obj.direction.deg += nex
-			nd = nd > 360 ? 0 : nd
-			nd = nd < 0 ? 360 : nd
+
+			nd = nd > 360 ? nd - 360 : nd
+			nd = nd < 0 ? 360 - nd : nd
 			obj.direction.deg = nd
 		}
 		obj.direction.currentdelay += 1
@@ -145,8 +202,15 @@ class Ordinator {
 		let AC = (a.posxyz.y + (a.sizwhl.h / 2)) - (b.posxyz.y + (b.sizwhl.h / 2))
 		return Math.sqrt((AB * AB) + (AC * AC))
 	}
+	PlayerMooves = (obj) => {
+
+	}
 	get_NewPosition = (obj) => {
 		let ratioDir = parseInt(obj.direction.deg / 360 * 1000) / 1000 // 0.0 to 1
+		if (obj.objtype === 'player') {
+			// console.log(ratioDir, 'C:'+obj.direction.compass, 'vx:' + obj.velxyz.x, 'vy:' + obj.velxyz.y)
+			// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg, 'ratio:' + ratioDir)
+		}
 		let velocityX = obj.velxyz.x
 		let velocityY = obj.velxyz.y
 		// north
@@ -166,8 +230,7 @@ class Ordinator {
 		// north 
 		if (ratioDir > 0.8125 && ratioDir <= 0.9375) { obj.direction.compass = "NW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
 
-		this.check_PosOut(obj)
-		this.num++
+		this.num++///??
 	}
 	check_PosOut(obj) {
 		if (obj.posxyz.x > this.DM.IniDatas.cosmosSize.w) { obj.posxyz.x = 1 - obj.sizwhl.w }
@@ -197,5 +260,21 @@ class Ordinator {
 		console.log(this.num, doo.posxyz, doo.direction.compass)
 	}
 
+	// players
+	getstars = (bnstars) => {
+		let a = ""
+		for (let ii = 0; ii < bnstars; ii++) {
+			a += "⭐" //♥
+		}
+		return a
+	}
+	// keyboard
 
+	PlayGo = (idx, dir) => {
+		if (!this.pauseOn) {
+			if (this.MF.mobs[idx].direction.way) {
+				this.MF.mobs[idx].direction.way[dir] = 1;
+			}
+		}
+	}
 }

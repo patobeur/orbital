@@ -21,6 +21,7 @@ class DivManager {
 		stringcss += '.info {background-color:rgba(255, 255, 255, 0.4);}'
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
 		stringcss += '.rangea {border-radius:50%;}'
+		stringcss += '.player .content {transform:rotate(-45deg)}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
 		stringcss += '#pause.active {display: initial;}'
@@ -178,6 +179,12 @@ class DivManager {
 			elemgravity.style.position = 'absolute';
 			elem.appendChild(elemgravity)
 		}
+		// content box used for rotation-----------------------
+		let elemcontentbox = document.createElement('div')
+		elemcontentbox.id = 'contentbox' + obj.div + '-' + obj.immat;
+		elemcontentbox.style.position = 'absolute';
+		elemcontentbox.style.width = obj.sizwhl.w + this.IniDatas.px
+		elemcontentbox.style.height = obj.sizwhl.h + this.IniDatas.px
 		// content---------------------------------------------
 		let elemcontent = document.createElement('div')
 		elemcontent.id = 'content' + obj.div + '-' + obj.immat;
@@ -191,7 +198,8 @@ class DivManager {
 		elemcontent.style.alignItems = 'center'
 		elemcontent.style.position = 'absolute';
 		elemcontent.textContent = obj.textcontent
-		elem.appendChild(elemcontent)
+		elemcontentbox.appendChild(elemcontent)
+		elem.appendChild(elemcontentbox)
 		// datas-----------------------------------------------
 
 		let eleminfo = document.createElement('div')
@@ -237,21 +245,29 @@ class DivManager {
 	}
 	redrawAllMobs(allMobs) {
 		allMobs.forEach(obj => {
-			if (obj.ia) {
-				let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
-				if (currentMob) {
-					currentMob.style.top = obj.posxyz.y + 'px';
-					currentMob.style.left = obj.posxyz.x + 'px';
-					// xpspan.textContent = this.getstars(obj.kills)
-					let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
-					if (divdata) {
-						divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + '';
-					}
+			// if (obj.ia) {
+			let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
+			if (currentMob) {
+				let toto = 'contentboxmob-' + obj.immat
+				let contentbox = document.getElementById(toto);
+				if (contentbox) {
+					console.log(toto, obj.objtype)
+					contentbox.style.transform = 'rotate(' + obj.direction.deg + 'deg)';
+					// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg, 'ratio:' + ratioDir)
+
 				}
-				else {
-					console.log('error')
+				currentMob.style.top = obj.posxyz.y + 'px';
+				currentMob.style.left = obj.posxyz.x + 'px';
+				// xpspan.textContent = this.getstars(obj.kills)
+				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
+				if (divdata) {
+					divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + '';
 				}
 			}
+			else {
+				console.log('error')
+			}
+			// }
 		})
 	}
 	redrawAllSobs(allSobs) {
