@@ -56,7 +56,7 @@
 	opacity: 1;
 	&.animate__fadeOut {
 		// animation: 2s 10s animate__fadeOut;
-		animation: 0.2s 0.2s animate__fadeOut;
+		animation: 0.2s 2s animate__fadeOut;
 	}
 }
 
@@ -67,7 +67,8 @@
 	background-color: rgba(240, 248, 255, 0.877);
 	border-radius: 1rem;
 	padding: 1rem;
-	font-size: 2rem;
+	line-height: 1.5rem;
+	font-size: 1.5rem;
 	opacity: 1;
 	transition: left 0.5s ease, top 0.5s ease;
 	&.animate__fadeOut {

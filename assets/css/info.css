@@ -75,8 +75,8 @@
 }
 
 #splash.animate__fadeOut {
-  -webkit-animation: 0.2s 0.2s animate__fadeOut;
-          animation: 0.2s 0.2s animate__fadeOut;
+  -webkit-animation: 0.2s 2s animate__fadeOut;
+          animation: 0.2s 2s animate__fadeOut;
 }
 
 #help-0 {
@@ -86,7 +86,8 @@
   background-color: rgba(240, 248, 255, 0.877);
   border-radius: 1rem;
   padding: 1rem;
-  font-size: 2rem;
+  line-height: 1.5rem;
+  font-size: 1.5rem;
   opacity: 1;
   -webkit-transition: left 0.5s ease, top 0.5s ease;
   transition: left 0.5s ease, top 0.5s ease;
