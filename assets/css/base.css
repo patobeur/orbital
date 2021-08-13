@@ -15,12 +15,12 @@
           box-sizing: border-box;
 }
 
-body .ddd {
+.ddd {
   -webkit-perspective: 1000vh;
           perspective: 1000vh;
 }
 
-body .ddd #cosmos {
+.ddd #cosmos {
   -webkit-transform-origin: center;
           transform-origin: center;
   -webkit-transform: rotateX(45deg);

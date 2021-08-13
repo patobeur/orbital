@@ -5,37 +5,42 @@ class Ordinator {
 		this.num = 0
 		this.DM.appendChild_Cosmos()
 		this.MF = new MobFactory(this.DM)
+		// this.theta = this.get_theta()
+
+		// if(){
+		// setInterval(this.renderScene, this.DM.IniDatas.renderinterval)
+		// }
+		this.animateCSS('#splash', 'fadeOut', true).then((message) => {
+			// Do something after the animation
+			this.start()
+			this.animateCSS('.help', 'fadeOut', true).then((message) => {
+				// Do something after the animation
+			});
+		});
+
+	}
+	start() {
 		this.MF.create_EveryBasics()
 		this.gameOn = true
 		this.pauseOn = false
-		this.theta = this.get_theta()
-
-		// if(){
-		setInterval(this.renderScene, this.DM.IniDatas.renderinterval)
-		// }
-
+		setInterval(
+			this.renderScene,
+			this.DM.IniDatas.renderinterval
+		)
 
 	}
-	get_theta = () => {
-		return [
-			0,
-			Math.PI / 6,
-			Math.PI / 4,
-			Math.PI / 3,
-			Math.PI / 2,
-			2 * (Math.PI / 3),
-			3 * (Math.PI / 4),
-			5 * (Math.PI / 6),
-			Math.PI,
-			7 * (Math.PI / 6),
-			5 * (Math.PI / 4),
-			4 * (Math.PI / 3),
-			3 * (Math.PI / 2),
-			5 * (Math.PI / 3),
-			7 * (Math.PI / 4),
-			11 * (Math.PI / 6)
-		];
-	}
+	//--
+	// getNextPos = (obj) => {
+	// 	let x = obj.posxyz.x
+	// 	let y = obj.posxyz.y
+	// 	obj.posxyz.x = (x * Math.cos(obj.direction.deg)) - (y * Math.sin(direction.deg))
+	// 	obj.posxyz.y =(x * Math.sin(direction.deg)) + (y * Math.cos(direction.deg))
+	// }
+	//--
+	// PlayerMooves = (obj) => {}
+	//--
+	// get_theta = () => {return [0,Math.PI / 6,Math.PI / 4,Math.PI / 3,Math.PI / 2,2 * (Math.PI / 3),3 * (Math.PI / 4),5 * (Math.PI / 6),Math.PI,7 * (Math.PI / 6),5 * (Math.PI / 4),4 * (Math.PI / 3),3 * (Math.PI / 2),5 * (Math.PI / 3),7 * (Math.PI / 4),11 * (Math.PI / 6)];}
+	//--
 	renderScene = () => {
 		if (!this.pauseOn) {
 			this.mobsIA()
@@ -88,37 +93,30 @@ class Ordinator {
 		}
 
 	}
-	// getNextPos = (obj) => {
-	// 	let x = obj.posxyz.x
-	// 	let y = obj.posxyz.y
-	// 	obj.posxyz.x = (x * Math.cos(45)) - (y * Math.sin(45))
-	// 	obj.posxyz.y =(x * Math.sin(45)) + (y * Math.cos(45))
-	// }
-	//
 	mobsIA = () => {
 		if (this.gameOn && !this.pauseOn) { // if game start
 			for (let index = 0; index < this.MF.mobs.length; index++) {
 				let obj = this.MF.mobs[index];
 				if (obj.ia && !obj.parentimmat) {
-					this.get_NewDirection(obj)
-					this.get_NewPosition(obj)
+					this.set_NiceDirection(obj)
+					this.set_NicePosition_WithDegX(obj)
 					this.check_PosOut(obj)
 				}
 				// else if (obj.objtype === 'player') {
-				// 	this.get_NewDirection(obj)
-				// 	this.get_NewPosition(obj)
+				// 	this.set_NiceDirection(obj)
+				// 	this.set_NicePosition_WithDegX(obj)
 				// 	this.check_PosOut(obj)
 				// }
 				else if (obj.objtype === 'player') {//ia && obj.direction) {
 					this.check_keyboardArrows(obj)
-					this.get_NewPosition(obj)
+					this.set_NicePosition_WithDegX(obj)
 					// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg)
 					// obj.direction.compass = [0, 0, 0, 0]
 					this.check_PosOut(obj)
 				}
 				// else if (obj.parentimmat && obj.direction) {
-				// 	this.get_NewDirection(obj)
-				// 	this.get_NewPosition(obj)
+				// 	this.set_NiceDirection(obj)
+				// 	this.set_NicePosition_WithDegX(obj)
 				// 	this.get_NextOrbitPos(obj)
 				// }
 
@@ -132,7 +130,6 @@ class Ordinator {
 		}
 	}
 	check_keyboardArrows = (obj) => {
-		let arrows = ['top', 'right', 'bottom', 'left']
 		// ROTATION DEG
 		if (obj.direction.way[0] === 1) { // up
 			this.set_NiceDegrees(obj, 0)
@@ -148,32 +145,24 @@ class Ordinator {
 		}
 		// SPEED
 		if (obj.direction.way[4] === 1) { // speed up
-			this.set_NiceSpeed(obj, 0)
+			this.set_NiceSpeed(obj, 4)
 		}
-		if (obj.direction.way[2] === 1) { // speed down
-			this.set_NiceSpeed(obj, 2)
+		if (obj.direction.way[5] === 1) { // speed down
+			this.set_NiceSpeed(obj, 5)
 		}
 		obj.direction.way = [0, 0, 0, 0, 0, 0] // reset to zero
 
 	}
 	set_NiceSpeed = (obj, type) => {
-		if (type === 0) {//accelerate
-			// agility ++ speedy
-			// or altitude ???
+		if (type === 4) {//accelerate
 			obj.velxyz.cx += obj.velxyz.cx >= 5 ? 0 : obj.velxyz.x
 			obj.velxyz.cy += obj.velxyz.cy >= 5 ? 0 : obj.velxyz.y
 			obj.velxyz.cz += obj.velxyz.cz >= 5 ? 0 : obj.velxyz.z
 		}
-		else if (type === 2) {//lower
-			// obj.direction.agility -- slower
-			// or altitude ???
-			obj.velxyz.cx -= obj.velxyz.cx <= 1 ? 0 : obj.velxyz.x
-			obj.velxyz.cy -= obj.velxyz.cy <= 1 ? 0 : obj.velxyz.y
-			obj.velxyz.cz -= obj.velxyz.cz <= 1 ? 0 : obj.velxyz.z
-			console.log('bug', obj.velxyz.cx, obj.velxyz.cy, type)
-		}
-		else {
-			console.log('bug', obj.direction.deg, obj.direction.agility, type)
+		else if (type === 5) {// lower speed
+			obj.velxyz.cx -= obj.velxyz.cx <= -2 ? 0 : obj.velxyz.x
+			obj.velxyz.cy -= obj.velxyz.cy <= -2 ? 0 : obj.velxyz.y
+			obj.velxyz.cz -= obj.velxyz.cz <= -2 ? 0 : obj.velxyz.z
 		}
 	}
 	set_NiceDegrees = (obj, type) => {
@@ -192,7 +181,7 @@ class Ordinator {
 			obj.direction.degZ = (obj.direction.degZ + obj.direction.agility) >= 360 ? obj.direction.degZ + obj.direction.agility - 360 : obj.direction.degZ + obj.direction.agility
 		}
 	}
-	get_NewDirection = (obj) => {
+	set_NiceDirection = (obj) => {
 		if (obj.direction.currentdelay < 1) {
 
 			let marge = (360 / 8)
@@ -213,34 +202,35 @@ class Ordinator {
 		let AC = (a.posxyz.y + (a.sizwhl.h / 2)) - (b.posxyz.y + (b.sizwhl.h / 2))
 		return Math.sqrt((AB * AB) + (AC * AC))
 	}
-	PlayerMooves = (obj) => {
-
-	}
-	get_NewPosition = (obj) => {
-		let ratioDir = parseInt(obj.direction.deg / 360 * 1000) / 1000 // 0.0 to 1
-		if (obj.objtype === 'player') {
-			// console.log(ratioDir, 'C:'+obj.direction.compass, 'vx:' + obj.velxyz.cx, 'vy:' + obj.velxyz.cy)
-			// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg, 'ratio:' + ratioDir)
-		}
+	set_NicePosition_WithDegX = (obj) => {
+		let ratioDir = parseInt(obj.direction.deg / 360 * 100000) / 100000 // 0.0 to 1
 		let velocityX = obj.velxyz.cx
 		let velocityY = obj.velxyz.cy
+		// let velocityZ = obj.velxyz.cz
+
 		// north
 		if ((ratioDir > 0.9375 && ratioDir < 1) || (ratioDir >= 0 && ratioDir <= 0.0625)) { obj.direction.compass = "N"; obj.posxyz.y -= velocityY }
 		// north est
-		if (ratioDir > 0.0625 && ratioDir < 0.1875) { obj.direction.compass = "NE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
+		else if (ratioDir > 0.0625 && ratioDir <= 0.1875) { obj.direction.compass = "NE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
 		// est
-		if (ratioDir > 0.1875 && ratioDir < 0.3125) { obj.direction.compass = "E"; obj.posxyz.x += velocityX }
+		else if (ratioDir > 0.1875 && ratioDir <= 0.3125) { obj.direction.compass = "E"; obj.posxyz.x += velocityX }
 		//south est
-		if (ratioDir > 0.3125 && ratioDir < 0.4375) { obj.direction.compass = "SE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
+		else if (ratioDir > 0.3125 && ratioDir <= 0.4375) { obj.direction.compass = "SE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
 		// south
-		if (ratioDir > 0.4375 && ratioDir < 0.5625) { obj.direction.compass = "S"; obj.posxyz.y += velocityY }
+		else if (ratioDir > 0.4375 && ratioDir <= 0.5625) { obj.direction.compass = "S"; obj.posxyz.y += velocityY }
 		// south west
-		if (ratioDir > 0.5625 && ratioDir < 0.6875) { obj.direction.compass = "SW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
+		else if (ratioDir > 0.5625 && ratioDir <= 0.6875) { obj.direction.compass = "SW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
 		// west
-		if (ratioDir > 0.6875 && ratioDir < 0.8125) { obj.direction.compass = "W"; obj.posxyz.x -= velocityX }
+		else if (ratioDir > 0.6875 && ratioDir <= 0.8125) { obj.direction.compass = "W"; obj.posxyz.x -= velocityX }
 		// north 
-		if (ratioDir > 0.8125 && ratioDir < 0.9375) { obj.direction.compass = "NW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
-
+		else if (ratioDir > 0.8125 && ratioDir <= 0.9375) { obj.direction.compass = "NW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
+		else {
+			if (obj.objtype === 'player') {
+				console.log(ratioDir)
+				// console.log(ratioDir, 'C:'+obj.direction.compass, 'vx:' + obj.velxyz.cx, 'vy:' + obj.velxyz.cy)
+				// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg, 'ratio:' + ratioDir)
+			}
+		}
 		this.num++///??
 	}
 	check_PosOut(obj) {
@@ -288,4 +278,22 @@ class Ordinator {
 			}
 		}
 	}
+	animateCSS = (element, animation, remove = false, prefix = 'animate__') =>
+		// thx to RainbowViking 
+		// thx https://github.com/animate-css/animate.css/blob/main/docsSource/sections/04-javascript.md
+		// We create a Promise and return it
+		new Promise((resolve, reject) => {
+			let animationName = `${prefix}${animation}`;
+			let node = document.querySelector(element);
+			node.classList.add(`${prefix}animated`, animationName);
+			// When the animation ends, we clean the classes and resolve the Promise
+			let handleAnimationEnd = (event) => {
+				event.stopPropagation();
+				node.classList.remove(`${prefix}animated`, animationName);
+				resolve('Animation ended');
+				if (remove) { node.remove() }
+			}
+			node.addEventListener('animationend', handleAnimationEnd, { once: true });
+		});
+
 }

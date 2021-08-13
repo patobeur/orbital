@@ -15,7 +15,8 @@ class DivManager {
 
 	}
 	cssMaker = () => {
-		let stringcss = '.sob,.mob {position: absolute;display: flex;align-items: center;justify-content: center;line-height: 100%;}'
+		let stringcss = 'body{overflow:hidden;}'
+		stringcss += '.sob,.mob {position: absolute;display: flex;align-items: center;justify-content: center;line-height: 100%;}'
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
 		stringcss += '.info {background-color:rgba(255, 255, 255, 0.4);}'
@@ -39,7 +40,7 @@ class DivManager {
 		let renderinterval = 30 // render speed 1ms * 30
 
 		this.lunarDiv.style.position = "relative";
-		this.lunarDiv.style.width = "100%";
+		this.lunarDiv.style.width = "100vw";
 		this.lunarDiv.style.height = "100vh";
 		this.lunarDiv.style.minWidth = "100%";
 		this.lunarDiv.style.minHeight = "100vh";
@@ -131,12 +132,21 @@ class DivManager {
 		// console.log(xyz)
 		return xyz
 	}
-	get_centerPos = (poss) => {
+	get_centerPos = (poss, type = { x: false, y: false }) => {
+		let typexy = {
+			x: type.x ?? false,
+			y: type.y ?? false
+		}
+		// type = {x:left||right,y:top|bottom}
 		let xyz = {
 			x: (this.IniDatas.cosmosSize.w / 2) - (poss.w / 2),
 			y: (this.IniDatas.cosmosSize.h / 2) - (poss.h / 2),
-			z: 0 - (poss.l / 2)
+			z: (this.IniDatas.cosmosSize.l / 2) - (poss.l / 2),
 		}
+		if (typexy.x === 'left') { xyz.x = 0 }
+		if (typexy.x === 'right') { xyz.x = (this.IniDatas.cosmosSize.w - poss.w) }
+		if (typexy.y === 'top') { xyz.y = 0 }
+		if (typexy.y === 'bottom') { xyz.y = (this.IniDatas.cosmosSize.h - poss.h) }
 		// console.log(xyz)
 		return xyz
 	}
@@ -168,6 +178,18 @@ class DivManager {
 		elemrange.style.backgroundColor = obj.rangecolor ? obj.rangecolor : "rgba(255,255, 255, 0.05)"
 		elem.appendChild(elemrange)
 
+		// Player Help  !!!-----------------------------------
+		if (obj.objtype === 'player') {
+			let elemhelp = document.createElement('div')
+			elemhelp.id = 'help'//-' + obj.immat;
+			elemhelp.style.width = "100" + this.IniDatas.px
+			elemhelp.style.height = "100" + this.IniDatas.px
+			elemhelp.className = 'help'
+			elemhelp.style.borderRadius = '1rem';
+			elemhelp.style.position = 'absolute';
+			elemhelp.textContent = 'This is your Ship !'
+			elem.appendChild(elemhelp)
+		}
 		// gravity zone  !!!-----------------------------------
 		if (obj.gravity) {
 			let elemgravity = document.createElement('div')
