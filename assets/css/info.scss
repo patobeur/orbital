@@ -84,14 +84,14 @@
 		// width: "100%";
 		// height: "50%";
 	}
-	&.prop-1 {
-		.prop {
-			animation: 0.2s 0s infinite reverse animate__prop1;
-		}
-	}
 	&.prop-2 {
 		.prop {
-			animation: 0.2s 0s infinite reverse animate__prop1;
+			animation: 1s 0s infinite reverse animate__prop1;
+		}
+	}
+	&.prop-1 {
+		.prop {
+			animation: 1.5s 0s infinite reverse animate__prop1;
 		}
 	}
 	&.prop0 {

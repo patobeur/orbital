@@ -19,7 +19,7 @@ class DivManager {
 		stringcss += '.sob,.mob {position: absolute;display: flex;align-items: center;justify-content: center;line-height: 100%;}'
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
-		stringcss += '.info {background-color:rgba(255, 255, 255, 0.4);}'
+		stringcss += '.info {background-color:rgba(255, 255, 255, 0.1);}'
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
 		stringcss += '.rangea {border-radius:50%;}'
 		stringcss += '.player .content {transform:rotate(-45deg)}'

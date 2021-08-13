@@ -108,12 +108,12 @@
   bottom: 100%;
 }
 
-.propulsion.prop-1 .prop {
-  animation: 0.2s 0s infinite reverse animate__prop1;
+.propulsion.prop-2 .prop {
+  animation: 1s 0s infinite reverse animate__prop1;
 }
 
-.propulsion.prop-2 .prop {
-  animation: 0.2s 0s infinite reverse animate__prop1;
+.propulsion.prop-1 .prop {
+  animation: 1.5s 0s infinite reverse animate__prop1;
 }
 
 .propulsion.prop1 div {
