@@ -110,20 +110,7 @@ class Ordinator {
 				// 	this.check_PosOut(obj)
 				// }
 				else if (obj.objtype === 'player') {//ia && obj.direction) {
-					if (obj.direction.way[0] === 1) {
-						obj.direction.deg = this.getNiceSpeed(obj, 0)
-					} // up
-					if (obj.direction.way[1] === 1) {
-						obj.direction.deg = this.getNiceDegrees(obj, 1)
-					} // right
-					if (obj.direction.way[2] === 1) {
-						obj.direction.deg = this.getNiceSpeed(obj, 2)
-					} // down
-					if (obj.direction.way[3] === 1) {
-						obj.direction.deg = this.getNiceDegrees(obj, 3)
-					} // left
-					obj.direction.way = [0, 0, 0, 0]
-
+					this.check_keyboardArrows(obj)
 					this.get_NewPosition(obj)
 					// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg)
 					// obj.direction.compass = [0, 0, 0, 0]
@@ -144,42 +131,66 @@ class Ordinator {
 			}
 		}
 	}
-	getNiceSpeed = (obj, type) => {
+	check_keyboardArrows = (obj) => {
+		let arrows = ['top', 'right', 'bottom', 'left']
+		// ROTATION DEG
+		if (obj.direction.way[0] === 1) { // up
+			this.set_NiceDegrees(obj, 0)
+		}
+		if (obj.direction.way[1] === 1) { // right
+			this.set_NiceDegrees(obj, 1)
+		}
+		if (obj.direction.way[2] === 1) { // down
+			this.set_NiceDegrees(obj, 2)
+		}
+		if (obj.direction.way[3] === 1) { // left
+			this.set_NiceDegrees(obj, 3)
+		}
+		// SPEED
+		if (obj.direction.way[4] === 1) { // speed up
+			this.set_NiceSpeed(obj, 0)
+		}
+		if (obj.direction.way[2] === 1) { // speed down
+			this.set_NiceSpeed(obj, 2)
+		}
+		obj.direction.way = [0, 0, 0, 0, 0, 0] // reset to zero
+
+	}
+	set_NiceSpeed = (obj, type) => {
 		if (type === 0) {//accelerate
 			// agility ++ speedy
 			// or altitude ???
-			obj.velxyz.x += 1
-			obj.velxyz.y += 1
+			obj.velxyz.cx += obj.velxyz.cx >= 5 ? 0 : obj.velxyz.x
+			obj.velxyz.cy += obj.velxyz.cy >= 5 ? 0 : obj.velxyz.y
+			obj.velxyz.cz += obj.velxyz.cz >= 5 ? 0 : obj.velxyz.z
 		}
 		else if (type === 2) {//lower
 			// obj.direction.agility -- slower
 			// or altitude ???
-			obj.velxyz.x -= 1
-			obj.velxyz.y -= 1
+			obj.velxyz.cx -= obj.velxyz.cx <= 1 ? 0 : obj.velxyz.x
+			obj.velxyz.cy -= obj.velxyz.cy <= 1 ? 0 : obj.velxyz.y
+			obj.velxyz.cz -= obj.velxyz.cz <= 1 ? 0 : obj.velxyz.z
+			console.log('bug', obj.velxyz.cx, obj.velxyz.cy, type)
 		}
 		else {
 			console.log('bug', obj.direction.deg, obj.direction.agility, type)
 		}
 	}
-	getNiceDegrees = (obj, type) => {
+	set_NiceDegrees = (obj, type) => {
 		if (type === 3) {//left
-			return (obj.direction.deg - obj.direction.agility) < 0 ? 360 - obj.direction.deg - obj.direction.agility : obj.direction.deg - obj.direction.agility
+			obj.direction.deg = (obj.direction.deg - obj.direction.agility) < 0 ? 360 - obj.direction.deg - obj.direction.agility : obj.direction.deg - obj.direction.agility
 		}
 		else if (type === 1) {//right
-			return (obj.direction.deg + obj.direction.agility) >= 360 ? obj.direction.deg + obj.direction.agility - 360 : obj.direction.deg + obj.direction.agility
+			obj.direction.deg = (obj.direction.deg + obj.direction.agility) >= 360 ? obj.direction.deg + obj.direction.agility - 360 : obj.direction.deg + obj.direction.agility
 		}
-
-		// else if (type === 0) {//top
-		// 	// agility ++ speedy
-		// 	// or altitude ???
-		// }
-		// else if (type === 2) {//bottom
-		// 	// obj.direction.agility -- slower
-		// 	// or altitude ???
-		// }
-		// else {
-		// 	console.log('bug', obj.direction.deg, obj.direction.agility, type)
-		// }
+		else if (type === 0) {//top
+			// z rotation mean 3d ??
+			obj.direction.degZ = (obj.direction.deg - obj.direction.agility) < 0 ? 360 - obj.direction.degZ - obj.direction.agility : obj.direction.degZ - obj.direction.agility
+		}
+		else if (type === 2) {//bottom
+			// z rotation mean 3d ??
+			obj.direction.degZ = (obj.direction.degZ + obj.direction.agility) >= 360 ? obj.direction.degZ + obj.direction.agility - 360 : obj.direction.degZ + obj.direction.agility
+		}
 	}
 	get_NewDirection = (obj) => {
 		if (obj.direction.currentdelay < 1) {
@@ -197,7 +208,7 @@ class Ordinator {
 			obj.direction.currentdelay = 0
 		}
 	}
-	get_distance = (a, b) => {
+	get_distance = (a, b) => { // get hypotenus with pythaGore
 		let AB = (a.posxyz.x + (a.sizwhl.w / 2)) - (b.posxyz.x + (b.sizwhl.w / 2))
 		let AC = (a.posxyz.y + (a.sizwhl.h / 2)) - (b.posxyz.y + (b.sizwhl.h / 2))
 		return Math.sqrt((AB * AB) + (AC * AC))
@@ -208,27 +219,27 @@ class Ordinator {
 	get_NewPosition = (obj) => {
 		let ratioDir = parseInt(obj.direction.deg / 360 * 1000) / 1000 // 0.0 to 1
 		if (obj.objtype === 'player') {
-			// console.log(ratioDir, 'C:'+obj.direction.compass, 'vx:' + obj.velxyz.x, 'vy:' + obj.velxyz.y)
+			// console.log(ratioDir, 'C:'+obj.direction.compass, 'vx:' + obj.velxyz.cx, 'vy:' + obj.velxyz.cy)
 			// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg, 'ratio:' + ratioDir)
 		}
-		let velocityX = obj.velxyz.x
-		let velocityY = obj.velxyz.y
+		let velocityX = obj.velxyz.cx
+		let velocityY = obj.velxyz.cy
 		// north
-		if ((ratioDir > 0.9375 && ratioDir <= 1) || (ratioDir >= 0 && ratioDir <= 0.0625)) { obj.direction.compass = "N"; obj.posxyz.y -= velocityY }
+		if ((ratioDir > 0.9375 && ratioDir < 1) || (ratioDir >= 0 && ratioDir <= 0.0625)) { obj.direction.compass = "N"; obj.posxyz.y -= velocityY }
 		// north est
-		if (ratioDir > 0.0625 && ratioDir <= 0.1875) { obj.direction.compass = "NE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
+		if (ratioDir > 0.0625 && ratioDir < 0.1875) { obj.direction.compass = "NE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
 		// est
-		if (ratioDir > 0.1875 && ratioDir <= 0.3125) { obj.direction.compass = "E"; obj.posxyz.x += velocityX }
+		if (ratioDir > 0.1875 && ratioDir < 0.3125) { obj.direction.compass = "E"; obj.posxyz.x += velocityX }
 		//south est
-		if (ratioDir > 0.3125 && ratioDir <= 0.4375) { obj.direction.compass = "SE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
+		if (ratioDir > 0.3125 && ratioDir < 0.4375) { obj.direction.compass = "SE"; obj.posxyz.x += (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
 		// south
-		if (ratioDir > 0.4375 && ratioDir <= 0.5625) { obj.direction.compass = "S"; obj.posxyz.y += velocityY }
+		if (ratioDir > 0.4375 && ratioDir < 0.5625) { obj.direction.compass = "S"; obj.posxyz.y += velocityY }
 		// south west
-		if (ratioDir > 0.5625 && ratioDir <= 0.6875) { obj.direction.compass = "SW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
+		if (ratioDir > 0.5625 && ratioDir < 0.6875) { obj.direction.compass = "SW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y += (velocityY / 2) }
 		// west
-		if (ratioDir > 0.6875 && ratioDir <= 0.8125) { obj.direction.compass = "W"; obj.posxyz.x -= velocityX }
+		if (ratioDir > 0.6875 && ratioDir < 0.8125) { obj.direction.compass = "W"; obj.posxyz.x -= velocityX }
 		// north 
-		if (ratioDir > 0.8125 && ratioDir <= 0.9375) { obj.direction.compass = "NW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
+		if (ratioDir > 0.8125 && ratioDir < 0.9375) { obj.direction.compass = "NW"; obj.posxyz.x -= (velocityX / 2); obj.posxyz.y -= (velocityY / 2) }
 
 		this.num++///??
 	}

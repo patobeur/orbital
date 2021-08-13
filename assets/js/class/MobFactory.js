@@ -27,10 +27,10 @@ class MobFactory {
 			textcontent: objdatas.textcontent ?? false,
 			posxyz: objdatas.posxyz ?? false,
 			sizwhl: objdatas.sizwhl ?? false,
-			velxyz: objdatas.velxyz ?? { x: 1, y: 1, z: 1 },
+			velxyz: objdatas.velxyz ?? { x: 1, y: 1, z: 1, cx: 1, cy: 1, cz: 1 },// own velocity statisticsactuals speeds
 			parentimmat: objdatas.parentimmat ?? false,
 			// movement 
-			direction: objdatas.direction ?? { ratio: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
+			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 1 },
 			stock: { fuel: 100, air: 1000, water: 1000, food: 1000 },
 			status: { dead: false, immune: false, immune1rd: false, shield: false, mooving: false, gravity: false },
 			tetha: objdatas.tetha ?? false,
@@ -114,10 +114,10 @@ class MobFactory {
 			textcontent: '🚀',
 			posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }),
 			sizwhl: { w: 24, h: 24, l: 24 },
-			velxyz: { x: 2, y: 2, z: 1 },
+			velxyz: { x: 2, y: 2, z: 1, cx: 1, cy: 1, cz: 1 },
 			//parentimmat: [0],
 			tetha: [0, 360, 0.03],
-			direction: { ratio: 0, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+			direction: { ratio: 0, degZ: 0, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
 		})
 		this.add_obj({
 			div: 'sob', // mob is mobile or sob is static
@@ -141,7 +141,7 @@ class MobFactory {
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 25, h: 25, l: 50 },
 			parentimmat: false,
-			direction: { ratio: 0, deg: this.aleaEntreBornes(0, 22.5), delay: 3, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 }
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 22.5), delay: 3, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 }
 		})
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
@@ -153,7 +153,7 @@ class MobFactory {
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 15, h: 15, l: 15 },
 			parentimmat: false,
-			direction: { ratio: 0, deg: this.aleaEntreBornes(0, 22.5), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 22.5), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
 		})
 		// for (let index = 0; index < 3; index++) {
 		// 	this.add_obj({

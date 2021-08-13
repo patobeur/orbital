@@ -248,13 +248,9 @@ class DivManager {
 			// if (obj.ia) {
 			let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
 			if (currentMob) {
-				let toto = 'contentboxmob-' + obj.immat
-				let contentbox = document.getElementById(toto);
+				let contentbox = document.getElementById('contentboxmob-' + obj.immat);
 				if (contentbox) {
-					console.log(toto, obj.objtype)
 					contentbox.style.transform = 'rotate(' + obj.direction.deg + 'deg)';
-					// console.log('C:' + obj.direction.compass, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'deg:' + obj.direction.deg, 'ratio:' + ratioDir)
-
 				}
 				currentMob.style.top = obj.posxyz.y + 'px';
 				currentMob.style.left = obj.posxyz.x + 'px';
