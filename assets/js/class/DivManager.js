@@ -36,7 +36,7 @@ class DivManager {
 		document.getElementsByTagName('head')[0].appendChild(style);
 	}
 	get_IniDatas = () => {
-		let screenborder = { w: 32, h: 32 }
+		let screenborder = { w: 32, h: 32, l: 32 }
 		let renderinterval = 30 // render speed 1ms * 30
 
 		this.lunarDiv.style.position = "relative";
@@ -56,7 +56,7 @@ class DivManager {
 			rem: 'rem',
 			renderinterval: renderinterval,
 			screenborder: screenborder, // twice the value in pixels
-			cosmosSize: { 'w': lunarzone.width - (screenborder.w * 2), 'h': lunarzone.height - (screenborder.h * 2) }
+			cosmosSize: { 'w': lunarzone.width - (screenborder.w * 2), 'h': lunarzone.height - (screenborder.h * 2), 'l': lunarzone.width - (screenborder.l * 2) }
 		}
 	}
 	checkAndGet_LunarDiv = () => {
@@ -124,18 +124,21 @@ class DivManager {
 	get_randomPos = (marge = false) => {
 		let mx = marge ? marge[0] : 0
 		let my = marge ? marge[1] : 0
+		let mz = marge ? marge[2] : 0
 		let xyz = {
 			x: this.aleaEntreBornes(5 + mx, this.IniDatas.cosmosSize.w - 5 - mx),
 			y: this.aleaEntreBornes(5 + my, this.IniDatas.cosmosSize.h - 5 - my),
-			z: 0
+			z: this.aleaEntreBornes(5 + mz, this.IniDatas.cosmosSize.l - 5 - mz),
 		}
 		// console.log(xyz)
 		return xyz
 	}
-	get_centerPos = (poss, type = { x: false, y: false }) => {
+	get_centerPos = (poss, type = { x: 0, y: 0, z: 0 }) => {
+
 		let typexy = {
-			x: type.x ?? false,
-			y: type.y ?? false
+			x: type.x ?? 0,
+			y: type.y ?? 0,
+			z: type.z ?? 0
 		}
 		// type = {x:left||right,y:top|bottom}
 		let xyz = {
@@ -143,10 +146,11 @@ class DivManager {
 			y: (this.IniDatas.cosmosSize.h / 2) - (poss.h / 2),
 			z: (this.IniDatas.cosmosSize.l / 2) - (poss.l / 2),
 		}
+		console.log(this.IniDatas.cosmosSize)
 		if (typexy.x === 'left') { xyz.x = 0 }
 		if (typexy.x === 'right') { xyz.x = (this.IniDatas.cosmosSize.w - poss.w) }
 		if (typexy.y === 'top') { xyz.y = 0 }
-		if (typexy.y === 'bottom') { xyz.y = (this.IniDatas.cosmosSize.h - poss.h) }
+		if (typexy.y === 'bottom') { xyz.y = (this.IniDatas.cosmosSize.h - poss.h - 20) }
 		// console.log(xyz)
 		return xyz
 	}
@@ -178,35 +182,13 @@ class DivManager {
 		elemrange.style.backgroundColor = obj.rangecolor ? obj.rangecolor : "rgba(255,255, 255, 0.05)"
 		elem.appendChild(elemrange)
 
-		// Player Help  !!!-----------------------------------
-		if (obj.objtype === 'player') {
-			let elemhelp = document.createElement('div')
-			elemhelp.id = 'help'//-' + obj.immat;
-			elemhelp.style.width = "100" + this.IniDatas.px
-			elemhelp.style.height = "100" + this.IniDatas.px
-			elemhelp.className = 'help'
-			elemhelp.style.borderRadius = '1rem';
-			elemhelp.style.position = 'absolute';
-			elemhelp.textContent = 'This is your Ship !'
-			elem.appendChild(elemhelp)
-		}
-		// gravity zone  !!!-----------------------------------
-		if (obj.gravity) {
-			let elemgravity = document.createElement('div')
-			elemgravity.id = 'gravity' + obj.div + '-' + obj.immat;
-			elemgravity.style.width = obj.gravity.range.w + this.IniDatas.px
-			elemgravity.style.height = obj.gravity.range.h + this.IniDatas.px
-			elemgravity.className = 'gravity'
-			elemgravity.style.borderRadius = '50%';
-			elemgravity.style.position = 'absolute';
-			elem.appendChild(elemgravity)
-		}
 		// content box used for rotation-----------------------
 		let elemcontentbox = document.createElement('div')
 		elemcontentbox.id = 'contentbox' + obj.div + '-' + obj.immat;
 		elemcontentbox.style.position = 'absolute';
 		elemcontentbox.style.width = obj.sizwhl.w + this.IniDatas.px
 		elemcontentbox.style.height = obj.sizwhl.h + this.IniDatas.px
+
 		// content---------------------------------------------
 		let elemcontent = document.createElement('div')
 		elemcontent.id = 'content' + obj.div + '-' + obj.immat;
@@ -221,7 +203,55 @@ class DivManager {
 		elemcontent.style.position = 'absolute';
 		elemcontent.textContent = obj.textcontent
 		elemcontentbox.appendChild(elemcontent)
-		elem.appendChild(elemcontentbox)
+
+		// Player Help  !!!-----------------------------------
+		if (obj.objtype === 'player') {
+			let elemhelp = document.createElement('div')
+			elemhelp.id = 'help-' + obj.immat;
+			elemhelp.style.width = "100" + this.IniDatas.px
+			elemhelp.style.height = "100" + this.IniDatas.px
+			elemhelp.className = 'help'
+			elemhelp.style.borderRadius = '1rem';
+			elemhelp.style.position = 'absolute';
+			elemhelp.textContent = 'This is your Ship !'
+			elem.appendChild(elemhelp)
+
+			// propulsion visual animation
+			let elemprop = document.createElement('div')
+			elemprop.style.width = (obj.sizwhl.w / 3) + this.IniDatas.px
+			elemprop.style.height = (obj.sizwhl.h) + this.IniDatas.px
+			elemprop.style.top = '100%'
+			elemprop.style.left = '50%'
+			// elemprop.style.backgroundColor = 'black'
+			elemprop.style.transform = 'translate(-50%,0)'
+			elemprop.style.position = 'absolute';
+			// elemprop.style.overflow = 'hidden';
+			elemprop.id = 'propulsion-' + obj.immat;
+			elemprop.className = 'propulsion prop0'
+
+			let elemcloud = document.createElement('div')
+			elemcloud.style.width = (obj.sizwhl.w / 3) + this.IniDatas.px
+			elemcloud.style.height = (obj.sizwhl.h / 3) + this.IniDatas.px
+			// elemcloud.style.borderRadius = '50%';
+			// elemcloud.style.backgroundColor = 'white'
+			// elemcloud.style.position = 'absolute';
+			// elemcloud.style.bottom = '0';
+			elemcloud.className = 'prop';
+
+			elemprop.prepend(elemcloud)
+			elemcontentbox.prepend(elemprop)
+		}
+		// gravity zone  !!!-----------------------------------
+		if (obj.gravity) {
+			let elemgravity = document.createElement('div')
+			elemgravity.id = 'gravity' + obj.div + '-' + obj.immat;
+			elemgravity.style.width = obj.gravity.range.w + this.IniDatas.px
+			elemgravity.style.height = obj.gravity.range.h + this.IniDatas.px
+			elemgravity.className = 'gravity'
+			elemgravity.style.borderRadius = '50%';
+			elemgravity.style.position = 'absolute';
+			elem.appendChild(elemgravity)
+		}
 		// datas-----------------------------------------------
 
 		let eleminfo = document.createElement('div')
@@ -237,10 +267,11 @@ class DivManager {
 
 		let elempos = document.createElement('div')
 		elempos.id = 'datas' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'x:0,y:0';
+		elempos.textContent = 'x:0,y:0,z:0';
 		eleminfo.appendChild(elempos)
 
 
+		elem.appendChild(elemcontentbox)
 		elem.appendChild(eleminfo)
 
 		// center of obj --------------------------------------
@@ -271,7 +302,7 @@ class DivManager {
 			let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
 			if (currentMob) {
 				let contentbox = document.getElementById('contentboxmob-' + obj.immat);
-				if (contentbox) {
+				if (contentbox && obj.objtype === 'player') {
 					contentbox.style.transform = 'rotate(' + obj.direction.deg + 'deg)';
 				}
 				currentMob.style.top = obj.posxyz.y + 'px';
@@ -279,7 +310,8 @@ class DivManager {
 				// xpspan.textContent = this.getstars(obj.kills)
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
 				if (divdata) {
-					divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + '';
+					divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
+					// console.log(obj.posxyz)
 				}
 			}
 			else {
@@ -299,7 +331,7 @@ class DivManager {
 				currentMob.style.left = obj.posxyz.x + 'px';
 				// xpspan.textContent = this.getstars(obj.lv)
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
-				divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + '';
+				divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
 			}
 		})
 	}

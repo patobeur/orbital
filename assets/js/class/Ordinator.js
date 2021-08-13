@@ -13,7 +13,7 @@ class Ordinator {
 		this.animateCSS('#splash', 'fadeOut', true).then((message) => {
 			// Do something after the animation
 			this.start()
-			this.animateCSS('.help', 'fadeOut', true).then((message) => {
+			this.animateCSS('#help-0', 'fadeOut', true).then((message) => {
 				// Do something after the animation
 			});
 		});
@@ -163,6 +163,9 @@ class Ordinator {
 			obj.velxyz.cx -= obj.velxyz.cx <= -2 ? 0 : obj.velxyz.x
 			obj.velxyz.cy -= obj.velxyz.cy <= -2 ? 0 : obj.velxyz.y
 			obj.velxyz.cz -= obj.velxyz.cz <= -2 ? 0 : obj.velxyz.z
+		}
+		if (obj.objtype === 'player') {
+			document.getElementById('propulsion-' + obj.immat).className = "propulsion prop" + obj.velxyz.cx
 		}
 	}
 	set_NiceDegrees = (obj, type) => {
