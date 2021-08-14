@@ -1,5 +1,6 @@
 "use strict";
 let Ord = Object
+let errors = []
 function isLoaded() {
 	Ord = new Ordinator()
 	document.onkeydown = (eventkeydown) => {

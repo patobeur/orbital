@@ -3,16 +3,14 @@
 class DivManager {
 	constructor() {
 		this.ddd = ""
-		console.log('DivManager')
+		console.log('🥪 Orbital lunch !!')
 		this.lunarDiv = this.checkAndGet_LunarDiv()
 		this.IniDatas = this.get_IniDatas()
 		this.cosmosDiv = Object
 		this.sobsDiv = Object // all static objects goes here
 		this.mobsDiv = Object // all mobile objects goes here
 		// this.moonDiv = Object// = document.getElementById('moonr')
-
 		this.cssMaker()
-
 	}
 	cssMaker = () => {
 		let stringcss = 'body{overflow:hidden;}'
@@ -26,7 +24,6 @@ class DivManager {
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
 		stringcss += '#pause.active {display: initial;}'
-
 		this.addCss(stringcss, 'sob-mob')
 	}
 	addCss(stringcss, styleid) {
@@ -85,34 +82,30 @@ class DivManager {
 		cosmos.style.backgroundRepeat = "repeat";
 		// cosmos.style.overflow="hidden";
 
-		let mobs = document.createElement('div')
-		mobs.id = 'mobs';
-		mobs.className = ''
-		mobs.style.position = "absolute";
-		mobs.style.width = this.IniDatas.cosmosSize.w + this.IniDatas.px
-		mobs.style.height = this.IniDatas.cosmosSize.h + this.IniDatas.px
-		mobs.style.top = "0";
-		mobs.style.left = "0";
-		mobs.style.right = "0";
-		mobs.style.bottom = "0";
-		mobs.style.borderRadius = "1rem";
-		mobs.style.overflow = "hidden";
-		mobs.className = ''
-
-		let sobs = document.createElement('div')
-		sobs.id = 'sobs';
-		sobs.className = ''
-		sobs.style.position = "absolute";
-		sobs.style.width = this.IniDatas.cosmosSize.w + this.IniDatas.px
-		sobs.style.height = this.IniDatas.cosmosSize.h + this.IniDatas.px
-		sobs.style.top = "0";
-		sobs.style.left = "0";
-		sobs.style.right = "0";
-		sobs.style.bottom = "0";
-		sobs.style.borderRadius = "1rem";
-		sobs.style.overflow = "hidden";
-		// sobs.style.zIndex = "500";
-		//--
+		let mobs = this.createEle({
+			id: 'mobs',
+			position: "absolute",
+			width: this.IniDatas.cosmosSize.w + this.IniDatas.px,
+			height: this.IniDatas.cosmosSize.h + this.IniDatas.px,
+			top: "0",
+			left: "0",
+			right: "0",
+			bottom: "0",
+			borderRadius: "1rem",
+			overflow: "hidden"
+		})
+		let sobs = this.createEle({
+			id: 'sobs',
+			position: "absolute",
+			width: this.IniDatas.cosmosSize.w + this.IniDatas.px,
+			height: this.IniDatas.cosmosSize.h + this.IniDatas.px,
+			top: "0",
+			left: "0",
+			right: "0",
+			bottom: "0",
+			borderRadius: "1rem",
+			overflow: "hidden"
+		})
 		cosmos.appendChild(sobs)
 		cosmos.appendChild(mobs)
 		this.lunarDiv.appendChild(cosmos)
@@ -120,6 +113,60 @@ class DivManager {
 		this.cosmosDiv = cosmos
 		this.sobsDiv = sobs
 		this.mobsDiv = mobs
+	}
+	createEle = (attrib = false) => {
+		let tag = false
+		if (attrib) {
+			attrib.tag = attrib.tag ?? 'div';
+			attrib.id ? tag = document.createElement(attrib.tag) : '';
+			attrib.id ? tag.id = attrib.id : '';
+			attrib.className ? tag.style.className = attrib.className : '';
+			attrib.position ? tag.style.position = attrib.position : '';
+			attrib.width ? tag.style.width = attrib.width : '';
+			attrib.height ? tag.style.height = attrib.height : '';
+
+			attrib.top ? tag.style.top = attrib.top : '';
+			attrib.left ? tag.style.left = attrib.left : '';
+			attrib.right ? tag.style.right = attrib.right : '';
+			attrib.bottom ? tag.style.bottom = attrib.bottom : '';
+
+			attrib.borderRadius ? tag.style.borderRadius = attrib.borderRadius : '';
+
+			attrib.overflow ? tag.style.overflow = attrib.overflow : '';
+
+			attrib.backgroundColor ? tag.style.backgroundColor = attrib.backgroundColor : '';
+			attrib.color ? tag.style.color = attrib.color : '';
+
+			attrib.display ? tag.style.display = attrib.display : '';
+			attrib.flexDirection ? tag.style.flexDirection = attrib.flexDirection : '';
+			attrib.justifyContent ? tag.style.justifyContent = attrib.justifyContent : '';
+			attrib.alignItems ? tag.style.alignItems = attrib.alignItems : '';
+
+
+			attrib.textContent ? tag.textContent = attrib.textContent : '';
+
+		}
+		return tag ?? false
+	}
+
+	appendChild_Board() {
+		let board = this.createEle({
+			tag: 'div',
+			id: 'board',
+
+		})
+		let speedmeter = this.createEle({
+			tag: 'div',
+			id: 'speedmeter',
+		})
+		let speedvisual = this.createEle({
+			tag: 'div',
+			id: 'speedvisual',
+		})
+		board.appendChild(speedvisual)
+		board.appendChild(speedmeter)
+		cosmos.prepend(board)
+
 	}
 	get_randomPos = (marge = false) => {
 		let mx = marge ? marge[0] : 0
@@ -146,7 +193,6 @@ class DivManager {
 			y: (this.IniDatas.cosmosSize.h / 2) - (poss.h / 2),
 			z: (this.IniDatas.cosmosSize.l / 2) - (poss.l / 2),
 		}
-		console.log(this.IniDatas.cosmosSize)
 		if (typexy.x === 'left') { xyz.x = 0 }
 		if (typexy.x === 'right') { xyz.x = (this.IniDatas.cosmosSize.w - poss.w) }
 		if (typexy.y === 'top') { xyz.y = 0 }
@@ -269,6 +315,10 @@ class DivManager {
 		elempos.id = 'datas' + obj.div + '-' + obj.immat;
 		elempos.textContent = 'x:0,y:0,z:0';
 		eleminfo.appendChild(elempos)
+		elempos = document.createElement('div')
+		elempos.id = 'direction' + obj.div + '-' + obj.immat;
+		elempos.textContent = 'deg:';
+		eleminfo.appendChild(elempos)
 
 
 		elem.appendChild(elemcontentbox)
@@ -279,12 +329,10 @@ class DivManager {
 		elemcenter.id = 'center' + obj.div + '-' + obj.immat;
 		elemcenter.className = 'center'
 		elem.appendChild(elemcenter)
-		console.log('created:' + obj.immat + ' / ' + obj.objtype + ' / ' + obj.objname + ' / ' + obj.classname)
+		console.log('immat ' + obj.immat + ' added to ' + obj.div + ' -> ' + obj.objtype + ' / ' + obj.objname + ' / ' + obj.classname)
 		return elem
 	}
 	create_EveryBasics(cosmosdatas) {
-		// console.log('create_EveryBwxcxwcasics')
-		// console.log(cosmosdatas.mobs)
 		cosmosdatas.sobs.forEach(sob => {
 			let newsob = this.get_ObjDomElem(sob)
 			this.sobsDiv.appendChild(newsob)
@@ -293,8 +341,6 @@ class DivManager {
 			let newmob = this.get_ObjDomElem(mob)
 			this.mobsDiv.appendChild(newmob)
 		});
-		// console.log(cosmosdatas.sobs)
-		// this.create_Cosmos()
 	}
 	redrawAllMobs(allMobs) {
 		allMobs.forEach(obj => {
@@ -311,11 +357,14 @@ class DivManager {
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
 				if (divdata) {
 					divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
-					// console.log(obj.posxyz)
+				}
+				let divdata2 = document.getElementById('direction' + obj.div + '-' + obj.immat)
+				if (divdata2) {
+					divdata2.textContent = 'deg:' + obj.direction.deg + '°';
 				}
 			}
 			else {
-				console.log('error')
+				errors.push(['redrawAllMobs', 'can\'t target ' + obj.objname + obj.div + "-" + obj.immat])
 			}
 			// }
 		})
@@ -324,9 +373,6 @@ class DivManager {
 		allSobs.forEach(obj => {
 			if (obj.objtype === 'planete' || obj.objtype === 'satellite') {
 				let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
-				// let elem = currentMob.querySelector(".mobinfo");
-				// if (elem) { elem.parentNode.removeChild(elem) }
-
 				currentMob.style.top = obj.posxyz.y + 'px';
 				currentMob.style.left = obj.posxyz.x + 'px';
 				// xpspan.textContent = this.getstars(obj.lv)
@@ -338,12 +384,6 @@ class DivManager {
 	aleaEntreBornes(minimum, maximum) {
 		return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
 	}
-
-
-
-	// addNewcss([{ "url": "assets/css/login.css", "id": "login-css" }]);
-
-
 
 
 
