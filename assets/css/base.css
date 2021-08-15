@@ -66,6 +66,11 @@
   opacity: 0;
 }
 
+#cosmos .sob .rangea,
+#cosmos .mob .rangea {
+  border-radius: 5%;
+}
+
 #cosmos .sob:hover .info,
 #cosmos .mob:hover .info {
   display: block;

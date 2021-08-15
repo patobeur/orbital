@@ -17,11 +17,11 @@ class DivManager {
 
 		stringcss += ''
 		// stringcss += '.sob{z-index: -1;}'
-		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
+		stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
 		stringcss += ''
 		stringcss += ''
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
-		stringcss += '.rangea {border-radius:50%;}'
+		stringcss += ''
 		stringcss += '.player .content {transform:rotate(-45deg)}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
@@ -221,7 +221,7 @@ class DivManager {
 		elemrange.style.position = 'absolute';
 		elemrange.style.width = (obj.sizwhl.w * 3) + this.IniDatas.px
 		elemrange.style.height = (obj.sizwhl.h * 3) + this.IniDatas.px
-		elemrange.style.backgroundColor = obj.rangecolor ? obj.rangecolor : "rgba(255,255, 255, 0.05)"
+		elemrange.style.backgroundColor = obj.rangeacolor ? obj.rangeacolor : "rgba(255,255, 255, 0.05)"
 		elem.appendChild(elemrange)
 
 		// content box used for rotation-----------------------
@@ -345,20 +345,41 @@ class DivManager {
 				if (contentbox && obj.objtype === 'player') {
 					contentbox.style.transform = 'rotate(' + obj.direction.deg + 'deg)';
 				}
+
+				let divrange = document.getElementById('rangea' + obj.div + '-' + obj.immat)
+				divrange.style.backgroundColor = obj.rangeacolor
+				// // if colliding
+				// if (obj.collide) {
+				// 	// refresh range color
+				// 	if (divrange) {
+				// 	}
+				// 	else {
+				// 		errors.push(['this.redrawAllMobs', 'can\'t target rangea' + obj.div + "-" + obj.immat])
+				// 	}
+				// }
+
+
 				currentMob.style.top = obj.posxyz.y + 'px';
 				currentMob.style.left = obj.posxyz.x + 'px';
 				// xpspan.textContent = this.getstars(obj.kills)
+				// // refresh information of info div
+				// let divinfo = document.getElementById('info' + obj.div + '-' + obj.immat)
+				// if (divinfo && obj.rangeacolor) {
+				// 	divinfo.style.backgroundColor = obj.rangeacolor
+				// }
+				// refresh information of info div
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
 				if (divdata) {
 					divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
 				}
+				// refresh information of info div
 				let divdata2 = document.getElementById('direction' + obj.div + '-' + obj.immat)
 				if (divdata2) {
 					divdata2.textContent = 'deg:' + obj.direction.deg + '°';
 				}
 			}
 			else {
-				errors.push(['redrawAllMobs', 'can\'t target ' + obj.objname + obj.div + "-" + obj.immat])
+				errors.push(['this.redrawAllMobs', 'can\'t target ' + obj.objname + obj.div + "-" + obj.immat])
 			}
 			// }
 		})
@@ -369,6 +390,10 @@ class DivManager {
 				let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
 				currentMob.style.top = obj.posxyz.y + 'px';
 				currentMob.style.left = obj.posxyz.x + 'px';
+
+				let divrange = document.getElementById('rangea' + obj.div + '-' + obj.immat)
+				divrange.style.backgroundColor = obj.rangeacolor
+
 				// xpspan.textContent = this.getstars(obj.lv)
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
 				divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);

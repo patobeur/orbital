@@ -14,6 +14,19 @@ class MobFactory {
 		// console.log('MobFactory IniDatas', this.inidatas)
 	}
 
+	get_ColorByType = (typename, zone) => {
+		let colors = {
+			rangea: {
+				etoile: "rgba(255, 255, 255, 0.05);",
+				planete: "rgba(255, 255, 255, 0.05)",
+				satellite: "rgba(255, 0, 252, 0.05)",
+				fsaucer: "rgba(255,255, 0, 0.05)",
+				neutral: "rgba(255,255, 0, 0.05)",
+				fruits: "rgba(0,255, 0, 0.05)"
+			}
+		}
+		return colors[zone][typename]
+	}
 	add_obj = (objdatas) => {
 		// obj completition
 		let obj = {
@@ -36,7 +49,7 @@ class MobFactory {
 			tetha: objdatas.tetha ?? false,
 			gravity: objdatas.gravity ?? false,
 			orbitdir: objdatas.orbitdir ?? false,
-			rangecolor: objdatas.objtype ? this.get_ColorByType(objdatas.objtype, "range") : false
+			rangeacolor: objdatas.objtype ? this.get_ColorByType(objdatas.objtype, "rangea") : false
 		}
 		if (obj.div === 'sob') {
 			obj.immat = (objdatas.parentimmat) ? (objdatas.parentimmat === -1) ? (this.sobsImmat[0] - 1) : (this.sobsImmat[0] + 1) : this.sobsImmat[0];
@@ -53,19 +66,6 @@ class MobFactory {
 		else {
 			console.log('innexpected')
 		}
-	}
-	get_ColorByType = (typename, zone) => {
-		let colors = {
-			range: {
-				etoile: "rgba(255, 255, 255, 0.1);",
-				planete: "rgba(255, 255, 255, 0.1)",
-				satellite: "rgba(25, 0, 252, 0.1)",
-				gravity: "rgba(255, 255, 255, 0.05)",
-				fsaucer: "rgba(255,255, 0, 0.05)",
-				neutral: "rgba(255,255, 0, 0.05)"
-			}
-		}
-		return colors[zone][typename]
 	}
 	create_EveryBasics() {
 		this.add_obj({
@@ -170,7 +170,7 @@ class MobFactory {
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
 			ia: true,
-			objtype: 'fsaucer',
+			objtype: 'fruits',
 			objname: 'ennemy',
 			classname: 'mob',
 			textcontent: this.givemeaniceico(),

@@ -185,7 +185,10 @@ class Ordinator {
 	mobsIA = () => {
 		if (this.gameOn && !this.pauseOn) { // if game start
 			for (let index = 0; index < this.MF.mobs.length; index++) {
+
 				let obj = this.MF.mobs[index];
+				let collide = false;
+
 				if (obj.ia && !obj.parentimmat) {
 					this.set_NewNiceDirection(obj)
 					this.set_NicePosition_WithDegX(obj)
@@ -197,8 +200,33 @@ class Ordinator {
 				// 	this.check_PosOut(obj)
 				// }
 				else if (obj.objtype === 'player') {
-					this.check_keyboardArrows(obj)
 
+					// CHECK COLLiSION with mobs
+					this.MF.mobs.forEach(mobB => {
+						if (mobB.immat != obj.immat) {
+							// console.log(mobB.immat)
+							collide = this.isOverlappingZone(obj, mobB)
+							obj.collide = collide
+							mobB.collide = collide
+
+							if (collide) {
+								// rangeacolorsave is temporary
+								if (!mobB.rangeacolorsave) {
+									mobB.rangeacolorsave = mobB.rangeacolor;
+									console.log('OOOoups colliding with :', mobB)
+									mobB.rangeacolor = '#FFFFFF33'
+								}
+							}
+							else {
+								if (!mobB.rangeacolorsave === false) {
+									mobB.rangeacolor = mobB.rangeacolorsave
+									mobB.rangeacolorsave = false
+								}
+							}
+						}
+					});
+
+					this.check_keyboardArrows(obj)
 
 					// this.get_xyzFromXYDeg(obj)
 					// or
@@ -407,4 +435,70 @@ class Ordinator {
 			}
 		}
 	}
+
+
+	isOverlappingZone = (() => {
+		// moins rapide
+		function getAreaA(obj, range = "rangea") {
+			let divZone = document.getElementById(range + obj.div + '-' + obj.immat).getBoundingClientRect()
+			let area = [
+				[
+					parseInt(divZone.left),
+					parseInt(divZone.left + divZone.width)
+				], [
+					parseInt(divZone.top),
+					parseInt(divZone.top + divZone.height)
+				]
+			];
+			return area
+		}
+		// plus rapide ??
+		function getArea(obj) {
+			let area = [
+				[
+					obj.posxyz.x,
+					obj.posxyz.x + obj.sizwhl.w
+				], [
+					obj.posxyz.y,
+					obj.posxyz.y + obj.sizwhl.h
+				]
+			];
+			return area
+		}
+		// autre pour avoir un carcle 
+		function getcenter(obj) {
+			let center = [
+				obj.posxyz.x + (obj.sizwhl.w / 2),
+				obj.posxyz.y + (obj.sizwhl.h / 2)
+			];
+			return center
+		}
+		function compareAreas(areaA, areaB) {
+			// var dist1 = areaA[0] < areaB[0] ? areaA : areaB;
+			// var dist2 = areaA[0] < areaB[0] ? areaB : areaA;
+			// console.log('+++++++++++++++++++++++++')
+			// console.log('areaA ', areaA[0], areaA[1])
+			// console.log('areaB ', areaB[0], areaB[1])
+			let conditionX0in = (areaB[0][0] < areaA[0][0] && areaA[0][0] < areaB[0][1])
+			let conditionX1in = (areaB[0][0] < areaA[0][1] && areaA[0][1] < areaB[0][1])
+			let conditionY0in = (areaB[1][0] < areaA[1][0] && areaA[1][0] < areaB[1][1])
+			let conditionY1in = (areaB[1][0] < areaA[1][1] && areaA[1][1] < areaB[1][1])
+			let isin = (
+				(conditionX0in && conditionY0in) ||
+				(conditionX1in && conditionY0in) ||
+				(conditionX0in && conditionY1in) ||
+				(conditionX1in && conditionY1in)
+			)
+			if (isin) {
+				console.log('hg:' + conditionX0in, 'hd:' + conditionX1in, 'bg:' + conditionY0in, 'bd:' + conditionY1in)
+			}
+			return isin
+		}
+		return function (mobA, mobB) {
+			let isin = compareAreas(getAreaA(mobA, "rangea"), getAreaA(mobB, "rangea"))
+			return isin
+		};
+	})(
+		// ???
+	);
 }
