@@ -15,6 +15,7 @@ class Ordinator {
 			this.start()
 			this.check_errors()
 			this.DM.appendChild_Board()
+			this.DM.appendChild_Board2()
 		});
 	}
 	check_errors() {
@@ -95,20 +96,21 @@ class Ordinator {
 			console.log('bug coord deg & ratio', ratioDir, obj.direction.deg)
 		}
 		this.num++///??
+
 	}
 	//--
-	// getNextPos = (obj) => {
-	// 	// honestly !!! dont remember what that for ? orbital ?
-	// 	let x = obj.posxyz.x
-	// 	let y = obj.posxyz.y
-	// 	let nxX = (x * Math.cos(obj.direction.deg)) - (y * Math.sin(obj.direction.deg))
-	// 	let nxY = (x * Math.sin(obj.direction.deg)) + (y * Math.cos(obj.direction.deg))
-	// 	obj.posxyz.x = nxX
-	// 	obj.posxyz.y = nxY
-	// 	// obj.posxyz.z = (x * Math.sin(obj.direction.degZ)) + (z * Math.cos(obj.direction.degZ))
-	// 	// console.log(obj.posxyz.x, obj.posxyz.y)
-	// 	// console.log(x, nxX, y, nxY)
-	// }
+	getNextPos = (obj) => {
+		// honestly !!! dont remember what that for ? orbital ?
+		let x = obj.posxyz.x
+		let y = obj.posxyz.y
+		let nxX = (x * Math.cos(obj.direction.deg)) - (y * Math.sin(obj.direction.deg))
+		let nxY = (x * Math.sin(obj.direction.deg)) + (y * Math.cos(obj.direction.deg))
+		obj.posxyz.x = nxX
+		obj.posxyz.y = nxY
+		// obj.posxyz.z = (x * Math.sin(obj.direction.degZ)) + (z * Math.cos(obj.direction.degZ))
+		// console.log(obj.posxyz.x, obj.posxyz.y)
+		// console.log(x, nxX, y, nxY)
+	}
 	//--
 	// PlayerMooves = (obj) => {}
 	//--
@@ -241,8 +243,15 @@ class Ordinator {
 			obj.velxyz.cz -= obj.velxyz.cz <= -2 ? 0 : obj.velxyz.z
 		}
 		if (obj.objtype === 'player') {
-			document.getElementById('propulsion-' + obj.immat).className = "propulsion prop" + obj.velxyz.cx
-			document.getElementById('speedvisual').className = "prop" + obj.velxyz.cx
+			//anime des moteurs à propulsion quantique
+			let prop = document.getElementById('propulsion-' + obj.immat)
+			if (prop) { prop.className = "propulsion prop" + obj.velxyz.cx }
+			// anime speed meter
+			let speedboard2 = document.getElementById('speedboard2')
+			if (speedboard2) { speedboard2.className = "prop" + obj.velxyz.cx }
+			// anime speed meter visual test
+			let speedboard = document.getElementById('speedvisual')
+			if (speedboard) { speedboard.className = "prop" + obj.velxyz.cx }
 		}
 	}
 	set_NiceDegrees_KeyPressed = (obj, type) => {

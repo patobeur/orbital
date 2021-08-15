@@ -120,7 +120,10 @@ class DivManager {
 			attrib.tag = attrib.tag ?? 'div';
 			attrib.id ? tag = document.createElement(attrib.tag) : '';
 			attrib.id ? tag.id = attrib.id : '';
-			attrib.className ? tag.style.className = attrib.className : '';
+			attrib.borderRadius ? tag.style.borderRadius = attrib.borderRadius : '';
+			attrib.zIndex ? tag.style.zIndex = attrib.zIndex : '';
+			attrib.className ? tag.className = attrib.className : '';
+
 			attrib.position ? tag.style.position = attrib.position : '';
 			attrib.width ? tag.style.width = attrib.width : '';
 			attrib.height ? tag.style.height = attrib.height : '';
@@ -130,7 +133,6 @@ class DivManager {
 			attrib.right ? tag.style.right = attrib.right : '';
 			attrib.bottom ? tag.style.bottom = attrib.bottom : '';
 
-			attrib.borderRadius ? tag.style.borderRadius = attrib.borderRadius : '';
 
 			attrib.overflow ? tag.style.overflow = attrib.overflow : '';
 
@@ -150,23 +152,20 @@ class DivManager {
 	}
 
 	appendChild_Board() {
-		let board = this.createEle({
-			tag: 'div',
-			id: 'board',
-
-		})
-		let speedmeter = this.createEle({
-			tag: 'div',
-			id: 'speedmeter',
-		})
-		let speedvisual = this.createEle({
-			tag: 'div',
-			id: 'speedvisual',
-		})
-		board.appendChild(speedvisual)
-		board.appendChild(speedmeter)
-		cosmos.prepend(board)
-
+		let speedboard = this.createEle({ tag: 'div', id: 'speedboard' })
+		let speedzero = this.createEle({ tag: 'div', id: 'speedzero' })
+		let speedvisual = this.createEle({ tag: 'div', id: 'speedvisual' })
+		speedboard.appendChild(speedvisual)
+		speedboard.appendChild(speedzero)
+		cosmos.appendChild(speedboard)
+	}
+	appendChild_Board2() {
+		let speedboard = this.createEle({ tag: 'div', id: 'speedboard2' })
+		for (let index = -2; index < 6; index++) {
+			let stepdiv = this.createEle({ tag: 'div', id: 'prop' + index, className: 'prop prop' + index })
+			speedboard.prepend(stepdiv)
+		}
+		cosmos.appendChild(speedboard)
 	}
 	get_randomPos = (marge = false) => {
 		let mx = marge ? marge[0] : 0
@@ -303,7 +302,7 @@ class DivManager {
 		let eleminfo = document.createElement('div')
 		eleminfo.id = 'info' + obj.div + '-' + obj.immat;
 		eleminfo.className = 'info'
-		eleminfo.style.left = '0'
+		eleminfo.style.left = '200%'
 		eleminfo.style.top = '-100%'
 		// elemdatas.style.width = obj.sizwhl.w + this.IniDatas.px
 		// elemdatas.style.height = obj.sizwhl.h + this.IniDatas.px

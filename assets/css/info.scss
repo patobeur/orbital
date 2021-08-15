@@ -170,13 +170,13 @@
 		left: -100px;
 	}
 }
-#board {
+#speedboard {
 	position: absolute;
-	width: 25px;
+	width: 12px;
 	height: 50px;
 	background-color: white;
-	border-radius: 1rem;
-	right: 12px;
+	border-radius: 0.5rem;
+	right: 39px;
 	bottom: 12px;
 	background-color: #ffffff33;
 	display: flex;
@@ -185,42 +185,85 @@
 	flex-direction: row;
 	color: white;
 	overflow: hidden;
-	#speedmeter {
+	#speedzero {
 		position: absolute;
 		width: 100%;
 		height: 2%;
 		top: 59%;
-		background-color: white;
+		background-color: rgba(255, 255, 255, 0.295);
 	}
 	#speedvisual {
 		position: absolute;
-		width: 8px;
-		height: 8px;
-		top: calc(59% - 4px);
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		top: calc(59% - 2px);
 		background-color: red;
 		&.prop-2 {
-			top: calc(100% - 4px);
+			top: calc(100% - 2px);
 		}
 		&.prop-1 {
-			top: calc(80% - 4px);
+			top: calc(80% - 2px);
 		}
 		&.prop0 {
-			top: calc(59% - 4px);
+			top: calc(59% - 2px);
 		}
 		&.prop1 {
-			top: calc(49% - 4px);
+			top: calc(49% - 2px);
 		}
 		&.prop2 {
-			top: calc(39% - 4px);
+			top: calc(39% - 2px);
 		}
 		&.prop3 {
-			top: calc(29% - 4px);
+			top: calc(29% - 2px);
 		}
 		&.prop4 {
-			top: calc(19% - 4px);
+			top: calc(19% - 2px);
 		}
 		&.prop5 {
-			top: calc(9% - 4px);
+			top: calc(9% - 2px);
 		}
+	}
+}
+#speedboard2 {
+	position: absolute;
+	width: 12px;
+	height: 50px;
+	border-radius: 0.5rem;
+	right: 12px;
+	bottom: 12px;
+	// background-color: #ffffff2d;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: column;
+	color: white;
+	overflow: hidden;
+	.prop {
+		width: 100%;
+		height: calc((100%) / 8);
+		background-color: #c8ff0050;
+		margin-bottom: 1px;
+		&.prop-1,
+		&.prop-2 {
+			background-color: #e606066b;
+		}
+		&.prop0 {
+			background-color: #ff88008a;
+		}
+	}
+	&.prop-2 .prop-2,
+	&.prop-1 .prop-1 {
+		background-color: #c70101;
+	}
+	&.prop0 .prop0 {
+		background-color: #ff7b00;
+	}
+	&.prop1 .prop1,
+	&.prop2 .prop2,
+	&.prop3 .prop3,
+	&.prop4 .prop4,
+	&.prop5 .prop5 {
+		background-color: #1eff00;
 	}
 }
