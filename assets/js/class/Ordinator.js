@@ -3,6 +3,7 @@ class Ordinator {
 	constructor() {
 		this.DM = new DivManager()
 		this.num = 0
+		this.currentSoundName = 'none'
 		this.DM.appendChild_Cosmos()
 		this.MF = new MobFactory(this.DM)
 		// this.theta = this.get_theta()
@@ -58,15 +59,15 @@ class Ordinator {
 		});
 
 	}
-	get_xyzFromDegree = (obj) => { // get hypotenus with pythaGore
+	get_xyzFromXYDeg = (obj) => { // get hypotenus with pythaGore
 		let x = obj.posxyz.x
 		let y = obj.posxyz.y
 		let z = obj.posxyz.z
 		let degx = obj.direction.deg
 		let degz = obj.direction.degZ
 		let distance = obj.velxyz.x
-		let nextX = x + parseInt(((distance * Math.tan(degx))) * 10) / 10
-		let nextY = y + parseInt(((distance * Math.cos(degx))) * 10) / 10
+		let nextX = x + parseInt(((1 * Math.cos(degx))) * 10) / 10
+		let nextY = y + parseInt(((1 * Math.cos(degx))) * 10) / 10
 		// let nextZ = 
 		obj.posxyz.x = nextX
 		obj.posxyz.y = nextY
@@ -186,12 +187,12 @@ class Ordinator {
 			for (let index = 0; index < this.MF.mobs.length; index++) {
 				let obj = this.MF.mobs[index];
 				if (obj.ia && !obj.parentimmat) {
-					this.set_NiceDirection(obj)
+					this.set_NewNiceDirection(obj)
 					this.set_NicePosition_WithDegX(obj)
 					this.check_PosOut(obj)
 				}
 				// else if (obj.objtype === 'player') {//ia && obj.direction) {
-				// 	this.set_NiceDirection(obj)
+				// 	this.set_NewNiceDirection(obj)
 				// 	this.set_NicePosition_WithDegX(obj)
 				// 	this.check_PosOut(obj)
 				// }
@@ -199,14 +200,14 @@ class Ordinator {
 					this.check_keyboardArrows(obj)
 
 
-					// this.get_xyzFromDegree(obj)
+					// this.get_xyzFromXYDeg(obj)
 					// or
 					this.set_NicePosition_WithDegX(obj)
 
 					this.check_PosOut(obj)
 				}
 				// else if (obj.parentimmat && obj.direction) {
-				// 	this.set_NiceDirection(obj)
+				// 	this.set_NewNiceDirection(obj)
 				// 	this.set_NicePosition_WithDegX(obj)
 				// 	this.get_NextOrbitPos(obj)
 				// }
@@ -244,6 +245,24 @@ class Ordinator {
 		obj.direction.way = [0, 0, 0, 0, 0, 0] // reset to zero
 
 	}
+	set_NiceDegrees_KeyPressed = (obj, type) => {
+		if (type === 0) { //top
+			// z rotation mean 3d ??
+			obj.direction.degZ = (obj.direction.deg - obj.direction.agility) <= 0 ? 360 - obj.direction.degZ - obj.direction.agility : obj.direction.degZ - obj.direction.agility
+		}
+		else if (type === 1) { //right
+			obj.direction.deg = (obj.direction.deg + obj.direction.agility) > 360 ? obj.direction.deg + obj.direction.agility - 360 : obj.direction.deg + obj.direction.agility
+		}
+		else if (type === 2) {//bottom
+			// z rotation mean 3d ??
+			obj.direction.degZ = (obj.direction.degZ + obj.direction.agility) > 360 ? obj.direction.degZ + obj.direction.agility - 360 : obj.direction.degZ + obj.direction.agility
+		}
+		else if (type === 3) { //left
+			obj.direction.deg = (obj.direction.deg - obj.direction.agility) <= 0 ? 360 - obj.direction.deg - obj.direction.agility : obj.direction.deg - obj.direction.agility
+		}
+		// if errors
+		if (obj.direction.deg < 0 || obj.direction.deg > 360) { errors.push(['set_NiceDegrees_KeyPressed', obj.direction.deg + ' out of range']) }
+	}
 	set_NiceSpeed = (obj, type) => {
 		if (type === 4) {//accelerate
 			obj.velxyz.cx += obj.velxyz.cx >= 5 ? 0 : obj.velxyz.x
@@ -267,25 +286,7 @@ class Ordinator {
 			if (speedboard) { speedboard.className = "prop" + obj.velxyz.cx }
 		}
 	}
-	set_NiceDegrees_KeyPressed = (obj, type) => {
-		if (type === 0) { //top
-			// z rotation mean 3d ??
-			obj.direction.degZ = (obj.direction.deg - obj.direction.agility) <= 0 ? 360 - obj.direction.degZ - obj.direction.agility : obj.direction.degZ - obj.direction.agility
-		}
-		else if (type === 1) { //right
-			obj.direction.deg = (obj.direction.deg + obj.direction.agility) > 360 ? obj.direction.deg + obj.direction.agility - 360 : obj.direction.deg + obj.direction.agility
-		}
-		else if (type === 2) {//bottom
-			// z rotation mean 3d ??
-			obj.direction.degZ = (obj.direction.degZ + obj.direction.agility) > 360 ? obj.direction.degZ + obj.direction.agility - 360 : obj.direction.degZ + obj.direction.agility
-		}
-		else if (type === 3) { //left
-			obj.direction.deg = (obj.direction.deg - obj.direction.agility) <= 0 ? 360 - obj.direction.deg - obj.direction.agility : obj.direction.deg - obj.direction.agility
-		}
-		// if errors
-		if (obj.direction.deg < 0 || obj.direction.deg > 360) { errors.push(['set_NiceDegrees_KeyPressed', obj.direction.deg + ' out of range']) }
-	}
-	set_NiceDirection = (obj) => {
+	set_NewNiceDirection = (obj) => {
 		if (obj.direction.currentdelay < 1) {
 
 			let marge = (360 / 8)
@@ -300,7 +301,7 @@ class Ordinator {
 				obj.direction.currentdelay = 0
 			}
 			if (obj.direction.deg < 0 || obj.direction.deg > 360) {
-				errors.push('newdir set_NiceDirection : ' + obj.direction.deg + '-' + obj.objtype + '-' + ' immat:' + obj.immat)
+				errors.push('newdir set_NewNiceDirection : ' + obj.direction.deg + '-' + obj.objtype + '-' + ' immat:' + obj.immat)
 			}
 		}
 	}
@@ -373,4 +374,41 @@ class Ordinator {
 			}
 			node.addEventListener('animationend', handleAnimationEnd, { once: true });
 		});
+
+	playSpeedSounds = (obj) => {
+		let speed = obj.velxyz.x
+		if (speed) {
+			let speedsounds = {
+				// thx to soundjay https://www.soundjay.com/beep-sounds-3.html
+				'sound-2': ['beep-07a.mp3', false],
+				'sound-1': ['beep-07a.mp3', false],
+				'sound0': false,
+				'sound1': false,
+				'sound2': false,
+				'sound3': false,
+				'sound4': false,
+				'sound5': false
+			}
+			if (speedsounds[speed] && speedsounds[speed][0]) {
+				let soundName = 'sound' + speedsounds[speed][0]
+				// if this is different from current sound
+				if (soundName != this.currentSoundName) {
+					var audio = new Audio(speedsounds[soundName]);
+					audio.loop = speedsounds[speed][1] ?? false
+
+					audio.oncanplaythrough = function () {
+						audio.play();
+					}
+					audio.onended = function () {
+						audio.play();
+					}
+					this.currentSoundName = soundName
+
+				}
+
+			}
+
+		}
+
+	}
 }

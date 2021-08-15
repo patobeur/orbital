@@ -9,6 +9,54 @@
 	user-select: none; /* Standard */
 	box-sizing: border-box;
 }
+#cosmos {
+	// background-image: url("/assets/img/grille_20px.png");
+	// background-position: left top;
+	// background-repeat: repeat;
+	background-color: rgba(55, 53, 78, 0.342);
+	background-image: url("/assets/img/grille_20px.png"),
+		// url("https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/pf-41-lukestackpoole-greenland-cabin-01a.jpg?w=1300&dpr=1&fit=default&crop=default&q=80&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=edea7bd428d005c4abc459db20b2e021");
+		// url("https://images.unsplash.com/photo-1502134249126-9f3755a50d78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
+		url("https://www.teahub.io/photos/full/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
+	// url("https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8&w=1000&q=80");
+	// url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/95629f34144463.56c58b1959576.jpg");
+
+	background-position: left top, center center;
+	background-repeat: repeat, no-repeat;
+	background-size: auto, cover;
+	// cosmos.style.backgroundColor = "rgba(55, 53, 78, 0.342)";
+	// cosmos.style.backgroundImage = "url(/assets/img/grille_20px.png)";
+	// cosmos.style.backgroundPosition = "left top";
+	// cosmos.style.backgroundRepeat = "repeat";
+	.mobs {
+		pointer-events: none;
+	}
+	.sob,
+	.mob {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 100%;
+		z-index: 2;
+		.info {
+			position: absolute;
+			left: 200%;
+			top: -100%;
+			background-color: rgba(255, 255, 255, 0.5);
+			display: none;
+			opacity: 0;
+		}
+	}
+	.sob:hover .info,
+	.mob:hover .info {
+		display: block;
+		// opacity: 1;
+		// transition: opacity 1s ease;
+		// transition: opacity 1s ease;
+		animation: displayinfo 0.5s forwards 0.2s;
+	}
+}
 .ddd {
 	perspective: 1000vh;
 	#cosmos {
@@ -18,6 +66,15 @@
 		-webkit-transform: rotateX(45deg);
 		transform: rotateX(45deg);
 		outline: 5px solid rgba(172, 255, 47, 0.116);
-		transition: 10s transform ease-in-out;
+		transition: 10s transform ease;
+	}
+}
+
+@keyframes displayinfo {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }

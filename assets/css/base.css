@@ -15,6 +15,51 @@
           box-sizing: border-box;
 }
 
+#cosmos {
+  background-color: rgba(55, 53, 78, 0.342);
+  background-image: url("/assets/img/grille_20px.png"), url("https://www.teahub.io/photos/full/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
+  background-position: left top, center center;
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+}
+
+#cosmos .mobs {
+  pointer-events: none;
+}
+
+#cosmos .sob,
+#cosmos .mob {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  line-height: 100%;
+  z-index: 2;
+}
+
+#cosmos .sob .info,
+#cosmos .mob .info {
+  position: absolute;
+  left: 200%;
+  top: -100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  display: none;
+  opacity: 0;
+}
+
+#cosmos .sob:hover .info,
+#cosmos .mob:hover .info {
+  display: block;
+  -webkit-animation: displayinfo 0.5s forwards 0.2s;
+          animation: displayinfo 0.5s forwards 0.2s;
+}
+
 .ddd {
   -webkit-perspective: 1000vh;
           perspective: 1000vh;
@@ -26,9 +71,27 @@
   -webkit-transform: rotateX(45deg);
   transform: rotateX(45deg);
   outline: 5px solid rgba(172, 255, 47, 0.116);
-  -webkit-transition: 10s -webkit-transform ease-in-out;
-  transition: 10s -webkit-transform ease-in-out;
-  transition: 10s transform ease-in-out;
-  transition: 10s transform ease-in-out, 10s -webkit-transform ease-in-out;
+  -webkit-transition: 10s -webkit-transform ease;
+  transition: 10s -webkit-transform ease;
+  transition: 10s transform ease;
+  transition: 10s transform ease, 10s -webkit-transform ease;
+}
+
+@-webkit-keyframes displayinfo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes displayinfo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 /*# sourceMappingURL=base.css.map */

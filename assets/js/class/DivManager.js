@@ -14,10 +14,12 @@ class DivManager {
 	}
 	cssMaker = () => {
 		let stringcss = 'body{overflow:hidden;}'
-		stringcss += '.sob,.mob {position: absolute;display: flex;align-items: center;justify-content: center;line-height: 100%;}'
+
+		stringcss += ''
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
-		stringcss += '.info {background-color:rgba(255, 255, 255, 0.1);}'
+		stringcss += ''
+		stringcss += ''
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
 		stringcss += '.rangea {border-radius:50%;}'
 		stringcss += '.player .content {transform:rotate(-45deg)}'
@@ -76,10 +78,6 @@ class DivManager {
 
 		cosmos.style.position = "relative";
 		// // transform: rotateZ(50%);		
-		cosmos.style.backgroundColor = "rgba(55, 53, 78, 0.342)";
-		cosmos.style.backgroundImage = "url(/assets/img/grille_20px.png)";
-		cosmos.style.backgroundPosition = "left top";
-		cosmos.style.backgroundRepeat = "repeat";
 		// cosmos.style.overflow="hidden";
 
 		let mobs = this.createEle({
@@ -302,11 +300,9 @@ class DivManager {
 		let eleminfo = document.createElement('div')
 		eleminfo.id = 'info' + obj.div + '-' + obj.immat;
 		eleminfo.className = 'info'
-		eleminfo.style.left = '200%'
-		eleminfo.style.top = '-100%'
 		// elemdatas.style.width = obj.sizwhl.w + this.IniDatas.px
 		// elemdatas.style.height = obj.sizwhl.h + this.IniDatas.px
-		eleminfo.style.position = 'absolute';
+		// eleminfo.style.position = 'absolute';
 		// elemdatas.style.backgroundColor = '';
 
 
