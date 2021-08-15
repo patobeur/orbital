@@ -170,21 +170,6 @@
 		text-align: center;
 	}
 }
-#help-0 {
-	position: absolute;
-	top: -100px;
-	left: -100px;
-	background-color: rgba(240, 248, 255, 0.877);
-	border-radius: 1rem;
-	padding: 1rem;
-	line-height: 1.5rem;
-	font-size: 1.5rem;
-	opacity: 1;
-	transition: left 0.5s ease, top 0.5s ease;
-	&.animate__fadeOut {
-		animation: 1s 1s 3 animate__fadeOut2;
-	}
-}
 .propulsion {
 	background-color: none;
 	.prop {

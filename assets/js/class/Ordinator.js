@@ -403,12 +403,8 @@ class Ordinator {
 						audio.play();
 					}
 					this.currentSoundName = soundName
-
 				}
-
 			}
-
 		}
-
 	}
 }
