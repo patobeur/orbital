@@ -10,13 +10,14 @@ class Ordinator {
 		// if(){
 		// setInterval(this.renderScene, this.DM.IniDatas.renderinterval)
 		// }
-		this.animateCSS('#splash', 'fadeOut', true).then((message) => {
-			// Do something after the animation
-			this.start()
-			this.check_errors()
-			this.DM.appendChild_Board()
-			this.DM.appendChild_Board2()
-		});
+		this.addStartButtonListener()
+		// this.animateCSS('#splash', 'fadeOut', true).then((message) => {
+		// 	// Do something after the animation
+		// 	this.start()
+		// 	this.check_errors()
+		// 	this.DM.appendChild_Board()
+		// 	this.DM.appendChild_Board2()
+		// });
 	}
 	check_errors() {
 		// errors.push(['check_errors', 'test'])
@@ -30,7 +31,19 @@ class Ordinator {
 			this.pauseOn = false
 		}
 	}
+	addStartButtonListener() {
+		let startgame = document.getElementById('startgame')
+		if (startgame) {
+			startgame.addEventListener('click', () => {
+				this.start()
+				this.check_errors()
+				this.DM.appendChild_Board()
+				this.DM.appendChild_Board2()
+				startgame.parentNode.remove();
+			})
+		}
 
+	}
 	start() {
 		this.MF.create_EveryBasics()
 		this.gameOn = true

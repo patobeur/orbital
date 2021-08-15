@@ -37,13 +37,11 @@
 	}
 }
 
-// <div id="splash" class='my-element'>splash</div>
-#splash {
+#starter {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 80%;
-	height: 80%;
+	width: max-content;
 	transform: translate(-50%, -50%);
 	display: flex;
 	flex-direction: row;
@@ -51,12 +49,71 @@
 	background-color: rgba(240, 248, 255, 0.363);
 	border-radius: 1rem;
 	padding: 1rem;
-	font-size: 2rem;
+	font-size: 0.9rem;
+	line-height: 0.9rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	transition: all 2s ease;
 	opacity: 1;
-	&.animate__fadeOut {
-		// animation: 2s 10s animate__fadeOut;
-		animation: 0.2s 2s animate__fadeOut;
+	.block {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid rgba(0, 0, 0, 0.781);
+		border-radius: 0.5rem;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+		margin: 0 0 0.2rem 0;
+		.ico {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: max-content;
+			height: 100%;
+			border-radius: 0.5rem;
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			background-color: rgba(43, 255, 0, 0.63);
+			padding: 0.3rem 0.3rem;
+		}
+		.explanation {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0.3rem 0.3rem;
+			background-color: rgba(0, 0, 0, 0.801);
+			color: white;
+		}
+	}
+	.texte {
+		// border: 1px solid rgba(0, 0, 0, 0.781);
+		padding: 0;
+		margin: 0;
+		margin-bottom: 0.2rem;
+	}
+	.start {
+		// border: 1px solid rgba(0, 0, 0, 0.781);
+		padding: 0.5rem;
+		margin: 0;
+		font-size: 2rem;
+		line-height: 2rem;
+		border-radius: 0.5rem;
+	}
+	h2 {
+		color: white;
+		background-color: black;
+		padding: 0.5rem;
+		margin: 0 0 1rem 0;
+		font-size: 2rem;
+		line-height: 2rem;
+		border-radius: 0.5rem;
+		width: 100%;
+		text-align: center;
 	}
 }
 
