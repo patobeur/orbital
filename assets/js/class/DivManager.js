@@ -13,11 +13,11 @@ class DivManager {
 		this.cssMaker()
 	}
 	cssMaker = () => {
-		let stringcss = 'body{overflow:hidden;}'
+		let stringcss = ''
 
 		stringcss += ''
 		// stringcss += '.sob{z-index: -1;}'
-		stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
+		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
 		stringcss += ''
 		stringcss += ''
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'

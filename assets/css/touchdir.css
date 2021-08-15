@@ -1,0 +1,49 @@
+#touchdir {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  bottom: 25vh;
+  right: 20vw;
+  z-index: 6;
+}
+
+#touchdir .up,
+#touchdir .down,
+#touchdir .left,
+#touchdir .right {
+  position: absolute;
+  width: 8vw;
+  height: 8vw;
+  background-color: rgba(0, 0, 0, 0.404);
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: rgba(255, 255, 255, 0.246);
+  text-transform: capitalize;
+}
+
+#touchdir .up {
+  top: -8vw;
+}
+
+#touchdir .right {
+  left: 8vw;
+}
+
+#touchdir .down {
+  top: 8vw;
+}
+
+#touchdir .left {
+  left: -8vw;
+}
+/*# sourceMappingURL=touchdir.css.map */

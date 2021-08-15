@@ -3,8 +3,12 @@ let Ord = Object
 let errors = []
 function isLoaded() {
 	Ord = new Ordinator()
+	document.getElementById('touch-up').addEventListener('click', () => { Ord.PlayGo(0, 4) })
+	document.getElementById('touch-right').addEventListener('click', () => { Ord.PlayGo(0, 1) })
+	document.getElementById('touch-down').addEventListener('click', () => { Ord.PlayGo(0, 5) })
+	document.getElementById('touch-left').addEventListener('click', () => { Ord.PlayGo(0, 3) })
 	document.onkeydown = (eventkeydown) => {
-		console.log(eventkeydown.key)
+		// console.log(eventkeydown.key)
 		if (eventkeydown.key === "p") { Ord.setPause() }
 		//--
 		// if (eventkeydown.key === "ArrowUp") { Ord.PlayGo(0, 0) } // Ord.PlayGo(mob.immat, 0=top||1=right||2=bottom||3=left)

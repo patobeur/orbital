@@ -9,6 +9,10 @@
 	user-select: none; /* Standard */
 	box-sizing: border-box;
 }
+body {
+	overflow: hidden;
+	font-family: monospace;
+}
 #orbitalbrand {
 	position: absolute;
 	top: 1rem;
@@ -60,7 +64,7 @@
 			opacity: 0;
 		}
 		.rangea {
-			border-radius: 5%;
+			border-radius: 50%;
 		}
 	}
 	.sob:hover .info,

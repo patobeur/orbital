@@ -15,6 +15,11 @@
           box-sizing: border-box;
 }
 
+body {
+  overflow: hidden;
+  font-family: monospace;
+}
+
 #orbitalbrand {
   position: absolute;
   top: 1rem;
@@ -68,7 +73,7 @@
 
 #cosmos .sob .rangea,
 #cosmos .mob .rangea {
-  border-radius: 5%;
+  border-radius: 50%;
 }
 
 #cosmos .sob:hover .info,

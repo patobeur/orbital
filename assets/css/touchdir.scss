@@ -1,0 +1,37 @@
+#touchdir {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	bottom: 25vh;
+	right: 20vw;
+	z-index: 6;
+	.up,
+	.down,
+	.left,
+	.right {
+		position: absolute;
+		width: 8vw;
+		height: 8vw;
+		background-color: rgba(0, 0, 0, 0.404);
+		border-radius: 50%;
+		left: 0;
+		top: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: rgba(255, 255, 255, 0.246);
+		text-transform: capitalize;
+	}
+	.up {
+		top: -8vw;
+	}
+	.right {
+		left: 8vw;
+	}
+	.down {
+		top: 8vw;
+	}
+	.left {
+		left: -8vw;
+	}
+}
