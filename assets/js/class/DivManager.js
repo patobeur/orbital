@@ -35,7 +35,7 @@ class DivManager {
 		document.getElementsByTagName('head')[0].appendChild(style);
 	}
 	get_IniDatas = () => {
-		let screenborder = { w: 32, h: 32, l: 32 }
+		let screenborder = { w: 0, h: 0, l: 0 }
 		let renderinterval = 30 // render speed 1ms * 30
 
 		this.lunarDiv.style.position = "relative";
@@ -141,7 +141,6 @@ class DivManager {
 			attrib.flexDirection ? tag.style.flexDirection = attrib.flexDirection : '';
 			attrib.justifyContent ? tag.style.justifyContent = attrib.justifyContent : '';
 			attrib.alignItems ? tag.style.alignItems = attrib.alignItems : '';
-
 
 			attrib.textContent ? tag.textContent = attrib.textContent : '';
 
