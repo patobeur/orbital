@@ -39,6 +39,21 @@
 	&.animate__fadeOut2 {
 		animation: 1s 3 animate__fadeOut2;
 	}
+	&.animate__stock {
+		animation: 1s 3 animate__stock;
+		bottom: -150%;
+	}
+	&.animate__right {
+		animation: 1s 3 animate__right;
+		left: 200%;
+		.square {
+			left: -10px;
+			transform: rotate(-135deg);
+
+			border-top: 2px solid rgba(172, 255, 47, 0.596);
+			border-right: 2px solid rgba(172, 255, 47, 0.596);
+		}
+	}
 }
 @keyframes animate__fadeOut {
 	0% {
@@ -54,6 +69,20 @@
 		left: -120px;
 	}
 }
+@keyframes animate__stock {
+	0% {
+		// top: -100px;
+		left: -150px;
+	}
+	50% {
+		// top: -150px;
+		left: -180px;
+	}
+	100% {
+		// top: -100px;
+		left: -150px;
+	}
+}
 @keyframes animate__fadeOut2 {
 	0% {
 		left: -120px;
@@ -63,5 +92,21 @@
 	}
 	100% {
 		left: -120px;
+	}
+}
+@keyframes animate__right {
+	0% {
+		// right: 150%;
+	}
+	100% {
+		// left: 150%;
+	}
+}
+@keyframes animate__left {
+	0% {
+		// right: 150%;
+	}
+	100% {
+		// left: 150%;
 	}
 }

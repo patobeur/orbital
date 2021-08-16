@@ -22,10 +22,76 @@ class MobFactory {
 				satellite: "rgba(255, 0, 252, 0.05)",
 				fsaucer: "rgba(255,255, 0, 0.05)",
 				neutral: "rgba(255,255, 0, 0.05)",
-				fruits: "rgba(0,255, 0, 0.05)"
+				fruits: "rgba(0,255, 0, 0.05)",
+				player: "rgba(0,00, 255, 0.05)"
 			}
 		}
 		return colors[zone][typename]
+	}
+	set_ObjDatasByZoneAndItemName = (obj, itemname) => {
+		let categories = {
+			sob: {
+				etoile: {
+					rangeacolor: "rgba(255, 255, 255, 0.05);",
+					stock: {
+						unknow: [this.aleaEntreBornes(0, 1000000), 10, 1, 1000000000],
+					}
+				},
+				planete: {
+					rangeacolor: "rgba(255, 255, 255, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					}
+				},
+				satellite: {
+					rangeacolor: "rgba(255, 0, 252, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					}
+				},
+				meteorite: {
+					rangeacolor: "rgba(255, 0, 252, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					}
+				}
+			},
+			mob: {
+				fsaucer: {
+					rangeacolor: "rgba(255,255, 0, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					}
+				},
+				neutral: {
+					rangeacolor: "rgba(255,255, 0, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					}
+				},
+				fruits: {
+					rangeacolor: "rgba(0,255, 0, 0.05)",
+					stock: {
+						food: [this.aleaEntreBornes(0, 10)]
+					}
+				},
+				meteorite: {
+					rangeacolor: "rgba(255, 0, 252, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					}
+				}
+			},
+		}
+		console.log(obj.div, obj.objtype, itemname)
+		console.log(categories)
+		return categories[obj.div][obj.objtype][itemname]
 	}
 	add_obj = (objdatas) => {
 		// obj completition
@@ -44,8 +110,15 @@ class MobFactory {
 			parentimmat: objdatas.parentimmat ?? false,
 			// movement 
 			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 1 },
-			stock: { fuel: 100, air: 1000, water: 1000, food: 1000 },
-			status: { dead: false, immune: false, immune1rd: false, shield: false, mooving: false, gravity: false },
+			stock: objdatas.stock ?? this.set_ObjDatasByZoneAndItemName(objdatas, 'stock'),
+			status: {
+				dead: false,
+				immune: ((objdatas.status && objdatas.status.immune) ? objdatas.status.immune : false),
+				immune1rd: false,
+				shield: false,
+				mooving: false,
+				gravity: false
+			},
 			tetha: objdatas.tetha ?? false,
 			gravity: objdatas.gravity ?? false,
 			orbitdir: objdatas.orbitdir ?? false,
@@ -118,6 +191,8 @@ class MobFactory {
 			//parentimmat: [0],
 			tetha: [0, 360, 0.03],
 			direction: { ratio: 0, degZ: 360, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+			stock: { water: [10000, .1, 100], fuel: [10000, .1, 100] },
+			status: { immune: false }
 		})
 		this.add_obj({
 			div: 'sob', // mob is mobile or sob is static
@@ -149,7 +224,7 @@ class MobFactory {
 			objtype: 'fsaucer',
 			objname: 'ennemy',
 			classname: 'mob',
-			textcontent: this.givemeaniceico(),
+			textcontent: '🛸',
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 15, h: 15, l: 15 },
 			parentimmat: false,
@@ -161,7 +236,7 @@ class MobFactory {
 			objtype: 'fsaucer',
 			objname: 'ennemy',
 			classname: 'mob',
-			textcontent: this.givemeaniceico(),
+			textcontent: '🛸',
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 15, h: 15, l: 15 },
 			parentimmat: false,
@@ -171,9 +246,10 @@ class MobFactory {
 			div: 'mob', // mob is mobile or sob is static
 			ia: true,
 			objtype: 'fruits',
-			objname: 'ennemy',
+			objname: 'kiwi',
 			classname: 'mob',
-			textcontent: this.givemeaniceico(),
+			textcontent: '🥝',
+			stock: { food: [10, 0, 0] },
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 15, h: 15, l: 15 },
 			parentimmat: false,

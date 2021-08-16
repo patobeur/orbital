@@ -1,13 +1,13 @@
 "use strict";
 class Ordinator {
 	constructor() {
-		this.helpAnim = 1
+		this.tutorialNum = 1
 		this.DM = new DivManager()
 		this.num = 0
 		this.currentSoundName = 'none'
 		this.DM.appendChild_Cosmos()
 		this.MF = new MobFactory(this.DM)
-		this.keyReady = false
+		this.trainingFinish = false
 		this.gameOn = false
 		this.pauseOn = false
 		// this.theta = this.get_theta()
@@ -53,43 +53,72 @@ class Ordinator {
 		this.MF.create_EveryBasics()
 		this.gameOn = true
 		this.pauseOn = false
-		this.keyReady = false
+		this.trainingFinish = false
 		setInterval(
 			this.renderScene,
 			this.DM.IniDatas.renderinterval
 		)
-		this.set_helpAnim(1)
+		this.set_tutorial(1)
 
 	}
-	set_helpAnim = (num) => {
+	set_tutorial = (num) => {
 		switch (num) {
 			case 1:
-				this.animateHelpCSS(0, 'fadeOut', false, 'This is your ship !').then((message) => {
-					this.set_NiceSpeed(this.MF.mobs[0], 4)
-					this.helpAnim += 1
-					this.set_helpAnim(this.helpAnim)
+				this.animateHelpCSS(0, 'right', false, 'This is your ship !').then((message) => {
+
+					this.MF.mobs[0].status.immune = true
+					this.set_NiceSpeed(this.MF.mobs[0], 4) // speed up
+					this.set_NiceSpeed(this.MF.mobs[0], 4) // speed up
+					this.tutorialNum += 1
+					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 2:
 				this.animateHelpCSS(0, 'fadeOut2', false, 'throttle up !').then((message) => {
-					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)
-					this.helpAnim += 1
-					this.set_helpAnim(this.helpAnim)
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3) // rot right
+					this.tutorialNum += 1
+					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 3:
 				this.animateHelpCSS(0, 'fadeOut', false, 'Rotate left to avoid the sun !').then((message) => {
-					this.helpAnim += 1
-					this.set_helpAnim(this.helpAnim)
+					this.set_NiceSpeed(this.MF.mobs[0], 5) // slower speed
+					this.set_NiceSpeed(this.MF.mobs[0], 5) // slower speed
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
+					this.tutorialNum += 1
+					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 4:
-				this.animateHelpCSS(0, 'fadeOut2', true, 'Enjoy !').then((message) => {
-					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1)
+				this.animateHelpCSS(0, 'right', false, "Green range mean u'r immune !!").then((message) => {
+					this.tutorialNum += 1
+					this.set_NiceSpeed(this.MF.mobs[0], 5) // slower speed
+					this.set_NiceSpeed(this.MF.mobs[0], 5) // slower speed
+					this.set_tutorial(this.tutorialNum)
+				});
+				break;
+			case 5:
+				this.animateHelpCSS(0, 'stock', false, "This is all your Stocks !").then((message) => {
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 0)
+					this.tutorialNum += 1
+					this.set_NiceSpeed(this.MF.mobs[0], 4) // speed up
+					this.set_NiceSpeed(this.MF.mobs[0], 4) // speed up
+					this.set_tutorial(this.tutorialNum)
+				});
+				break;
+			case 6:
+				this.animateHelpCSS(0, 'fadeOut2', false, 'Great !! Let find a Mission Idea !!!').then((message) => {
+					this.set_NiceSpeed(this.MF.mobs[0], 4) // speed up
 					// this.set_NiceSpeed(this.MF.mobs[0], 5)
-					this.helpAnim += 1
-					this.keyReady = true
-					// this.set_helpAnim(3)
+					this.tutorialNum += 1
+					this.trainingFinish = true
+					console.log(this.MF.mobs[0])
+					this.set_tutorial(this.tutorialNum)
+				});
+				break;
+			case 7:
+				this.animateHelpCSS(0, 'right', true, 'OOps !! Removing Immunity ;) ').then((message) => {
+					this.MF.mobs[0].status.immune = false
 				});
 				break;
 			default:
@@ -407,13 +436,17 @@ class Ordinator {
 	}
 	// Pause game
 	setPause() {
-		if (this.pauseOn === true) {
-			this.pauseOn = false
-			document.getElementById('pause').classList.remove('active')
+		if (this.trainingFinish === true) {
+			if (this.pauseOn === true) {
+				this.pauseOn = false
+				document.getElementById('pause').classList.remove('active')
+			} else {
+				this.pauseOn = true
+				document.getElementById('pause').classList.add('active')
+				console.log('Game paused!!')
+			}
 		} else {
-			this.pauseOn = true
-			document.getElementById('pause').classList.add('active')
-			console.log('Game paused!!')
+			console.log('No pause permited during tutorial !')
 		}
 	}
 	// players
@@ -426,7 +459,7 @@ class Ordinator {
 	}
 	// keyboard
 	PlayGo = (idx, dir, help = false) => {
-		if ((!this.pauseOn && this.gameOn && this.keyReady)) {// || help
+		if ((!this.pauseOn && this.gameOn && this.trainingFinish)) {// || help
 			if (this.MF.mobs[idx].direction.way) {
 				this.MF.mobs[idx].direction.way[dir] = 1;
 			}

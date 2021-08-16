@@ -2,8 +2,8 @@
   position: absolute;
   width: 1px;
   height: 1px;
-  bottom: 25vh;
-  right: 20vw;
+  bottom: calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
+  right: calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
   z-index: 6;
 }
 
@@ -12,9 +12,8 @@
 #touchdir .left,
 #touchdir .right {
   position: absolute;
-  width: 8vw;
-  height: 8vw;
-  background-color: rgba(0, 0, 0, 0.404);
+  width: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+  height: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
   border-radius: 50%;
   left: 0;
   top: 0;
@@ -31,19 +30,42 @@
   text-transform: capitalize;
 }
 
+#touchdir .up:hover,
+#touchdir .down:hover,
+#touchdir .left:hover,
+#touchdir .right:hover {
+  background-color: rgba(156, 156, 156, 0.111);
+  color: rgba(255, 255, 255, 0.651);
+}
+
 #touchdir .up {
-  top: -8vw;
+  top: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
+  background-color: rgba(255, 0, 0, 0.111);
 }
 
 #touchdir .right {
-  left: 8vw;
+  left: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+  background-color: rgba(255, 255, 0, 0.111);
 }
 
 #touchdir .down {
-  top: 8vw;
+  top: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+  background-color: rgba(0, 255, 255, 0.111);
 }
 
 #touchdir .left {
-  left: -8vw;
+  left: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
+  background-color: rgba(255, 0, 255, 0.111);
+}
+
+#touchdir .up:hover, #touchdir .up:focus,
+#touchdir .down:hover,
+#touchdir .down:focus,
+#touchdir .left:hover,
+#touchdir .left:focus,
+#touchdir .right:hover,
+#touchdir .right:focus {
+  background-color: rgba(156, 156, 156, 0.377);
+  color: rgba(255, 255, 255, 0.651);
 }
 /*# sourceMappingURL=touchdir.css.map */

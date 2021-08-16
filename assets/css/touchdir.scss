@@ -2,17 +2,17 @@
 	position: absolute;
 	width: 1px;
 	height: 1px;
-	bottom: 25vh;
-	right: 20vw;
+	bottom: calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
+	right: calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
 	z-index: 6;
 	.up,
 	.down,
 	.left,
 	.right {
 		position: absolute;
-		width: 8vw;
-		height: 8vw;
-		background-color: rgba(0, 0, 0, 0.404);
+		width: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+		height: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+		// background-color: rgba(0, 0, 0, 0.100);
 		border-radius: 50%;
 		left: 0;
 		top: 0;
@@ -21,17 +21,35 @@
 		align-items: center;
 		color: rgba(255, 255, 255, 0.246);
 		text-transform: capitalize;
+		&:hover {
+			background-color: rgba(156, 156, 156, 0.111);
+			color: rgba(255, 255, 255, 0.651);
+		}
 	}
 	.up {
-		top: -8vw;
+		top: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
+		background-color: rgba(255, 0, 0, 0.111);
 	}
 	.right {
-		left: 8vw;
+		left: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+		background-color: rgba(255, 255, 0, 0.111);
 	}
 	.down {
-		top: 8vw;
+		top: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+		background-color: rgba(0, 255, 255, 0.111);
 	}
 	.left {
-		left: -8vw;
+		left: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
+		background-color: rgba(255, 0, 255, 0.111);
+	}
+	.up,
+	.down,
+	.left,
+	.right {
+		&:hover,
+		&:focus {
+			background-color: rgba(156, 156, 156, 0.377);
+			color: rgba(255, 255, 255, 0.651);
+		}
 	}
 }

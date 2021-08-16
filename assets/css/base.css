@@ -71,6 +71,79 @@ body {
   opacity: 0;
 }
 
+#cosmos .sob .stock,
+#cosmos .mob .stock {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  left: -100%;
+  top: 150%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: 0.8rem;
+}
+
+#cosmos .sob .stock .stockitem,
+#cosmos .mob .stock .stockitem {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-top-right-radius: 0.2rem;
+  border-top-left-radius: 0.2rem;
+  width: 1.2rem;
+  font-size: 0.8rem;
+  line-height: 100%;
+  padding: 0.2rem;
+  z-index: 999999;
+}
+
+#cosmos .sob .stock .stockitem .stockcount,
+#cosmos .mob .stock .stockitem .stockcount {
+  position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  font-size: 0.8rem;
+  line-height: 100%;
+  padding: 0.2rem;
+  left: 0;
+  top: 100%;
+  background-color: rgba(255, 255, 255, 0.514);
+  display: none;
+  border-bottom-left-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+
+#cosmos .sob .stock .stockitem:hover,
+#cosmos .mob .stock .stockitem:hover {
+  background-color: rgba(255, 255, 255, 0.514);
+}
+
+#cosmos .sob .stock .stockitem:hover .stockcount,
+#cosmos .mob .stock .stockitem:hover .stockcount {
+  display: initial;
+}
+
 #cosmos .sob .rangea,
 #cosmos .mob .rangea {
   border-radius: 50%;

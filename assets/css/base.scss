@@ -63,6 +63,53 @@ body {
 			display: none;
 			opacity: 0;
 		}
+		.stock {
+			position: absolute;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			left: -100%;
+			top: 150%;
+			width: max-content;
+			height: 0.8rem;
+			// display: none;
+			// opacity: 0;
+
+			.stockitem {
+				position: relative;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-top-right-radius: 0.2rem;
+				border-top-left-radius: 0.2rem;
+				width: 1.2rem;
+				font-size: 0.8rem;
+				line-height: 100%;
+				padding: 0.2rem;
+				z-index: 999999;
+				.stockcount {
+					position: absolute;
+					width: max-content;
+					font-size: 0.8rem;
+					line-height: 100%;
+					padding: 0.2rem;
+					left: 0;
+					top: 100%;
+					background-color: rgba(255, 255, 255, 0.514);
+					display: none;
+					border-bottom-left-radius: 0.2rem;
+					border-bottom-right-radius: 0.2rem;
+					border-top-right-radius: 0.2rem;
+				}
+				&:hover {
+					background-color: rgba(255, 255, 255, 0.514);
+					.stockcount {
+						display: initial;
+					}
+				}
+			}
+		}
 		.rangea {
 			border-radius: 50%;
 		}

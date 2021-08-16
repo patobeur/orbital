@@ -311,6 +311,70 @@ class DivManager {
 			elemgravity.style.position = 'absolute';
 			elem.appendChild(elemgravity)
 		}
+		// stocks 
+		if (obj.stock) {
+			console.log(obj.stock)
+			let elemstock = document.createElement('div')
+			elemstock.id = 'stock' + obj.div + '-' + obj.immat;
+			elemstock.className = 'stock';
+			let itemstock;
+			let itemstockcount;
+			let itemsentence;
+			if (obj.stock.air) {
+				itemstock = document.createElement('div')
+				itemstock.id = 'stockair' + obj.div + '-' + obj.immat;
+				itemstock.className = 'stockitem stockair';
+				itemsentence = '[' + (obj.stock.air[0] ?? 0) + '] Air Stocks(regen: ' + (obj.stock.air[1] ?? 0) + ' / ' + (obj.stock.air[2] ?? 0) + ')';
+				itemstock.title = itemsentence
+				itemstock.textContent = '💨';
+				//--
+				itemstockcount = document.createElement('div')
+				itemstockcount.id = 'stockaircount' + obj.div + '-' + obj.immat;
+				itemstockcount.className = 'stockcount';
+				itemstockcount.textContent = itemsentence
+				//--
+				itemstock.appendChild(itemstockcount)
+				elemstock.appendChild(itemstock)
+			}
+			if (obj.stock.water) {
+				itemstock = document.createElement('div')
+				itemstock.id = 'stockwater' + obj.div + '-' + obj.immat;
+				itemstock.className = 'stockitem stockwater';
+				itemsentence = '[' + (obj.stock.water[0] ?? 0) + '] Water Stocks(regen: ' + (obj.stock.water[1] ?? 0) + ' / ' + (obj.stock.water[2] ?? 0) + ')';
+				itemstock.title = itemsentence
+				itemstock.textContent = '🧊';//
+				//--
+				itemstockcount = document.createElement('div')
+				itemstockcount.id = 'stockwatercount' + obj.div + '-' + obj.immat;
+				itemstockcount.className = 'stockcount';
+				itemstockcount.textContent = itemsentence
+				//--
+				itemstock.appendChild(itemstockcount)
+				elemstock.appendChild(itemstock)
+			}
+			if (obj.stock.fuel) {
+				itemstock = document.createElement('div')
+				itemstock.id = 'stockfuel' + obj.div + '-' + obj.immat;
+				itemstock.className = 'stockitem stockfuel';
+				itemstock.textContent = '☕';//
+				//--
+				itemstockcount = document.createElement('div')
+				itemstockcount.id = 'stockfuelcount' + obj.div + '-' + obj.immat;
+				itemstockcount.className = 'stockcount';
+				itemstockcount.textContent = obj.stock.fuel[0]
+				//--
+				itemstock.appendChild(itemstockcount)
+				elemstock.appendChild(itemstock)
+			}
+			if (obj.stock.food) {
+				itemstock = document.createElement('div')
+				itemstock.id = 'stockfood' + obj.div + '-' + obj.immat;
+				itemstock.className = 'stockitem stockfood';
+				itemstock.textContent = '🍽️';//🥛
+				elemstock.appendChild(itemstock)
+			}
+			elem.appendChild(elemstock)
+		}
 		// datas-----------------------------------------------
 
 		let eleminfo = document.createElement('div')
@@ -331,6 +395,9 @@ class DivManager {
 		elempos.textContent = 'deg:';
 		eleminfo.appendChild(elempos)
 
+
+
+		// -------------------
 
 		elem.appendChild(elemcontentbox)
 		elem.appendChild(eleminfo)
@@ -364,7 +431,19 @@ class DivManager {
 				}
 
 				let divrange = document.getElementById('rangea' + obj.div + '-' + obj.immat)
-				divrange.style.backgroundColor = obj.rangeacolor
+				if (divrange) {
+					if (obj.objtype === 'player') {
+						if (obj.status.immune === true) {
+							divrange.style.backgroundColor = '#00FF0055'
+						}
+						else {
+							divrange.style.backgroundColor = obj.rangeacolor
+						}
+					}
+					else {
+						divrange.style.backgroundColor = obj.rangeacolor
+					}
+				}
 				// // if colliding
 				// if (obj.collide) {
 				// 	// refresh range color
