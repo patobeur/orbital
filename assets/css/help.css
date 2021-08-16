@@ -1,19 +1,98 @@
-#help-0 {
+.help {
   position: absolute;
-  top: -100px;
-  left: -100px;
-  background-color: rgba(240, 248, 255, 0.877);
-  border-radius: 1rem;
-  padding: 1rem;
-  line-height: 1.5rem;
-  font-size: 1.5rem;
+  width: 100px;
+  background-color: aliceblue;
+  border-radius: 0.5rem;
+  padding: 10px;
+  line-height: 1rem;
+  font-size: 1rem;
+  font-weight: 800;
   opacity: 1;
   -webkit-transition: left 0.5s ease, top 0.5s ease;
   transition: left 0.5s ease, top 0.5s ease;
+  border: 2px solid rgba(172, 255, 47, 0.596);
+  bottom: 0;
+  left: -120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
 }
 
-#help-0.animate__fadeOut {
-  -webkit-animation: 1s 1s 3 animate__fadeOut2;
-          animation: 1s 1s 3 animate__fadeOut2;
+.help .square {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 10px;
+  left: calc(100% - 10px);
+  background-color: aliceblue;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  border-top: 2px solid rgba(172, 255, 47, 0.596);
+  border-right: 2px solid rgba(172, 255, 47, 0.596);
+}
+
+.help.animate__fadeOut {
+  -webkit-animation: 1s 3 animate__fadeOut;
+          animation: 1s 3 animate__fadeOut;
+}
+
+.help.animate__fadeOut2 {
+  -webkit-animation: 1s 3 animate__fadeOut2;
+          animation: 1s 3 animate__fadeOut2;
+}
+
+@-webkit-keyframes animate__fadeOut {
+  0% {
+    left: -120px;
+  }
+  50% {
+    left: -150px;
+  }
+  100% {
+    left: -120px;
+  }
+}
+
+@keyframes animate__fadeOut {
+  0% {
+    left: -120px;
+  }
+  50% {
+    left: -150px;
+  }
+  100% {
+    left: -120px;
+  }
+}
+
+@-webkit-keyframes animate__fadeOut2 {
+  0% {
+    left: -120px;
+  }
+  50% {
+    left: -150px;
+  }
+  100% {
+    left: -120px;
+  }
+}
+
+@keyframes animate__fadeOut2 {
+  0% {
+    left: -120px;
+  }
+  50% {
+    left: -150px;
+  }
+  100% {
+    left: -120px;
+  }
 }
 /*# sourceMappingURL=help.css.map */

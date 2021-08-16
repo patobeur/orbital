@@ -192,9 +192,21 @@ class DivManager {
 		if (typexy.x === 'left') { xyz.x = 0 }
 		if (typexy.x === 'right') { xyz.x = (this.IniDatas.cosmosSize.w - poss.w) }
 		if (typexy.y === 'top') { xyz.y = 0 }
-		if (typexy.y === 'bottom') { xyz.y = (this.IniDatas.cosmosSize.h - poss.h - 20) }
+		if (typexy.y === 'bottom') { xyz.y = (this.IniDatas.cosmosSize.h - poss.h - 50) }
 		// console.log(xyz)
 		return xyz
+	}
+	add_help = (obj, message = 'This is your Ship !') => {
+
+		let elemhelp = document.createElement('div')
+		elemhelp.id = 'help-' + obj.immat;
+		elemhelp.className = 'help'
+		elemhelp.textContent = 'This is your Ship !'
+
+		let square = document.createElement('div')
+		square.className = 'square'
+		elemhelp.appendChild(square)
+		elem.appendChild(elemhelp)
 	}
 	get_ObjDomElem = (obj) => {
 
@@ -250,18 +262,23 @@ class DivManager {
 		if (obj.objtype === 'player') {
 			let elemhelp = document.createElement('div')
 			elemhelp.id = 'help-' + obj.immat;
-			elemhelp.style.width = "100" + this.IniDatas.px
-			elemhelp.style.height = "100" + this.IniDatas.px
 			elemhelp.className = 'help'
-			elemhelp.style.borderRadius = '1rem';
-			elemhelp.style.position = 'absolute';
-			elemhelp.textContent = 'This is your Ship !'
+
+			let helptxt = document.createElement('div')
+			helptxt.id = 'helptxt-' + obj.immat;
+			helptxt.className = 'helptxt'
+			helptxt.textContent = '🪕💡'
+
+			let square = document.createElement('div')
+			square.className = 'square'
+			elemhelp.appendChild(helptxt)
+			elemhelp.appendChild(square)
 			elem.appendChild(elemhelp)
 
 			// propulsion visual animation
 			let elemprop = document.createElement('div')
-			elemprop.style.width = (obj.sizwhl.w / 3) + this.IniDatas.px
-			elemprop.style.height = (obj.sizwhl.h) + this.IniDatas.px
+			elemprop.style.width = parseInt(obj.sizwhl.w / 3) + this.IniDatas.px
+			elemprop.style.height = parseInt(obj.sizwhl.h) + this.IniDatas.px
 			elemprop.style.top = '100%'
 			elemprop.style.left = '50%'
 			// elemprop.style.backgroundColor = 'black'

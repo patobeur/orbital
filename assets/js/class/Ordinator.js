@@ -1,18 +1,22 @@
 "use strict";
 class Ordinator {
 	constructor() {
+		this.helpAnim = 1
 		this.DM = new DivManager()
 		this.num = 0
 		this.currentSoundName = 'none'
 		this.DM.appendChild_Cosmos()
 		this.MF = new MobFactory(this.DM)
+		this.keyReady = false
+		this.gameOn = false
+		this.pauseOn = false
 		// this.theta = this.get_theta()
 
 		// if(){
 		// setInterval(this.renderScene, this.DM.IniDatas.renderinterval)
 		// }
 		this.addStartButtonListener()
-		// this.animateCSS('#splash', 'fadeOut', true).then((message) => {
+		// this.animateHelpCSS('#splash', 'fadeOut', true).then((message) => {
 		// 	// Do something after the animation
 		// 	this.start()
 		// 	this.check_errors()
@@ -36,11 +40,11 @@ class Ordinator {
 		let startgame = document.getElementById('startgame')
 		if (startgame) {
 			startgame.addEventListener('click', () => {
+				startgame.parentNode.remove();
 				this.start()
 				this.check_errors()
-				this.DM.appendChild_Board()
-				this.DM.appendChild_Board2()
-				startgame.parentNode.remove();
+				this.DM.appendChild_Board() // menu test one
+				this.DM.appendChild_Board2() // menu test two 
 			})
 		}
 
@@ -49,18 +53,57 @@ class Ordinator {
 		this.MF.create_EveryBasics()
 		this.gameOn = true
 		this.pauseOn = false
+		this.keyReady = false
 		setInterval(
 			this.renderScene,
 			this.DM.IniDatas.renderinterval
 		)
-		this.animateCSS('#help-0', 'fadeOut', true).then((message) => {
-			// Do something after the animation
-			console.log(message)
-			this.set_NiceSpeed(this.MF.mobs[0], 4)
-		});
+		this.set_helpAnim(1)
 
 	}
-	get_xyzFromXYDeg = (obj) => { // get hypotenus with pythaGore
+	set_helpAnim = (num) => {
+		switch (num) {
+			case 1:
+				this.animateHelpCSS(0, 'fadeOut', false, 'This is your ship !').then((message) => {
+					this.set_NiceSpeed(this.MF.mobs[0], 4)
+					this.helpAnim += 1
+					this.set_helpAnim(this.helpAnim)
+				});
+				break;
+			case 2:
+				this.animateHelpCSS(0, 'fadeOut2', false, 'throttle up !').then((message) => {
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)
+					this.helpAnim += 1
+					this.set_helpAnim(this.helpAnim)
+				});
+				break;
+			case 3:
+				this.animateHelpCSS(0, 'fadeOut', false, 'Rotate left to avoid the sun !').then((message) => {
+					this.helpAnim += 1
+					this.set_helpAnim(this.helpAnim)
+				});
+				break;
+			case 4:
+				this.animateHelpCSS(0, 'fadeOut2', true, 'Enjoy !').then((message) => {
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1)
+					// this.set_NiceSpeed(this.MF.mobs[0], 5)
+					this.helpAnim += 1
+					this.keyReady = true
+					// this.set_helpAnim(3)
+				});
+				break;
+			default:
+				console.log(`Sorry, we are out of ${expr}.`);
+		}
+	}
+
+
+
+	// 	this.animateHelpCSS(0, 'fadeOut', true, 'Rotate left', 'ok').then((message) => {
+	// 		// turn left
+	// 		// this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)
+	// 	});
+	set_NewNicePosition_testing = (obj) => { // get hypotenus with pythaGore
 		let x = obj.posxyz.x
 		let y = obj.posxyz.y
 		let z = obj.posxyz.z
@@ -76,7 +119,7 @@ class Ordinator {
 
 		// console.log(nextX, nextY, nextZ)
 	}
-	set_NicePosition_WithDegX = (obj) => {
+	set_NewNicePosition_broken = (obj) => {
 		let ratioDir = parseInt(obj.direction.deg / 360 * 100000) / 100000 // 0.0 to 1
 		let velocityX = obj.velxyz.cx
 		let velocityY = obj.velxyz.cy
@@ -179,9 +222,8 @@ class Ordinator {
 			}
 		}
 		else {
-			console.log('no parent immat')
+			errors.push(['get_NextOrbitPos', 'object has no parent immat'])
 		}
-
 	}
 	mobsIA = () => {
 		if (this.gameOn && !this.pauseOn) { // if game start
@@ -191,12 +233,12 @@ class Ordinator {
 
 				if (obj.ia && !obj.parentimmat) {
 					this.set_NewNiceDirection(obj)
-					this.set_NicePosition_WithDegX(obj)
+					this.set_NewNicePosition_broken(obj)
 					this.check_PosOut(obj)
 				}
 				// else if (obj.objtype === 'player') {//ia && obj.direction) {
 				// 	this.set_NewNiceDirection(obj)
-				// 	this.set_NicePosition_WithDegX(obj)
+				// 	this.set_NewNicePosition_broken(obj)
 				// 	this.check_PosOut(obj)
 				// }
 				else if (obj.objtype === 'player') {
@@ -207,15 +249,15 @@ class Ordinator {
 
 					this.check_keyboardArrows(obj)
 
-					// this.get_xyzFromXYDeg(obj)
+					// this.set_NewNicePosition_testing(obj)
 					// or
-					this.set_NicePosition_WithDegX(obj)
+					this.set_NewNicePosition_broken(obj)
 
 					this.check_PosOut(obj)
 				}
 				// else if (obj.parentimmat && obj.direction) {
 				// 	this.set_NewNiceDirection(obj)
-				// 	this.set_NicePosition_WithDegX(obj)
+				// 	this.set_NewNicePosition_broken(obj)
 				// 	this.get_NextOrbitPos(obj)
 				// }
 
@@ -383,31 +425,34 @@ class Ordinator {
 		return a
 	}
 	// keyboard
-	PlayGo = (idx, dir) => {
-		console.log('yes')
-		if (!this.pauseOn && this.gameOn) {
+	PlayGo = (idx, dir, help = false) => {
+		if ((!this.pauseOn && this.gameOn && this.keyReady)) {// || help
 			if (this.MF.mobs[idx].direction.way) {
 				this.MF.mobs[idx].direction.way[dir] = 1;
 			}
 		}
 	}
 	// add className to div and remove it after animation end and delete tag or not 
-	animateCSS = (element, animation, remove = false, consoletext, prefix = 'animate__') =>
+	animateHelpCSS = (immat, animation, remove = false, consoletext, prefix = 'animate__') =>
 		// thx to friends
 		// & thx https://github.com/animate-css/animate.css/blob/main/docsSource/sections/04-javascript.md
 		// We create a Promise and return it
 		new Promise((resolve, reject) => {
+			let element = '#help-' + immat
 			let animationName = `${prefix}${animation}`;
 			let node = document.querySelector(element);
 			node.classList.add(`${prefix}animated`, animationName);
+			let elementcontent = '#helptxt-' + immat
+			let txt = document.querySelector(elementcontent);
+			consoletext ? txt.textContent = consoletext : 'Empty message ?'
 			// When the animation ends, we clean the classes and resolve the Promise
 			let handleAnimationEnd = (event) => {
 				event.stopPropagation();
 				node.classList.remove(`${prefix}animated`, animationName);
-				resolve('Propulsion on lv1 Captain !');
+				resolve('help done !');
 				if (remove) { node.remove() }
 			}
-			node.addEventListener('animationend', handleAnimationEnd, { once: true });
+			node.addEventListener('animationend', handleAnimationEnd, { once: false });
 		});
 
 	playSpeedSounds = (obj) => {
