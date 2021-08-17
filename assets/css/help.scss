@@ -19,7 +19,9 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+	z-index: 999;
 	.helptxt {
+		z-index: 999;
 	}
 	.square {
 		position: absolute;
@@ -40,8 +42,14 @@
 		animation: 1s 3 animate__fadeOut2;
 	}
 	&.animate__stock {
-		animation: 1s 3 animate__stock;
+		animation: 2s 3 animate__stock;
 		bottom: -150%;
+	}
+	&.animate__left {
+		animation: 1s 3 animate__left;
+	}
+	&.animate__end {
+		animation: 1s animate__end;
 	}
 	&.animate__right {
 		animation: 1s 3 animate__right;
@@ -56,6 +64,7 @@
 	}
 	&.animate__empty {
 		opacity: 0;
+		z-index: -1;
 		animation: 1s 10s 1 animate__empty;
 	}
 }
@@ -106,6 +115,22 @@
 		// left: 150%;
 	}
 }
+@keyframes animate__end {
+	0% {
+		// right: 150%;
+	}
+	100% {
+		// left: 150%;
+	}
+}
+@keyframes left {
+	0% {
+		// right: 150%;
+	}
+	100% {
+		// left: 150%;
+	}
+}
 @keyframes animate__empty {
 	0% {
 		// right: 150%;
@@ -116,9 +141,15 @@
 }
 @keyframes animate__left {
 	0% {
-		// right: 150%;
+		// top: -100px;
+		left: -120px;
+	}
+	50% {
+		// top: -150px;
+		left: -150px;
 	}
 	100% {
-		// left: 150%;
+		// top: -100px;
+		left: -120px;
 	}
 }

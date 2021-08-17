@@ -35,7 +35,7 @@ body {
 
 #cosmos {
   background-color: rgba(55, 53, 78, 0.342);
-  background-image: url("/assets/img/grille_20px.png"), url("https://www.teahub.io/photos/full/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
+  background-image: url("/assets/img/grille_20px.png"), url("../img/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
   background-position: left top, center center;
   background-repeat: repeat, no-repeat;
   background-size: auto, cover;
@@ -113,7 +113,7 @@ body {
   font-size: 0.8rem;
   line-height: 100%;
   padding: 0.2rem;
-  z-index: 999999;
+  z-index: 4;
 }
 
 #cosmos .sob .stock .stockitem .stockcount,
@@ -135,18 +135,62 @@ body {
 }
 
 #cosmos .sob .stock .stockitem:hover,
-#cosmos .mob .stock .stockitem:hover {
+#cosmos .sob .stock .stockitem .active,
+#cosmos .mob .stock .stockitem:hover,
+#cosmos .mob .stock .stockitem .active {
   background-color: rgba(255, 255, 255, 0.514);
 }
 
 #cosmos .sob .stock .stockitem:hover .stockcount,
-#cosmos .mob .stock .stockitem:hover .stockcount {
+#cosmos .sob .stock .stockitem .active .stockcount,
+#cosmos .mob .stock .stockitem:hover .stockcount,
+#cosmos .mob .stock .stockitem .active .stockcount {
   display: initial;
+}
+
+#cosmos .sob .gravity,
+#cosmos .mob .gravity {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 #cosmos .sob .rangea,
 #cosmos .mob .rangea {
   border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+#cosmos .sob.rangea .rangea,
+#cosmos .mob.rangea .rangea {
+  border: 2px dashed rgba(255, 136, 0, 0.5);
+}
+
+#cosmos .sob.alert .rangea,
+#cosmos .mob.alert .rangea {
+  background-color: rgba(255, 0, 0, 0.315);
+}
+
+#cosmos .sob.immune .rangea,
+#cosmos .mob.immune .rangea {
+  border: 2px dashed rgba(0, 102, 255, 0.8);
+  -webkit-animation: 0.5s infinite rangea_flash;
+          animation: 0.5s infinite rangea_flash;
+}
+
+#cosmos .sob .social,
+#cosmos .mob .social {
+  border-radius: 50%;
+  outline: 3px dotted rgba(54, 190, 13, 0.15);
+}
+
+#cosmos .sob.socialact .social,
+#cosmos .mob.socialact .social {
+  outline: 3px dotted rgba(137, 248, 11, 0.664);
+}
+
+#cosmos .sob .content,
+#cosmos .mob .content {
+  outline: 1px solid rgba(100, 1, 1, 0.534);
+  border-radius: 100%;
 }
 
 #cosmos .sob:hover .info,
@@ -528,6 +572,26 @@ body {
             transform: scale(2);
     bottom: 0;
     opacity: 0;
+  }
+}
+
+@-webkit-keyframes rangea_flash {
+  0% {
+  }
+  50% {
+  }
+  100% {
+    border: 2px none;
+  }
+}
+
+@keyframes rangea_flash {
+  0% {
+  }
+  50% {
+  }
+  100% {
+    border: 2px none;
   }
 }
 /*# sourceMappingURL=base.css.map */

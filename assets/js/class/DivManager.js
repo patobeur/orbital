@@ -16,7 +16,7 @@ class DivManager {
 		let stringcss = ''
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
-		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
+		stringcss += ''
 		stringcss += '.player .content {transform:rotate(-45deg)}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
@@ -221,6 +221,17 @@ class DivManager {
 		classname += obj.ia ? ' ia' : ''
 		elem.className = classname
 
+		// gravity zone  !!!-----------------------------------
+		if (obj.gravity) {
+			let elemgravity = document.createElement('div')
+			elemgravity.id = 'gravity' + obj.div + '-' + obj.immat;
+			elemgravity.style.width = obj.gravity.range.w + this.IniDatas.px
+			elemgravity.style.height = obj.gravity.range.h + this.IniDatas.px
+			elemgravity.className = 'gravity'
+			elemgravity.style.borderRadius = '50%';
+			elemgravity.style.position = 'absolute';
+			elem.appendChild(elemgravity)
+		}
 		// range ----------------------------------------------
 		let elemrange = document.createElement('div')
 		elemrange.id = 'rangea' + obj.div + '-' + obj.immat;
@@ -228,8 +239,18 @@ class DivManager {
 		elemrange.style.position = 'absolute';
 		elemrange.style.width = (obj.sizwhl.w * 3) + this.IniDatas.px
 		elemrange.style.height = (obj.sizwhl.h * 3) + this.IniDatas.px
-		elemrange.style.backgroundColor = obj.rangeacolor ? obj.rangeacolor : "rgba(255,255, 255, 0.05)"
+		// elemrange.style.backgroundColor = obj.rangeacolor ? obj.rangeacolor : "yellow"
 		elem.appendChild(elemrange)
+
+		// social range ----------------------------------------------
+		let elemsocial = document.createElement('div')
+		elemsocial.id = 'social' + obj.div + '-' + obj.immat;
+		elemsocial.className = 'social'
+		elemsocial.style.position = 'absolute';
+		elemsocial.style.width = (obj.ranges.social.d) + this.IniDatas.px
+		elemsocial.style.height = (obj.ranges.social.d) + this.IniDatas.px;
+		// obj.ranges.elemsocial ? elemsocial.style.backgroundColor = obj.ranges.social.color : "";
+		elem.appendChild(elemsocial)
 
 		// content box used for rotation-----------------------
 		let elemcontentbox = document.createElement('div')
@@ -295,20 +316,9 @@ class DivManager {
 			elemprop.prepend(elemcloud)
 			elemcontentbox.prepend(elemprop)
 		}
-		// gravity zone  !!!-----------------------------------
-		if (obj.gravity) {
-			let elemgravity = document.createElement('div')
-			elemgravity.id = 'gravity' + obj.div + '-' + obj.immat;
-			elemgravity.style.width = obj.gravity.range.w + this.IniDatas.px
-			elemgravity.style.height = obj.gravity.range.h + this.IniDatas.px
-			elemgravity.className = 'gravity'
-			elemgravity.style.borderRadius = '50%';
-			elemgravity.style.position = 'absolute';
-			elem.appendChild(elemgravity)
-		}
 		// stocks 
 		if (obj.stock) {
-			console.log(obj.stock)
+			// console.log(obj.stock)
 			let elemstock = document.createElement('div')
 			elemstock.id = 'stock' + obj.div + '-' + obj.immat;
 			elemstock.className = 'stock';
@@ -321,7 +331,8 @@ class DivManager {
 				itemstock.className = 'stockitem stockair';
 				itemsentence = '[' + (obj.stock.air[0] ?? 0) + '] Air Stocks(regen: ' + (obj.stock.air[1] ?? 0) + ' / ' + (obj.stock.air[2] ?? 0) + ')';
 				itemstock.title = itemsentence
-				itemstock.textContent = '💨';
+				itemstock.textContent = '☁';//💨
+				itemstock.style.color = 'white';
 				//--
 				itemstockcount = document.createElement('div')
 				itemstockcount.id = 'stockaircount' + obj.div + '-' + obj.immat;
@@ -413,7 +424,7 @@ class DivManager {
 		elemcenter.id = 'center' + obj.div + '-' + obj.immat;
 		elemcenter.className = 'center'
 		elem.appendChild(elemcenter)
-		console.log('immat ' + obj.immat + ' added to ' + obj.div + ' -> ' + obj.objtype + ' / ' + obj.objname + ' / ' + obj.classname)
+		// console.log('immat ' + obj.immat + ' added to ' + obj.div + ' -> ' + obj.objtype + ' / ' + obj.objname + ' / ' + obj.classname)
 		return elem
 	}
 	create_EveryBasics(cosmosdatas) {
@@ -437,27 +448,35 @@ class DivManager {
 				}
 
 				let divrange = document.getElementById('rangea' + obj.div + '-' + obj.immat)
-				if (divrange) {
-					if (obj.objtype === 'player') {
-						if (obj.status.immune === true) {
-							divrange.style.backgroundColor = '#00FF0055'
-						}
-						else {
-							divrange.style.backgroundColor = obj.rangeacolor
-						}
-					}
-					else {
-						divrange.style.backgroundColor = obj.rangeacolor
-					}
-				}
-				// // if colliding
-				// if (obj.collide) {
-				// 	// refresh range color
-				// 	if (divrange) {
+				// if (divrange) {
+				// 	if (obj.objtype === 'player') {
 				// 	}
 				// 	else {
-				// 		errors.push(['this.redrawAllMobs', 'can\'t target rangea' + obj.div + "-" + obj.immat])
+				// 		// divrange.style.backgroundColor = obj.rangeacolor
 				// 	}
+				// }
+				obj.status.immune && obj.statusdelay.immune[0] > 0
+					? currentMob.classList.add('immune')
+					: currentMob.classList.remove('immune')
+				obj.collide && obj.collide.colliderangea
+					? currentMob.classList.add('rangea')
+					: currentMob.classList.remove('rangea')
+				obj.collide && obj.collide.collidealert
+					? currentMob.classList.add('alert')
+					: currentMob.classList.remove('alert')
+
+				// let divsocial = document.getElementById('social' + obj.div + '-' + obj.immat)
+				// // if (obj.objtype === 'player') {
+				// if (divsocial) {
+				// 	if (obj.collide.collidesocial === true) {
+				// 		currentMob.classList.add('socialact')
+				// 		console.log('add social')
+				// 	}
+				// 	else {
+				// 		currentMob.classList.remove('socialact')
+				// 		console.log('remove social')
+				// 	}
+				// }
 				// }
 
 
@@ -499,8 +518,8 @@ class DivManager {
 				currentMob.style.top = obj.posxyz.y + 'px';
 				currentMob.style.left = obj.posxyz.x + 'px';
 
-				let divrange = document.getElementById('rangea' + obj.div + '-' + obj.immat)
-				divrange.style.backgroundColor = obj.rangeacolor
+				// let divrange = document.getElementById('rangea' + obj.div + '-' + obj.immat)
+				// divrange.style.backgroundColor = obj.rangeacolor
 
 				// xpspan.textContent = this.getstars(obj.lv)
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)

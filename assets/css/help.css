@@ -23,6 +23,11 @@
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
+  z-index: 999;
+}
+
+.help .helptxt {
+  z-index: 999;
 }
 
 .help .square {
@@ -49,9 +54,14 @@
 }
 
 .help.animate__stock {
-  -webkit-animation: 1s 3 animate__stock;
-          animation: 1s 3 animate__stock;
+  -webkit-animation: 2s 3 animate__stock;
+          animation: 2s 3 animate__stock;
   bottom: -150%;
+}
+
+.help.animate__left {
+  -webkit-animation: 1s 3 animate__left;
+          animation: 1s 3 animate__left;
 }
 
 .help.animate__right {
@@ -70,6 +80,7 @@
 
 .help.animate__empty {
   opacity: 0;
+  z-index: -1;
   -webkit-animation: 1s 10s 1 animate__empty;
           animation: 1s 10s 1 animate__empty;
 }
@@ -160,6 +171,20 @@
   }
 }
 
+@-webkit-keyframes left {
+  0% {
+  }
+  100% {
+  }
+}
+
+@keyframes left {
+  0% {
+  }
+  100% {
+  }
+}
+
 @-webkit-keyframes animate__empty {
   0% {
   }
@@ -176,15 +201,25 @@
 
 @-webkit-keyframes animate__left {
   0% {
+    left: -120px;
+  }
+  50% {
+    left: -150px;
   }
   100% {
+    left: -120px;
   }
 }
 
 @keyframes animate__left {
   0% {
+    left: -120px;
+  }
+  50% {
+    left: -150px;
   }
   100% {
+    left: -120px;
   }
 }
 /*# sourceMappingURL=help.css.map */

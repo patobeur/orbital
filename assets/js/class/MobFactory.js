@@ -17,7 +17,7 @@ class MobFactory {
 	get_ColorByType = (typename, zone) => {
 		let colors = {
 			rangea: {
-				etoile: "rgba(255, 255, 255, 0.05);",
+				etoile: "rgba(0, 0, 0, 1);",
 				planete: "rgba(255, 255, 255, 0.05)",
 				satellite: "rgba(255, 0, 252, 0.05)",
 				fsaucer: "rgba(255,255, 0, 0.05)",
@@ -60,6 +60,15 @@ class MobFactory {
 				}
 			},
 			mob: {
+				player: {
+					rangeacolor: "rgba(0,255, 255, 0.05)",
+					stock: {
+						water: [this.aleaEntreBornes(0, 100), -.1, 0, 100],
+						air: [this.aleaEntreBornes(0, 100), 0, -.1, 100],
+						fuel: [this.aleaEntreBornes(0, 100), 0, -.5, 100],
+						food: [this.aleaEntreBornes(0, 100), 0, -.5, 100],
+					}
+				},
 				fsaucer: {
 					rangeacolor: "rgba(255,255, 0, 0.05)",
 					stock: {
@@ -90,8 +99,8 @@ class MobFactory {
 				}
 			},
 		}
-		console.log(obj.div, obj.objtype, itemname)
-		console.log(categories)
+		// console.log(obj.div, obj.objtype, itemname)
+		// console.log(categories)
 		return categories[obj.div][obj.objtype][itemname]
 	}
 	add_obj = (objdatas) => {
@@ -111,19 +120,48 @@ class MobFactory {
 			parentimmat: objdatas.parentimmat ?? false,
 			// movement 
 			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 1 },
-			stock: objdatas.stock ?? this.set_ObjDatasByZoneAndItemName(objdatas, 'stock'),
 			status: {
+				etheral: false,
 				dead: false,
 				immune: ((objdatas.status && objdatas.status.immune) ? objdatas.status.immune : false),
 				immune1rd: false,
 				shield: false,
 				mooving: false,
-				gravity: false
+				gravity: false,
+				explose: false,
+				alerte: false,
+			},
+			statusdelay: {
+				etheral: [0, 0],
+				dead: [0, 0],
+				immune: [0, 0],
+				immune1rd: [0, 0],
+				shield: [0, 0],
+				mooving: [0, 0],
+				gravity: [0, 0],
+				explose: [0, 0],
+				alerte: [0, 0],
 			},
 			tetha: objdatas.tetha ?? false,
 			gravity: objdatas.gravity ?? false,
 			orbitdir: objdatas.orbitdir ?? false,
-			rangeacolor: objdatas.objtype ? this.get_ColorByType(objdatas.objtype, "rangea") : false
+			stock: objdatas.stock ?? this.set_ObjDatasByZoneAndItemName(objdatas, 'stock'),
+			rangeacolor: objdatas.objtype ? this.set_ObjDatasByZoneAndItemName(objdatas, 'rangeacolor') : false,
+			selfr: objdatas.objtype ?? ((objdatas.sizwhl.w + objdatas.sizwhl.h) / 2),
+			ranges: objdatas.ranges ?? {
+				social: {
+					d: 4 * ((objdatas.sizwhl.w + objdatas.sizwhl.h) / 2)
+				},
+				rangea: {
+					d: 4 * ((objdatas.sizwhl.w + objdatas.sizwhl.h) / 2)
+				}
+			},
+			collide: {
+				collidesocial: false,
+				colliderangea: false,
+				collideself: false,
+				collidealert: false
+			}
 		}
 		if (obj.div === 'sob') {
 			obj.immat = (objdatas.parentimmat) ? (objdatas.parentimmat === -1) ? (this.sobsImmat[0] - 1) : (this.sobsImmat[0] + 1) : this.sobsImmat[0];
@@ -192,7 +230,6 @@ class MobFactory {
 			//parentimmat: [0],
 			tetha: [0, 360, 0.03],
 			direction: { ratio: 0, degZ: 360, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
-			stock: { water: [10000, .1, 100], fuel: [10000, .1, 100] },
 			status: { immune: false }
 		})
 		this.add_obj({
@@ -277,6 +314,12 @@ class MobFactory {
 	}
 	givemeaniceico = () => {
 		let temporarypersonalfun = [
+			{ ico: "🕶", name: "sunglasses" },
+			{ ico: "🎲", name: "Dice" },
+			{ ico: "🌌", name: "milky way" },
+			{ ico: "🪐", name: "ringed planet" },
+			{ ico: "🌌", name: "milky way" },
+			{ ico: "🩲", name: "sleep" },
 			{ ico: "🍩", name: "Doughnut" },
 			{ ico: "🥥", name: "Coconut" },
 			{ ico: "🍎", name: "Red Apple" },
