@@ -112,13 +112,22 @@ class Ordinator {
 					// this.set_NiceSpeed(this.MF.mobs[0], 5)
 					this.tutorialNum += 1
 					this.trainingFinish = true
-					console.log(this.MF.mobs[0])
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 7:
-				this.animateHelpCSS(0, 'right', true, 'OOps !! Removing Immunity ;) ').then((message) => {
+				this.animateHelpCSS(0, 'empty', false, 'What else ?').then((message) => {
+					this.set_NiceSpeed(this.MF.mobs[0], 5) // speed up
+					// this.set_NiceSpeed(this.MF.mobs[0], 5)
+					this.tutorialNum += 1
+					this.trainingFinish = true
+					this.set_tutorial(this.tutorialNum)
+				});
+				break;
+			case 8:
+				this.animateHelpCSS(0, 'right', true, 'Oh  !! Removing Immunity. WATCH OUT !!! ').then((message) => {
 					this.MF.mobs[0].status.immune = false
+					console.log(this.MF.mobs[0])
 				});
 				break;
 			default:
@@ -126,24 +135,18 @@ class Ordinator {
 		}
 	}
 
-
-
-	// 	this.animateHelpCSS(0, 'fadeOut', true, 'Rotate left', 'ok').then((message) => {
-	// 		// turn left
-	// 		// this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)
-	// 	});
 	set_NewNicePosition_testing = (obj) => { // get hypotenus with pythaGore
 		let x = obj.posxyz.x
 		let y = obj.posxyz.y
-		let z = obj.posxyz.z
-		let degx = obj.direction.deg
-		let degz = obj.direction.degZ
 		let distance = obj.velxyz.x
-		let nextX = x + parseInt(((1 * Math.cos(degx))) * 10) / 10
-		let nextY = y + parseInt(((1 * Math.cos(degx))) * 10) / 10
+		let nextX = parseInt(x + ((distance * Math.cos(obj.direction.deg) * 10) / 10))
+		let nextY = parseInt(y + ((distance * Math.sin(obj.direction.deg) * 10) / 10))
+		// let nextX = x + (parseInt(((distance * Math.cos(obj.direction.deg))) * 10) / 10)
+		// let nextY = y + (parseInt(((distance * Math.sin(obj.direction.deg))) * 10) / 10)
 		// let nextZ = 
 		obj.posxyz.x = nextX
 		obj.posxyz.y = nextY
+		console.log('deg:' + obj.direction.deg, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.x,)
 		// obj.posxyz.z = nextZ
 
 		// console.log(nextX, nextY, nextZ)
@@ -263,12 +266,12 @@ class Ordinator {
 				if (obj.ia && !obj.parentimmat) {
 					this.set_NewNiceDirection(obj)
 					this.set_NewNicePosition_broken(obj)
-					this.check_PosOut(obj)
+					this.check_IsPosOutScreen(obj)
 				}
 				// else if (obj.objtype === 'player') {//ia && obj.direction) {
 				// 	this.set_NewNiceDirection(obj)
 				// 	this.set_NewNicePosition_broken(obj)
-				// 	this.check_PosOut(obj)
+				// 	this.check_IsPosOutScreen(obj)
 				// }
 				else if (obj.objtype === 'player') {
 
@@ -282,7 +285,7 @@ class Ordinator {
 					// or
 					this.set_NewNicePosition_broken(obj)
 
-					this.check_PosOut(obj)
+					this.check_IsPosOutScreen(obj)
 				}
 				// else if (obj.parentimmat && obj.direction) {
 				// 	this.set_NewNiceDirection(obj)
@@ -351,22 +354,23 @@ class Ordinator {
 
 	}
 	set_NiceDegrees_KeyPressed = (obj, type) => {
-		if (type === 0) { //top
-			// z rotation mean 3d ??
-			obj.direction.degZ = (obj.direction.deg - obj.direction.agility) <= 0 ? 360 - obj.direction.degZ - obj.direction.agility : obj.direction.degZ - obj.direction.agility
-		}
-		else if (type === 1) { //right
+		// if (type === 0) { //top
+		// 	// z rotation mean 3d ??
+		// 	obj.direction.degZ = (obj.direction.degZ - obj.direction.agility) <= 0 ? 360 - obj.direction.degZ - obj.direction.agility : obj.direction.degZ - obj.direction.agility
+		// }
+		if (type === 1) { //right
 			obj.direction.deg = (obj.direction.deg + obj.direction.agility) > 360 ? obj.direction.deg + obj.direction.agility - 360 : obj.direction.deg + obj.direction.agility
 		}
-		else if (type === 2) {//bottom
-			// z rotation mean 3d ??
-			obj.direction.degZ = (obj.direction.degZ + obj.direction.agility) > 360 ? obj.direction.degZ + obj.direction.agility - 360 : obj.direction.degZ + obj.direction.agility
-		}
+		// else if (type === 2) {//bottom
+		// 	// z rotation mean 3d ??
+		// 	obj.direction.degZ = (obj.direction.degZ + obj.direction.agility) > 360 ? obj.direction.degZ + obj.direction.agility - 360 : obj.direction.degZ + obj.direction.agility
+		// }
 		else if (type === 3) { //left
-			obj.direction.deg = (obj.direction.deg - obj.direction.agility) <= 0 ? 360 - obj.direction.deg - obj.direction.agility : obj.direction.deg - obj.direction.agility
+			obj.direction.deg = (obj.direction.deg - obj.direction.agility) <= 0 ? obj.direction.deg - obj.direction.agility + 360 : obj.direction.deg - obj.direction.agility
 		}
 		// if errors
 		if (obj.direction.deg < 0 || obj.direction.deg > 360) { errors.push(['set_NiceDegrees_KeyPressed', obj.direction.deg + ' out of range']) }
+		console.log(obj.direction.deg)
 	}
 	set_NiceSpeed = (obj, type) => {
 		if (type === 4) {//accelerate
@@ -418,7 +422,7 @@ class Ordinator {
 	// check if obj xyz is out of cosmos to replace it or not
 	// care with orbital that have to go out of cosmos
 	// this will only check mobs and not sobs (obs ia dont call this)
-	check_PosOut(obj) {
+	check_IsPosOutScreen(obj) {
 		if (obj.posxyz.x > this.DM.IniDatas.cosmosSize.w) { obj.posxyz.x = 1 - obj.sizwhl.w }
 		if (obj.posxyz.x <= 0 - obj.sizwhl.w) { obj.posxyz.x = this.DM.IniDatas.cosmosSize.w }
 		if (obj.posxyz.y <= 0 - obj.sizwhl.h) { obj.posxyz.y = this.DM.IniDatas.cosmosSize.h }

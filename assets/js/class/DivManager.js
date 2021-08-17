@@ -14,14 +14,9 @@ class DivManager {
 	}
 	cssMaker = () => {
 		let stringcss = ''
-
-		stringcss += ''
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
-		stringcss += ''
-		stringcss += ''
 		stringcss += '.gravity {background-color: rgba(255, 255, 255, 0.05);}'
-		stringcss += ''
 		stringcss += '.player .content {transform:rotate(-45deg)}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
@@ -356,12 +351,14 @@ class DivManager {
 				itemstock = document.createElement('div')
 				itemstock.id = 'stockfuel' + obj.div + '-' + obj.immat;
 				itemstock.className = 'stockitem stockfuel';
+				itemsentence = '[' + (obj.stock.fuel[0] ?? 0) + '] Fuel Stocks(regen: ' + (obj.stock.fuel[1] ?? 0) + ' / ' + (obj.stock.fuel[2] ?? 0) + ')';
+				itemstock.title = itemsentence
 				itemstock.textContent = '☕';//
 				//--
 				itemstockcount = document.createElement('div')
 				itemstockcount.id = 'stockfuelcount' + obj.div + '-' + obj.immat;
 				itemstockcount.className = 'stockcount';
-				itemstockcount.textContent = obj.stock.fuel[0]
+				itemstockcount.textContent = itemsentence
 				//--
 				itemstock.appendChild(itemstockcount)
 				elemstock.appendChild(itemstock)
@@ -370,7 +367,16 @@ class DivManager {
 				itemstock = document.createElement('div')
 				itemstock.id = 'stockfood' + obj.div + '-' + obj.immat;
 				itemstock.className = 'stockitem stockfood';
+				itemsentence = '[' + (obj.stock.food[0] ?? 0) + '] Food Stocks(regen: ' + (obj.stock.food[1] ?? 0) + ' / ' + (obj.stock.food[2] ?? 0) + ')';
+				itemstock.title = itemsentence
 				itemstock.textContent = '🍽️';//🥛
+				//--
+				itemstockcount = document.createElement('div')
+				itemstockcount.id = 'stockfoodcount' + obj.div + '-' + obj.immat;
+				itemstockcount.className = 'stockcount';
+				itemstockcount.textContent = itemsentence
+				//--
+				itemstock.appendChild(itemstockcount)
 				elemstock.appendChild(itemstock)
 			}
 			elem.appendChild(elemstock)
@@ -380,11 +386,6 @@ class DivManager {
 		let eleminfo = document.createElement('div')
 		eleminfo.id = 'info' + obj.div + '-' + obj.immat;
 		eleminfo.className = 'info'
-		// elemdatas.style.width = obj.sizwhl.w + this.IniDatas.px
-		// elemdatas.style.height = obj.sizwhl.h + this.IniDatas.px
-		// eleminfo.style.position = 'absolute';
-		// elemdatas.style.backgroundColor = '';
-
 
 		let elempos = document.createElement('div')
 		elempos.id = 'datas' + obj.div + '-' + obj.immat;
@@ -392,7 +393,12 @@ class DivManager {
 		eleminfo.appendChild(elempos)
 		elempos = document.createElement('div')
 		elempos.id = 'direction' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'deg:';
+		elempos.textContent = 'deg:' + obj.direction.deg + "°";
+		eleminfo.appendChild(elempos)
+
+		elempos = document.createElement('div')
+		elempos.id = 'datafile' + obj.div + '-' + obj.immat;
+		elempos.textContent = 'div:' + obj.div + "";
 		eleminfo.appendChild(elempos)
 
 
@@ -463,6 +469,8 @@ class DivManager {
 				// if (divinfo && obj.rangeacolor) {
 				// 	divinfo.style.backgroundColor = obj.rangeacolor
 				// }
+
+
 				// refresh information of info div
 				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
 				if (divdata) {
@@ -472,6 +480,10 @@ class DivManager {
 				let divdata2 = document.getElementById('direction' + obj.div + '-' + obj.immat)
 				if (divdata2) {
 					divdata2.textContent = 'deg:' + obj.direction.deg + '°';
+				}
+				let divdata3 = document.getElementById('datafile' + obj.div + '-' + obj.immat)
+				if (divdata3) {
+					divdata3.textContent = 'div:' + obj.div + '°';
 				}
 			}
 			else {

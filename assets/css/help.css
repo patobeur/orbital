@@ -68,6 +68,12 @@
   border-right: 2px solid rgba(172, 255, 47, 0.596);
 }
 
+.help.animate__empty {
+  opacity: 0;
+  -webkit-animation: 1s 10s 1 animate__empty;
+          animation: 1s 10s 1 animate__empty;
+}
+
 @-webkit-keyframes animate__fadeOut {
   0% {
     left: -120px;
@@ -148,6 +154,20 @@
 }
 
 @keyframes animate__right {
+  0% {
+  }
+  100% {
+  }
+}
+
+@-webkit-keyframes animate__empty {
+  0% {
+  }
+  100% {
+  }
+}
+
+@keyframes animate__empty {
   0% {
   }
   100% {

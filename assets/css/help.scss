@@ -54,6 +54,10 @@
 			border-right: 2px solid rgba(172, 255, 47, 0.596);
 		}
 	}
+	&.animate__empty {
+		opacity: 0;
+		animation: 1s 10s 1 animate__empty;
+	}
 }
 @keyframes animate__fadeOut {
 	0% {
@@ -95,6 +99,14 @@
 	}
 }
 @keyframes animate__right {
+	0% {
+		// right: 150%;
+	}
+	100% {
+		// left: 150%;
+	}
+}
+@keyframes animate__empty {
 	0% {
 		// right: 150%;
 	}

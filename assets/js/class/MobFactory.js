@@ -46,10 +46,10 @@ class MobFactory {
 				},
 				satellite: {
 					rangeacolor: "rgba(255, 0, 252, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					}
+					// stock: {
+					// 	water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					// 	air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+					// }
 				},
 				meteorite: {
 					rangeacolor: "rgba(255, 0, 252, 0.05)",
@@ -72,6 +72,7 @@ class MobFactory {
 					stock: {
 						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
 						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
+						fuel: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
 					}
 				},
 				fruits: {
@@ -190,7 +191,7 @@ class MobFactory {
 			velxyz: { x: 1, y: 1, z: 1, cx: 0, cy: 0, cz: 0 },
 			//parentimmat: [0],
 			tetha: [0, 360, 0.03],
-			direction: { ratio: 0, degZ: 360, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+			direction: { ratio: 0, degZ: 360, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
 			stock: { water: [10000, .1, 100], fuel: [10000, .1, 100] },
 			status: { immune: false }
 		})

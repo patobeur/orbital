@@ -1,5 +1,5 @@
 # orbital
-game idea with orbitals functions and only css, html, javascript
+game idea with orbitals functions, css, html and javascript !
 
 https://patobeur.github.io/orbital/
 
