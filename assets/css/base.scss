@@ -151,6 +151,7 @@ body {
 	}
 	.sob:hover .info,
 	.mob:hover .info {
+		width: max-content;
 		display: block;
 		// opacity: 1;
 		// transition: opacity 1s ease;

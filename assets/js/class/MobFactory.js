@@ -112,6 +112,7 @@ class MobFactory {
 			ia: objdatas.ia ?? false,
 			objtype: objdatas.objtype ?? false,
 			objname: objdatas.objname ?? false,
+			name: objdatas.name ?? 'unknown',
 			classname: objdatas.classname ?? false,
 			textcontent: objdatas.textcontent ?? false,
 			posxyz: objdatas.posxyz ?? false,
@@ -267,7 +268,8 @@ class MobFactory {
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 25, h: 25, l: 50 },
 			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 400, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 }
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 400, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
+			contact: { social: [], exchange: [] }
 		})
 		// this.add_obj({
 		// 	div: 'mob', // mob is mobile or sob is static

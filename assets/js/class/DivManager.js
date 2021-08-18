@@ -208,6 +208,8 @@ class DivManager {
 		let classname = obj.classname +
 			(obj.objtype ? ' ' + obj.objtype : '') +
 			(obj.objdiv ? ' ' + obj.objdiv : '')
+
+		// CREATION OBJ
 		let elem = document.createElement('div')
 		elem.id = obj.objname + '' + obj.div + '-' + obj.immat;
 		// elem.style.top = (obj.posxyz.y - (obj.sizwhl.h / 2)) + this.IniDatas.px;
@@ -280,11 +282,12 @@ class DivManager {
 			elemhelp.id = 'help-' + obj.immat;
 			elemhelp.className = 'help'
 
+			// tutorial container div
 			let helptxt = document.createElement('div')
 			helptxt.id = 'helptxt-' + obj.immat;
 			helptxt.className = 'helptxt'
-			helptxt.textContent = '🪕💡'
-
+			// helptxt.textContent = '🪕💡'
+			// littl square indicator
 			let square = document.createElement('div')
 			square.className = 'square'
 			elemhelp.appendChild(helptxt)
@@ -392,25 +395,39 @@ class DivManager {
 			}
 			elem.appendChild(elemstock)
 		}
-		// datas-----------------------------------------------
-
+		// datas information about object
 		let eleminfo = document.createElement('div')
 		eleminfo.id = 'info' + obj.div + '-' + obj.immat;
 		eleminfo.className = 'info'
 
 		let elempos = document.createElement('div')
-		elempos.id = 'datas' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'x:0,y:0,z:0';
+		elempos.id = 'datafile' + obj.div + '-' + obj.immat;
+		elempos.textContent = '' + obj.name + "";
 		eleminfo.appendChild(elempos)
+
+		// elempos = document.createElement('div')
+		// elempos.id = 'datas' + obj.div + '-' + obj.immat;
+		// elempos.textContent = 'x:0,y:0,z:0';
+		// eleminfo.appendChild(elempos)
+
+		elempos = document.createElement('div')
+		elempos.id = 'datasx' + obj.div + '-' + obj.immat;
+		elempos.textContent = 'x:0';
+		eleminfo.appendChild(elempos)
+		elempos = document.createElement('div')
+		elempos.id = 'datasy' + obj.div + '-' + obj.immat;
+		elempos.textContent = 'y:0';
+		eleminfo.appendChild(elempos)
+		elempos = document.createElement('div')
+		elempos.id = 'datasz' + obj.div + '-' + obj.immat;
+		elempos.textContent = 'z:0';
+		eleminfo.appendChild(elempos)
+
 		elempos = document.createElement('div')
 		elempos.id = 'direction' + obj.div + '-' + obj.immat;
 		elempos.textContent = 'deg:' + obj.direction.deg + "°";
 		eleminfo.appendChild(elempos)
 
-		elempos = document.createElement('div')
-		elempos.id = 'datafile' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'div:' + obj.div + "";
-		eleminfo.appendChild(elempos)
 
 
 
@@ -455,9 +472,6 @@ class DivManager {
 				// 		// divrange.style.backgroundColor = obj.rangeacolor
 				// 	}
 				// }
-				obj.status.immune && obj.statusdelay.immune[0] > 0
-					? currentMob.classList.add('immune')
-					: currentMob.classList.remove('immune')
 				obj.collide && obj.collide.colliderangea
 					? currentMob.classList.add('rangea')
 					: currentMob.classList.remove('rangea')
@@ -467,6 +481,9 @@ class DivManager {
 				obj.contact && obj.contact.social.length > 0
 					? currentMob.classList.add('social')
 					: currentMob.classList.remove('social')
+				obj.status.immune && obj.statusdelay.immune[0] > 0
+					? currentMob.classList.add('immune')
+					: currentMob.classList.remove('immune')
 
 				// let divsocial = document.getElementById('social' + obj.div + '-' + obj.immat)
 				// // if (obj.objtype === 'player') {
@@ -494,10 +511,22 @@ class DivManager {
 
 
 				// refresh information of info div
-				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
-				if (divdata) {
-					divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
+				let divdatax = document.getElementById('datasx' + obj.div + '-' + obj.immat)
+				if (divdatax) {
+					divdatax.textContent = 'x:' + parseInt(obj.posxyz.x) + '°';
 				}
+				let divdatay = document.getElementById('datasy' + obj.div + '-' + obj.immat)
+				if (divdatay) {
+					divdatay.textContent = 'x:' + parseInt(obj.posxyz.y) + '°';
+				}
+				let divdataz = document.getElementById('datasz' + obj.div + '-' + obj.immat)
+				if (divdataz) {
+					divdataz.textContent = 'x:' + parseInt(obj.posxyz.z) + '°';
+				}
+				// let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
+				// if (divdata) {
+				// 	divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
+				// }
 				// refresh information of info div
 				let divdata2 = document.getElementById('direction' + obj.div + '-' + obj.immat)
 				if (divdata2) {
@@ -525,8 +554,19 @@ class DivManager {
 				// divrange.style.backgroundColor = obj.rangeacolor
 
 				// xpspan.textContent = this.getstars(obj.lv)
-				let divdata = document.getElementById('datas' + obj.div + '-' + obj.immat)
-				divdata.textContent = 'x:' + parseInt(obj.posxyz.x) + ',y:' + parseInt(obj.posxyz.y) + ',z:' + parseInt(obj.posxyz.z);
+				// refresh information of info div
+				let divdatax = document.getElementById('datasx' + obj.div + '-' + obj.immat)
+				if (divdatax) {
+					divdatax.textContent = 'x:' + parseInt(obj.posxyz.x) + '°';
+				}
+				let divdatay = document.getElementById('datasy' + obj.div + '-' + obj.immat)
+				if (divdatay) {
+					divdatay.textContent = 'x:' + parseInt(obj.posxyz.y) + '°';
+				}
+				let divdataz = document.getElementById('datasz' + obj.div + '-' + obj.immat)
+				if (divdataz) {
+					divdataz.textContent = 'x:' + parseInt(obj.posxyz.z) + '°';
+				}
 			}
 		})
 	}

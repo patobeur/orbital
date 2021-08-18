@@ -52,8 +52,8 @@ class Ordinator {
 	}
 	start() {
 		this.MF.create_EveryBasics()
-		this.MF.mobs[0].status.immune = true
-		this.MF.mobs[0].statusdelay.immune = [1, 4050] //time in msec
+		// this.MF.mobs[0].status.immune = true
+		// this.MF.mobs[0].statusdelay.immune = [1, 4050] //time in msec
 		this.gameOn = true
 		this.pauseOn = false
 		this.tutorialFinish = false
@@ -77,84 +77,108 @@ class Ordinator {
 				});
 				break;
 			case 2:
-				this.animateHelpCSS(0, 'left', false, 'This is your ship !').then((message) => {
+				this.animateHelpCSS(0, 'left', false, this.tutorialNum + '/15 This is your ship !').then((message) => {
 					this.set_NiceSpeed(this.MF.mobs[0], 5) // slower speed
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 3:
-				this.animateHelpCSS(0, 'right', false, 'Let run a short training !').then((message) => {
+				this.animateHelpCSS(0, 'right', false, this.tutorialNum + '/15 Let run a short training !').then((message) => {
 					this.set_NiceSpeed(this.MF.mobs[0], 4) // speed up
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 4:
-				this.animateHelpCSS(0, 'fadeOut2', false, 'up & down arrows for throttle !').then((message) => {
+				this.animateHelpCSS(0, 'fadeOut2', false, this.tutorialNum + '/15 up & down arrows for throttle !').then((message) => {
 					this.set_NiceSpeed(this.MF.mobs[0], 5) // slower speed
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 5:
-				this.animateHelpCSS(0, 'fadeOut', false, 'Left & right arrows to Rotate !').then((message) => {
-					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
+				this.animateHelpCSS(0, 'fadeOut', false, this.tutorialNum + '/15 Left & right arrows to Rotate !').then((message) => {
 					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)// rot right
+					this.MF.mobs[0].collide.colliderangea = true
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 6:
-				this.animateHelpCSS(0, 'right', false, "Flashing blue range mean u'r immune !!").then((message) => {
-					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)// rot right
+				this.animateHelpCSS(0, 'fadeOut2', false, this.tutorialNum + "/15 Orange mean Danger !!").then((message) => {
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
+					this.MF.mobs[0].collide.collidealert = true
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 7:
-				this.animateHelpCSS(0, 'fadeOut', false, "Orange mean Danger !!").then((message) => {
-					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
-					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 1) // rot left
+				this.animateHelpCSS(0, 'right', false, this.tutorialNum + "/15 Background Red mean imminent Danger !!").then((message) => {
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)// rot right
+					this.MF.mobs[0].collide.collidealert = false
+					this.MF.mobs[0].collide.colliderangea = false
+					this.MF.mobs[0].status.immune = true
+					this.MF.mobs[0].statusdelay.immune = [1, 50]
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 8:
-				this.animateHelpCSS(0, 'right', false, "Background Red mean imminent Danger !!").then((message) => {
+				this.animateHelpCSS(0, 'left', false, this.tutorialNum + "/15 Flashing blue range mean u are immune !!").then((message) => {
+					this.set_NiceDegrees_KeyPressed(this.MF.mobs[0], 3)// rot right
+					this.MF.mobs[0].collide.colliderangea = true
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 9:
-				this.animateHelpCSS(0, 'stock', false, "This is all your Ressources !").then((message) => {
+				this.animateHelpCSS(0, 'stock', false, this.tutorialNum + "/15 This is all your Ressources !").then((message) => {
+
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 10:
-				this.animateHelpCSS(0, 'fadeOut', false, "You'll need to gather some to survive.").then((message) => {
+				this.animateHelpCSS(0, 'fadeOut', false, this.tutorialNum + "/15 You'll need to gather some to survive.").then((message) => {
+					this.MF.mobs[0].contact.social = [0, 0]
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
 			case 11:
-				this.animateHelpCSS(0, 'right', false, 'Your on your own now !').then((message) => {
+				this.animateHelpCSS(0, 'right', false, this.tutorialNum + "/15 Move nearest other to share some stoks.").then((message) => {
+					this.tutorialNum += 1
+					this.set_tutorial(this.tutorialNum)
+				});
+				break;
+			case 12:
+				this.animateHelpCSS(0, 'left', false, this.tutorialNum + '/15 Green range mean u have contact with nearby object !').then((message) => {
+					this.MF.mobs[0].contact.social = false
+					this.tutorialNum += 1
+					this.tutorialFinish = true
+					this.set_tutorial(this.tutorialNum)
+				});
+				break;
+			case 13:
+				this.animateHelpCSS(0, 'fadeOut', false, this.tutorialNum + '/15 Your on your own now !').then((message) => {
 					// this.set_NiceSpeed(this.MF.mobs[0], 5)
 					this.tutorialNum += 1
 					this.tutorialFinish = true
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
-			case 12:
-				this.animateHelpCSS(0, 'empty', false, 'What else ?').then((message) => {
+			case 14:
+				this.animateHelpCSS(0, 'empty', false, this.tutorialNum + '/15 What else ?').then((message) => {
 					// this.set_NiceSpeed(this.MF.mobs[0], 5)
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
-			case 13:
-				this.animateHelpCSS(0, 'right', true, 'Oh  !! Removing Immunity. WATCH OUT !!! ').then((message) => {
+			case 15:
+				this.animateHelpCSS(0, 'right', true, this.tutorialNum + '/15 Oh  !! Removing Immunity. WATCH OUT !!! ').then((message) => {
 					this.MF.mobs[0].status.immune = false
 					this.MF.mobs[0].statusdelay.immune = [0, 0]
 					this.MF.mobs[0].lv += 1
@@ -258,26 +282,37 @@ class Ordinator {
 				this.mobsIA()
 				this.DM.redrawAllMobs(this.MF.mobs)
 				this.DM.redrawAllSobs(this.MF.sobs)
-				// this.EarthIA()
-				// this.redrawAllMobs()
-				// this.checkWin()
-
-
+				// this.EarthIA() // to think about -> mission dealer ???
+				// this.checkWinOrLoose() // to doooooo
 				this.MF.mobs[0].status.dead ? this.gameOver = true : ''
 			}
 		}
 	}
 	reset_obj_tmp = (objs) => {
 		for (let index = 0; index < objs.length; index++) {
-			objs[index].collide = {
-				collidesocial: false,
-				colliderangea: false,
-				collideself: false,
-				collidealert: false
+			if (objs[index].objtype != 'player') {
+				objs[index].collide = {
+					collidesocial: false,
+					colliderangea: false,
+					collideself: false,
+					collidealert: false
+				}
+				if (objs[index].contact) {
+					objs[index].contact.social = []
+					objs[index].contact.exchange = []
+				}
 			}
-			if (objs[index].contact) {
-				objs[index].contact.social = []
-				objs[index].contact.exchange = []
+			if (objs[index].objtype === 'player' && this.tutorialFinish) {
+				objs[index].collide = {
+					collidesocial: false,
+					colliderangea: false,
+					collideself: false,
+					collidealert: false
+				}
+				if (objs[index].contact) {
+					objs[index].contact.social = []
+					objs[index].contact.exchange = []
+				}
 			}
 		}
 	}
@@ -329,33 +364,26 @@ class Ordinator {
 				let obj = this.MF.mobs[index];
 
 				if (obj.ia && !obj.parentimmat) {
-
 					this.set_NewNiceDirection(obj)
 					this.set_NewNicePosition_broken(obj)
-
 					this.check_IsPosOutScreen(obj)
 					if (!obj.status.immune) {
 						// CHECK COLLiSION with mobs
 						this.check_collisions(obj, 'mobs')
 						// this.check_collisions(obj, 'sobs')
 					}
-					// this.check_contacts(obj, 'mobs')
-
-
 				}
 				else if (obj.objtype === 'player') {
-
-
-
-					if (!obj.status.immune) {
-						// CHECK COLLiSION with mobs
-						this.check_collisions(obj, 'mobs')
-						this.check_collisions(obj, 'sobs')
+					if (this.tutorialFinish) {
+						if (!obj.status.immune) {
+							// CHECK COLLiSION with mobs
+							this.check_collisions(obj, 'mobs')
+							this.check_collisions(obj, 'sobs')
+							this.check_contacts(obj, 'mobs')
+							this.check_contacts(obj, 'sobs')
+							this.check_keyboardArrows(obj)
+						}
 					}
-					this.check_contacts(obj, 'mobs')
-					this.check_contacts(obj, 'sobs')
-					this.check_keyboardArrows(obj)
-
 					if (this.posTest) {
 						this.set_NewNicePosition_testing(obj)
 					} else {
@@ -385,6 +413,7 @@ class Ordinator {
 				let test = ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2));
 				if (distance < test) {
 					obj.contact.social = [0, true];
+					objB.contact.social = [0, true];
 					console.log('contact with :', objB.immat, objB.objname)
 					console.log('x', (test ? 'true' : 'false'), '<', ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2)))
 				}

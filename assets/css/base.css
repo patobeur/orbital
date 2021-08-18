@@ -195,6 +195,9 @@ body {
 
 #cosmos .sob:hover .info,
 #cosmos .mob:hover .info {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   display: block;
   -webkit-animation: displayinfo 0.5s forwards 0.2s;
           animation: displayinfo 0.5s forwards 0.2s;
