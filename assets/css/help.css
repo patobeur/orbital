@@ -64,6 +64,11 @@
           animation: 1s 3 animate__left;
 }
 
+.help.animate__end {
+  -webkit-animation: 1s animate__end;
+          animation: 1s animate__end;
+}
+
 .help.animate__right {
   -webkit-animation: 1s 3 animate__right;
           animation: 1s 3 animate__right;
@@ -165,6 +170,20 @@
 }
 
 @keyframes animate__right {
+  0% {
+  }
+  100% {
+  }
+}
+
+@-webkit-keyframes animate__end {
+  0% {
+  }
+  100% {
+  }
+}
+
+@keyframes animate__end {
   0% {
   }
   100% {

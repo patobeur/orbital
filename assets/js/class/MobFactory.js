@@ -161,7 +161,11 @@ class MobFactory {
 				colliderangea: false,
 				collideself: false,
 				collidealert: false
-			}
+			},
+			contact: objdatas.contact ? {
+				social: objdatas.contact.social ?? false,
+				exchange: objdatas.contact.exchange ?? false
+			} : false
 		}
 		if (obj.div === 'sob') {
 			obj.immat = (objdatas.parentimmat) ? (objdatas.parentimmat === -1) ? (this.sobsImmat[0] - 1) : (this.sobsImmat[0] + 1) : this.sobsImmat[0];
@@ -186,31 +190,35 @@ class MobFactory {
 			objname: 'sun',
 			classname: 'sob',
 			textcontent: '🌞',
+			name: 'The Sun',
 			posxyz: this.inidatas.get_centerPos({ w: 32, h: 32, l: 32 }),
 			sizwhl: { w: 32, h: 32, l: 32 },
 			parentimmat: false,
 			gravity: { range: { w: 400, h: 400 }, force: 1 },
 			orbitdir: 1
 		})
-		// this.add_obj({
-		// 	div: 'sob',
-		// 	objtype: 'planete',
-		// 	objname: 'earth',
-		// 	classname: 'sob',
-		// 	textcontent: '🌎',
-		// 	posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }),
-		// 	sizwhl: { w: 24, h: 24, l: 24 },
-		// 	parentimmat: [0],
-		// 	tetha: [0, 360, 0.01],
-		// 	gravity: { range: { w: 100, h: 50 }, force: 1 },
-		// 	orbitdir: 0
-		// })
+		this.add_obj({
+			div: 'sob',
+			objtype: 'planete',
+			objname: 'earth',
+			classname: 'sob',
+			textcontent: '🌎',
+			name: 'The Earth (the only one !!!)',
+			posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }),
+			sizwhl: { w: 24, h: 24, l: 24 },
+			parentimmat: [0],
+			tetha: [0, 360, 0.01],
+			gravity: { range: { w: 100, h: 50 }, force: 1 },
+			orbitdir: 0,
+			contact: { social: [], exchange: [] }
+		})
 		// this.add_obj({
 		// 	div: 'sob',
 		// 	objtype: 'satellite',
 		// 	objname: 'moon',
 		// 	classname: 'sob',
 		// 	textcontent: '🌑',
+		// name: 'The Moon',
 		// 	posxyz: this.inidatas.get_centerPos({ w: 16, h: 16, l: 16 }),
 		// 	sizwhl: { w: 16, h: 16, l: 16 },
 		// 	parentimmat: [1],
@@ -224,13 +232,15 @@ class MobFactory {
 			objname: 'player',
 			classname: 'mob',
 			textcontent: '🚀',
+			name: 'You',
 			posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }, { y: 'bottom' }),
 			sizwhl: { w: 24, h: 24, l: 24 },
 			velxyz: { x: 1, y: 1, z: 1, cx: 0, cy: 0, cz: 0 },
 			//parentimmat: [0],
 			tetha: [0, 360, 0.03],
-			direction: { ratio: 0, degZ: 360, deg: 0, delay: 1, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
-			status: { immune: false }
+			direction: { ratio: 0, degZ: 360, deg: 0, delay: 1, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
+			status: { immune: false },
+			contact: { social: [], exchange: [] }
 		})
 		this.add_obj({
 			div: 'sob', // mob is mobile or sob is static
@@ -239,10 +249,12 @@ class MobFactory {
 			objname: 'ennemy',
 			classname: 'sob',
 			textcontent: '🛰️',
+			name: 'SOLXIII (Sun Of Light earth Base ! )',
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 24, h: 24, l: 24 },
 			parentimmat: [0],
-			tetha: [90, 360, 0.01]
+			tetha: [90, 360, 0.01],
+			contact: { social: [], exchange: [] }
 		})
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
@@ -251,10 +263,11 @@ class MobFactory {
 			objname: 'ennemy',
 			classname: 'mob',
 			textcontent: '🛸',
+			name: 'Billy Alien',
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 25, h: 25, l: 50 },
 			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 400, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 }
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 400, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 }
 		})
 		// this.add_obj({
 		// 	div: 'mob', // mob is mobile or sob is static
@@ -263,10 +276,11 @@ class MobFactory {
 		// 	objname: 'ennemy',
 		// 	classname: 'mob',
 		// 	textcontent: '🛸',
+		// 		name: 'OVNI',
 		// 	posxyz: this.inidatas.get_randomPos(),
 		// 	sizwhl: { w: 15, h: 15, l: 15 },
 		// 	parentimmat: false,
-		// 	direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+		// 	direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
 		// })
 		// this.add_obj({
 		// 	div: 'mob', // mob is mobile or sob is static
@@ -275,10 +289,11 @@ class MobFactory {
 		// 	objname: 'ennemy',
 		// 	classname: 'mob',
 		// 	textcontent: '🛸',
+		// 		name: 'OVNI',
 		// 	posxyz: this.inidatas.get_randomPos(),
 		// 	sizwhl: { w: 15, h: 15, l: 15 },
 		// 	parentimmat: false,
-		// 	direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+		// 	direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
 		// })
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
@@ -287,11 +302,13 @@ class MobFactory {
 			objname: 'kiwi',
 			classname: 'mob',
 			textcontent: '🥝',
+			name: 'A SpaceFrozen kiwi',
 			stock: { food: [10, 0, 0] },
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 15, h: 15, l: 15 },
 			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 100, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 5 },
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 100, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+			contact: { exchange: [] }
 		})
 		// for (let index = 0; index < 3; index++) {
 		// 	this.add_obj({
@@ -301,6 +318,7 @@ class MobFactory {
 		// 		objname: 'ennemy',
 		// 		classname: 'mob',
 		// 		textcontent: '🛸',
+		// 		name: 'OVNI',
 		// 		posxyz: this.inidatas.get_randomPos(),
 		// 		sizwhl: { w: 24, h: 24, l: 24 },
 		// 		parentimmat: false

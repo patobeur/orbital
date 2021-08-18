@@ -1,6 +1,7 @@
 "use strict";
 class Ordinator {
 	constructor() {
+		this.posTest = false // testing new coordinates
 		this.tutorialNum = 1
 		this.tutorialFinish = false
 		this.DM = new DivManager()
@@ -178,12 +179,15 @@ class Ordinator {
 		let d = obj.direction.deg
 		let v = obj.velxyz.x
 
-		let nextX = (v * Math.cos(d))
-		let nextY = (v * Math.sin(d))
+		let nextX = (1 * Math.cos(d)) + (1 * Math.sin(d))
+		let nextY = (1 * Math.sin(d)) - (1 * Math.cos(d))
+
+		// let nextX = (v * Math.cos(d))
+		// let nextY = (v * Math.sin(d))
 
 		// let nextZ = 
-		obj.posxyz.x = parseInt((x + (nextX)) * 10) / 10
-		obj.posxyz.y = parseInt((y + (nextY)) * 10) / 10
+		obj.posxyz.x = x + parseInt(((nextX)) * 10) / 10
+		obj.posxyz.y = y + parseInt(((nextY)) * 10) / 10
 
 		console.log('from deg:' + d, 'x:' + x, 'y:' + y, 'v:' + v)
 		console.log('to - deg:' + d, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'v:' + v)
@@ -271,7 +275,10 @@ class Ordinator {
 				collideself: false,
 				collidealert: false
 			}
-
+			if (objs[index].contact) {
+				objs[index].contact.social = []
+				objs[index].contact.exchange = []
+			}
 		}
 	}
 	get_NextOrbitPos = (obj) => {
@@ -332,21 +339,28 @@ class Ordinator {
 						this.check_collisions(obj, 'mobs')
 						// this.check_collisions(obj, 'sobs')
 					}
+					// this.check_contacts(obj, 'mobs')
 
 
 				}
 				else if (obj.objtype === 'player') {
+
+
+
 					if (!obj.status.immune) {
 						// CHECK COLLiSION with mobs
 						this.check_collisions(obj, 'mobs')
 						this.check_collisions(obj, 'sobs')
 					}
+					this.check_contacts(obj, 'mobs')
+					this.check_contacts(obj, 'sobs')
 					this.check_keyboardArrows(obj)
 
-					// this.set_NewNicePosition_testing(obj)
-					// or
-					this.set_NewNicePosition_broken(obj)
-
+					if (this.posTest) {
+						this.set_NewNicePosition_testing(obj)
+					} else {
+						this.set_NewNicePosition_broken(obj)
+					}
 					this.check_IsPosOutScreen(obj)
 				}
 
@@ -359,21 +373,22 @@ class Ordinator {
 			}
 		}
 	}
-	check_socialcontact = (obj, typeobj) => {
+	check_contacts = (obj, typeobj) => {
 		// CHECK COLLiSION with mobs
 		this.MF[typeobj].forEach(objB => {
-			if (objB.immat != obj.immat) {
+
+			// contact: { social: [], exchange: [] }
+			if (objB.immat != obj.immat && objB.contact) {
 				let distance = this.get_distance(obj, objB)
+				// if (objB.contact.social) {
 				// social range test
-				let test = (obj.ranges.social.d) + (objB.ranges.social.d);
-				(distance < test) ? obj.collide.collidesocial = true : '';
-
-				if (obj.collide.collidesocial === true) {
-					console.log('x', objB.immat, objB.objname, distance, (obj.ranges.social.d / 2) + (objB.ranges.social.d / 2))
+				let test = ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2));
+				if (distance < test) {
+					obj.contact.social = [0, true];
+					console.log('contact with :', objB.immat, objB.objname)
+					console.log('x', (test ? 'true' : 'false'), '<', ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2)))
 				}
-				else { console.log('not colliding') }
-
-				// this.check_collisionsDirectives(obj, objB)
+				// }
 			}
 		});
 	}
@@ -512,7 +527,7 @@ class Ordinator {
 	set_NewNiceDirection = (obj) => {
 
 		if (obj.direction.currentdelay === 0) {
-			console.log('acting', obj.objtype, obj.direction)
+			// console.log('acting', obj.objtype, obj.direction)
 			let newdir = this.DM.aleaEntreBornes(1, 2) === 1 ? 22.5 : -22.5;
 			// let marge = (360 / 8)
 			let nd = obj.direction.deg += newdir
@@ -524,7 +539,7 @@ class Ordinator {
 				obj.direction.deg = 360
 				errors.push('newdir set_NewNiceDirection : ' + obj.direction.deg + '-' + obj.objtype + '-' + ' immat:' + obj.immat)
 			}
-			console.log('nex dir : ' + obj.direction.deg)
+			// console.log('sorting new direction : ' + obj.direction.deg)
 		}
 		obj.direction.currentdelay += 1
 		if (obj.direction.currentdelay >= obj.direction.delay) {

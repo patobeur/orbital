@@ -182,8 +182,8 @@ body {
   outline: 3px dotted rgba(54, 190, 13, 0.15);
 }
 
-#cosmos .sob.socialact .social,
-#cosmos .mob.socialact .social {
+#cosmos .sob.social .social,
+#cosmos .mob.social .social {
   outline: 3px dotted rgba(137, 248, 11, 0.664);
 }
 
