@@ -119,7 +119,7 @@ class MobFactory {
 			velxyz: objdatas.velxyz ?? { x: 1, y: 1, z: 1, cx: 1, cy: 1, cz: 1 },// own velocity statisticsactuals speeds
 			parentimmat: objdatas.parentimmat ?? false,
 			// movement 
-			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 1 },
+			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 22.5 },
 			status: {
 				etheral: false,
 				dead: false,
@@ -192,31 +192,31 @@ class MobFactory {
 			gravity: { range: { w: 400, h: 400 }, force: 1 },
 			orbitdir: 1
 		})
-		this.add_obj({
-			div: 'sob',
-			objtype: 'planete',
-			objname: 'earth',
-			classname: 'sob',
-			textcontent: '🌎',
-			posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }),
-			sizwhl: { w: 24, h: 24, l: 24 },
-			parentimmat: [0],
-			tetha: [0, 360, 0.01],
-			gravity: { range: { w: 100, h: 50 }, force: 1 },
-			orbitdir: 0
-		})
-		this.add_obj({
-			div: 'sob',
-			objtype: 'satellite',
-			objname: 'moon',
-			classname: 'sob',
-			textcontent: '🌑',
-			posxyz: this.inidatas.get_centerPos({ w: 16, h: 16, l: 16 }),
-			sizwhl: { w: 16, h: 16, l: 16 },
-			parentimmat: [1],
-			tetha: [0, 360, 0.03],
-			orbitdir: 1
-		})
+		// this.add_obj({
+		// 	div: 'sob',
+		// 	objtype: 'planete',
+		// 	objname: 'earth',
+		// 	classname: 'sob',
+		// 	textcontent: '🌎',
+		// 	posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }),
+		// 	sizwhl: { w: 24, h: 24, l: 24 },
+		// 	parentimmat: [0],
+		// 	tetha: [0, 360, 0.01],
+		// 	gravity: { range: { w: 100, h: 50 }, force: 1 },
+		// 	orbitdir: 0
+		// })
+		// this.add_obj({
+		// 	div: 'sob',
+		// 	objtype: 'satellite',
+		// 	objname: 'moon',
+		// 	classname: 'sob',
+		// 	textcontent: '🌑',
+		// 	posxyz: this.inidatas.get_centerPos({ w: 16, h: 16, l: 16 }),
+		// 	sizwhl: { w: 16, h: 16, l: 16 },
+		// 	parentimmat: [1],
+		// 	tetha: [0, 360, 0.03],
+		// 	orbitdir: 1
+		// })
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
 			ia: false,
@@ -229,7 +229,7 @@ class MobFactory {
 			velxyz: { x: 1, y: 1, z: 1, cx: 0, cy: 0, cz: 0 },
 			//parentimmat: [0],
 			tetha: [0, 360, 0.03],
-			direction: { ratio: 0, degZ: 360, deg: 0, delay: 15, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 45 },
+			direction: { ratio: 0, degZ: 360, deg: 0, delay: 1, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
 			status: { immune: false }
 		})
 		this.add_obj({
@@ -254,32 +254,32 @@ class MobFactory {
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 25, h: 25, l: 50 },
 			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 3, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 }
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 400, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 }
 		})
-		this.add_obj({
-			div: 'mob', // mob is mobile or sob is static
-			ia: true,
-			objtype: 'fsaucer',
-			objname: 'ennemy',
-			classname: 'mob',
-			textcontent: '🛸',
-			posxyz: this.inidatas.get_randomPos(),
-			sizwhl: { w: 15, h: 15, l: 15 },
-			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
-		})
-		this.add_obj({
-			div: 'mob', // mob is mobile or sob is static
-			ia: true,
-			objtype: 'fsaucer',
-			objname: 'ennemy',
-			classname: 'mob',
-			textcontent: '🛸',
-			posxyz: this.inidatas.get_randomPos(),
-			sizwhl: { w: 15, h: 15, l: 15 },
-			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
-		})
+		// this.add_obj({
+		// 	div: 'mob', // mob is mobile or sob is static
+		// 	ia: true,
+		// 	objtype: 'fsaucer',
+		// 	objname: 'ennemy',
+		// 	classname: 'mob',
+		// 	textcontent: '🛸',
+		// 	posxyz: this.inidatas.get_randomPos(),
+		// 	sizwhl: { w: 15, h: 15, l: 15 },
+		// 	parentimmat: false,
+		// 	direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+		// })
+		// this.add_obj({
+		// 	div: 'mob', // mob is mobile or sob is static
+		// 	ia: true,
+		// 	objtype: 'fsaucer',
+		// 	objname: 'ennemy',
+		// 	classname: 'mob',
+		// 	textcontent: '🛸',
+		// 	posxyz: this.inidatas.get_randomPos(),
+		// 	sizwhl: { w: 15, h: 15, l: 15 },
+		// 	parentimmat: false,
+		// 	direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 22.5 },
+		// })
 		this.add_obj({
 			div: 'mob', // mob is mobile or sob is static
 			ia: true,
@@ -291,7 +291,7 @@ class MobFactory {
 			posxyz: this.inidatas.get_randomPos(),
 			sizwhl: { w: 15, h: 15, l: 15 },
 			parentimmat: false,
-			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(0, 360), delay: 5, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 1 },
+			direction: { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(1, 360), delay: 100, currentdelay: 0, way: [0, 0, 0, 0], compass: '', agility: 5 },
 		})
 		// for (let index = 0; index < 3; index++) {
 		// 	this.add_obj({

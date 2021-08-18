@@ -170,19 +170,23 @@ class Ordinator {
 				break;
 		}
 	}
-
 	set_NewNicePosition_testing = (obj) => { // get hypotenus with pythaGore
+		obj.direction.deg = (obj.direction.deg === 0) ? 360 : obj.direction.deg
+
 		let x = obj.posxyz.x
 		let y = obj.posxyz.y
-		let distance = obj.velxyz.x
-		let nextX = parseInt(x + ((distance * Math.cos(obj.direction.deg) * 10) / 10))
-		let nextY = parseInt(y + ((distance * Math.sin(obj.direction.deg) * 10) / 10))
-		// let nextX = x + (parseInt(((distance * Math.cos(obj.direction.deg))) * 10) / 10)
-		// let nextY = y + (parseInt(((distance * Math.sin(obj.direction.deg))) * 10) / 10)
+		let d = obj.direction.deg
+		let v = obj.velxyz.x
+
+		let nextX = (v * Math.cos(d))
+		let nextY = (v * Math.sin(d))
+
 		// let nextZ = 
-		obj.posxyz.x = nextX
-		obj.posxyz.y = nextY
-		console.log('deg:' + obj.direction.deg, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.x,)
+		obj.posxyz.x = parseInt((x + (nextX)) * 10) / 10
+		obj.posxyz.y = parseInt((y + (nextY)) * 10) / 10
+
+		console.log('from deg:' + d, 'x:' + x, 'y:' + y, 'v:' + v)
+		console.log('to - deg:' + d, 'x:' + obj.posxyz.x, 'y:' + obj.posxyz.y, 'v:' + v)
 		// obj.posxyz.z = nextZ
 
 		// console.log(nextX, nextY, nextZ)
@@ -318,8 +322,10 @@ class Ordinator {
 				let obj = this.MF.mobs[index];
 
 				if (obj.ia && !obj.parentimmat) {
+
 					this.set_NewNiceDirection(obj)
 					this.set_NewNicePosition_broken(obj)
+
 					this.check_IsPosOutScreen(obj)
 					if (!obj.status.immune) {
 						// CHECK COLLiSION with mobs
@@ -329,11 +335,6 @@ class Ordinator {
 
 
 				}
-				// else if (obj.objtype === 'player') {//ia && obj.direction) {
-				// 	this.set_NewNiceDirection(obj)
-				// 	this.set_NewNicePosition_broken(obj)
-				// 	this.check_IsPosOutScreen(obj)
-				// }
 				else if (obj.objtype === 'player') {
 					if (!obj.status.immune) {
 						// CHECK COLLiSION with mobs
@@ -348,11 +349,6 @@ class Ordinator {
 
 					this.check_IsPosOutScreen(obj)
 				}
-				// else if (obj.parentimmat && obj.direction) {
-				// 	this.set_NewNiceDirection(obj)
-				// 	this.set_NewNicePosition_broken(obj)
-				// 	this.get_NextOrbitPos(obj)
-				// }
 
 			}
 			for (let index = 0; index < this.MF.sobs.length; index++) {
@@ -484,7 +480,10 @@ class Ordinator {
 			obj.direction.deg = (obj.direction.deg - obj.direction.agility) <= 0 ? obj.direction.deg - obj.direction.agility + 360 : obj.direction.deg - obj.direction.agility
 		}
 		// if errors
-		if (obj.direction.deg < 0 || obj.direction.deg > 360) { errors.push(['set_NiceDegrees_KeyPressed', obj.direction.deg + ' out of range']) }
+		if (obj.direction.deg < 0 || obj.direction.deg > 360) {
+			obj.direction.deg = 360
+			errors.push(['set_NiceDegrees_KeyPressed', obj.direction.deg + ' out of range'])
+		}
 		// console.log(obj.direction.deg)
 	}
 	set_NiceSpeed = (obj, type) => {
@@ -511,22 +510,25 @@ class Ordinator {
 		}
 	}
 	set_NewNiceDirection = (obj) => {
-		if (obj.direction.currentdelay < 1) {
 
-			let marge = (360 / 8)
-			let nex = this.DM.aleaEntreBornes(-obj.direction.agility, obj.direction.agility) + marge
-			let nd = obj.direction.deg += nex
+		if (obj.direction.currentdelay === 0) {
+			console.log('acting', obj.objtype, obj.direction)
+			let newdir = this.DM.aleaEntreBornes(1, 2) === 1 ? 22.5 : -22.5;
+			// let marge = (360 / 8)
+			let nd = obj.direction.deg += newdir
 
 			nd = (nd > 360) ? (nd - 360) : nd;
 			nd = (nd <= 0) ? (360 - nd) : nd;
 			obj.direction.deg = nd;
-			obj.direction.currentdelay += 1
-			if (obj.direction.currentdelay > obj.direction.delay) {
-				obj.direction.currentdelay = 0
-			}
 			if (obj.direction.deg < 0 || obj.direction.deg > 360) {
+				obj.direction.deg = 360
 				errors.push('newdir set_NewNiceDirection : ' + obj.direction.deg + '-' + obj.objtype + '-' + ' immat:' + obj.immat)
 			}
+			console.log('nex dir : ' + obj.direction.deg)
+		}
+		obj.direction.currentdelay += 1
+		if (obj.direction.currentdelay >= obj.direction.delay) {
+			obj.direction.currentdelay = 0
 		}
 	}
 	get_distance = (a, b) => { // get hypotenus with pythaGore
