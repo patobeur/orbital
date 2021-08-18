@@ -12,6 +12,7 @@
 body {
 	overflow: hidden;
 	font-family: monospace;
+	background-color: rgb(0, 0, 0);
 }
 #orbitalbrand {
 	position: absolute;
@@ -24,6 +25,30 @@ body {
 	font-size: 1.5rem;
 	line-height: 1.5rem;
 	font-weight: 800;
+}
+#lunar {
+	background-color: rgb(12, 8, 51) !important;
+	&.invertedscreencoolor {
+		background-color: rgb(255, 255, 255) !important;
+		filter: invert(1);
+		#cosmos {
+			background-color: rgb(153, 65, 99) !important;
+			// background-image: none !important;
+		}
+		.mob,
+		.sob {
+			filter: invert(1);
+			.stock {
+				filter: invert(1);
+				.stockitem {
+					filter: invert(1);
+					&.stockair {
+						filter: invert(0);
+					}
+				}
+			}
+		}
+	}
 }
 #cosmos {
 	// background-image: url("/assets/img/grille_20px.png");
@@ -63,6 +88,7 @@ body {
 			background-color: rgba(255, 255, 255, 0.5);
 			display: none;
 			opacity: 0;
+			width: max-content;
 		}
 		.stock {
 			position: absolute;
@@ -122,41 +148,41 @@ body {
 		&.rangea {
 			.rangea {
 				border: 2px dashed rgba(255, 136, 0, 0.5);
+				animation: 0.5s infinite rangea_flash;
 			}
 		}
 		&.alert {
 			.rangea {
-				background-color: rgba(255, 0, 0, 0.315);
+				background-color: rgba(255, 0, 0, 0.1);
+				animation: 0.5s infinite rangea_flash;
 			}
 		}
 		&.immune {
 			.rangea {
 				border: 2px dashed rgba(0, 102, 255, 0.8);
-				animation: 0.5s infinite rangea_flash;
+				animation: 1s infinite immune_flash_rotate;
 			}
 		}
 		.social {
 			border-radius: 50%;
-			outline: 3px dotted rgba(54, 190, 13, 0.15);
+			border: 3px dotted rgba(54, 190, 13, 0.15);
 		}
 		&.social {
 			.social {
-				outline: 3px dotted rgba(137, 248, 11, 0.664);
+				border: 3px dotted rgba(137, 248, 11, 0.464);
+				animation: 0.5s infinite social_flash;
 			}
 		}
 		.content {
 			outline: 1px solid rgba(100, 1, 1, 0.534);
 			border-radius: 100%;
 		}
-	}
-	.sob:hover .info,
-	.mob:hover .info {
-		width: max-content;
-		display: block;
-		// opacity: 1;
-		// transition: opacity 1s ease;
-		// transition: opacity 1s ease;
-		animation: displayinfo 0.5s forwards 0.2s;
+		&:hover {
+			.info {
+				display: block;
+				animation: displayinfo 0.5s forwards 0.2s;
+			}
+		}
 	}
 }
 .ddd {
@@ -210,6 +236,7 @@ body {
 		margin: 0;
 		overflow: hidden;
 		margin: 0 0 0.2rem 0;
+		background-color: rgba(0, 0, 0, 0.801);
 		.ico,
 		.ico2 {
 			display: flex;
@@ -226,16 +253,15 @@ body {
 			line-height: 100%;
 		}
 		.explanation {
-			height: 100%;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			padding: 0;
 			padding-left: 0.5rem;
 			padding-right: 0.5rem;
-			background-color: rgba(0, 0, 0, 0.801);
 			color: white;
 			font-size: 0.9rem;
-			line-height: 0.9rem;
+			line-height: 100%;
 		}
 	}
 	.texte {
@@ -247,7 +273,7 @@ body {
 	.start {
 		// border: 1px solid rgba(0, 0, 0, 0.781);
 		padding: 0.5rem;
-		margin: 0;
+		margin-bottom: 1rem;
 		font-size: 2rem;
 		line-height: 2rem;
 		border-radius: 0.5rem;
@@ -419,7 +445,65 @@ body {
 		background-color: #1eff00;
 	}
 }
-
+#statusbonus {
+	position: absolute;
+	bottom: 25%;
+	left: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	z-index: 5;
+	.bonusitem {
+		position: relative;
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		position: relative;
+		background-size: cover;
+		outline: 1px solid black;
+		z-index: 10;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 0.3;
+		.range {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+		.content {
+			opacity: 1;
+		}
+		.count {
+			position: absolute;
+			width: max-content;
+			top: 50%;
+			left: 110%;
+			transform: translateY(-50%);
+			color: white;
+		}
+		&.immune {
+			.range {
+				border: 2px dashed rgba(0, 102, 255, 0.8);
+			}
+		}
+		&.social {
+			.range {
+				border: 2px dashed rgba(30, 255, 0, 0.8);
+			}
+		}
+		&:hover,
+		&.active {
+			animation: 1s infinite immune_flash;
+			.range {
+			}
+			.content {
+				opacity: 1;
+			}
+		}
+	}
+}
 @keyframes animate__prop1 {
 	0% {
 		transform: scale(1);
@@ -433,6 +517,19 @@ body {
 	}
 }
 
+@keyframes social_flash {
+	0% {
+		transform: scale(0.8);
+		transition: scale 0.2s ease;
+	}
+	50% {
+	}
+	100% {
+		transform: scale(1.2);
+		transition: scale 0.3s ease;
+		border: 2px none;
+	}
+}
 @keyframes rangea_flash {
 	0% {
 	}
@@ -440,5 +537,32 @@ body {
 	}
 	100% {
 		border: 2px none;
+	}
+}
+@keyframes immune_flash_rotate {
+	0% {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
+	100% {
+		opacity: 0.5;
+		transform: rotate(360deg);
+	}
+}
+@keyframes immune_flash {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes rotate_flash {
+	0% {
+	}
+	50% {
+	}
+	100% {
 	}
 }

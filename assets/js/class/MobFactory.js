@@ -233,7 +233,7 @@ class MobFactory {
 			objname: 'player',
 			classname: 'mob',
 			textcontent: '🚀',
-			name: 'You',
+			name: 'Alice & Bob Ship',
 			posxyz: this.inidatas.get_centerPos({ w: 24, h: 24, l: 24 }, { y: 'bottom' }),
 			sizwhl: { w: 24, h: 24, l: 24 },
 			velxyz: { x: 1, y: 1, z: 1, cx: 0, cy: 0, cz: 0 },

@@ -10,6 +10,8 @@ function isLoaded() {
 	document.onkeydown = (eventkeydown) => {
 		// console.log(eventkeydown.key)
 		if (eventkeydown.key === "Escape") { Ord.escapeKey() }
+		if (eventkeydown.key === "i") { Ord.get_bonus('immune') }
+		if (eventkeydown.key === "c") { Ord.invertScreenColor() }
 		if (eventkeydown.key === "p") { Ord.setPause() }
 		//--
 		// if (eventkeydown.key === "ArrowUp") { Ord.PlayGo(0, 0) } // Ord.PlayGo(mob.immat, 0=top||1=right||2=bottom||3=left)

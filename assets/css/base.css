@@ -18,6 +18,7 @@
 body {
   overflow: hidden;
   font-family: monospace;
+  background-color: black;
 }
 
 #orbitalbrand {
@@ -31,6 +32,44 @@ body {
   font-size: 1.5rem;
   line-height: 1.5rem;
   font-weight: 800;
+}
+
+#lunar {
+  background-color: #0c0833 !important;
+}
+
+#lunar.invertedscreencoolor {
+  background-color: white !important;
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
+#lunar.invertedscreencoolor #cosmos {
+  background-color: #994163 !important;
+}
+
+#lunar.invertedscreencoolor .mob,
+#lunar.invertedscreencoolor .sob {
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
+#lunar.invertedscreencoolor .mob .stock,
+#lunar.invertedscreencoolor .sob .stock {
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
+#lunar.invertedscreencoolor .mob .stock .stockitem,
+#lunar.invertedscreencoolor .sob .stock .stockitem {
+  -webkit-filter: invert(1);
+          filter: invert(1);
+}
+
+#lunar.invertedscreencoolor .mob .stock .stockitem.stockair,
+#lunar.invertedscreencoolor .sob .stock .stockitem.stockair {
+  -webkit-filter: invert(0);
+          filter: invert(0);
 }
 
 #cosmos {
@@ -69,6 +108,9 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
   display: none;
   opacity: 0;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 #cosmos .sob .stock,
@@ -162,29 +204,35 @@ body {
 #cosmos .sob.rangea .rangea,
 #cosmos .mob.rangea .rangea {
   border: 2px dashed rgba(255, 136, 0, 0.5);
+  -webkit-animation: 0.5s infinite rangea_flash;
+          animation: 0.5s infinite rangea_flash;
 }
 
 #cosmos .sob.alert .rangea,
 #cosmos .mob.alert .rangea {
-  background-color: rgba(255, 0, 0, 0.315);
+  background-color: rgba(255, 0, 0, 0.1);
+  -webkit-animation: 0.5s infinite rangea_flash;
+          animation: 0.5s infinite rangea_flash;
 }
 
 #cosmos .sob.immune .rangea,
 #cosmos .mob.immune .rangea {
   border: 2px dashed rgba(0, 102, 255, 0.8);
-  -webkit-animation: 0.5s infinite rangea_flash;
-          animation: 0.5s infinite rangea_flash;
+  -webkit-animation: 1s infinite immune_flash_rotate;
+          animation: 1s infinite immune_flash_rotate;
 }
 
 #cosmos .sob .social,
 #cosmos .mob .social {
   border-radius: 50%;
-  outline: 3px dotted rgba(54, 190, 13, 0.15);
+  border: 3px dotted rgba(54, 190, 13, 0.15);
 }
 
 #cosmos .sob.social .social,
 #cosmos .mob.social .social {
-  outline: 3px dotted rgba(137, 248, 11, 0.664);
+  border: 3px dotted rgba(137, 248, 11, 0.464);
+  -webkit-animation: 0.5s infinite social_flash;
+          animation: 0.5s infinite social_flash;
 }
 
 #cosmos .sob .content,
@@ -195,9 +243,6 @@ body {
 
 #cosmos .sob:hover .info,
 #cosmos .mob:hover .info {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
   display: block;
   -webkit-animation: displayinfo 0.5s forwards 0.2s;
           animation: displayinfo 0.5s forwards 0.2s;
@@ -292,6 +337,7 @@ body {
   margin: 0;
   overflow: hidden;
   margin: 0 0 0.2rem 0;
+  background-color: rgba(0, 0, 0, 0.801);
 }
 
 #starter .block .ico,
@@ -316,7 +362,6 @@ body {
 }
 
 #starter .block .explanation {
-  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -326,12 +371,12 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.801);
   color: white;
   font-size: 0.9rem;
-  line-height: 0.9rem;
+  line-height: 100%;
 }
 
 #starter .texte {
@@ -342,7 +387,7 @@ body {
 
 #starter .start {
   padding: 0.5rem;
-  margin: 0;
+  margin-bottom: 1rem;
   font-size: 2rem;
   line-height: 2rem;
   border-radius: 0.5rem;
@@ -548,6 +593,82 @@ body {
   background-color: #1eff00;
 }
 
+#statusbonus {
+  position: absolute;
+  bottom: 25%;
+  left: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  z-index: 5;
+}
+
+#statusbonus .bonusitem {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  position: relative;
+  background-size: cover;
+  outline: 1px solid black;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0.3;
+}
+
+#statusbonus .bonusitem .range {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+#statusbonus .bonusitem .content {
+  opacity: 1;
+}
+
+#statusbonus .bonusitem .count {
+  position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  top: 50%;
+  left: 110%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  color: white;
+}
+
+#statusbonus .bonusitem.immune .range {
+  border: 2px dashed rgba(0, 102, 255, 0.8);
+}
+
+#statusbonus .bonusitem.social .range {
+  border: 2px dashed rgba(30, 255, 0, 0.8);
+}
+
+#statusbonus .bonusitem:hover, #statusbonus .bonusitem.active {
+  -webkit-animation: 1s infinite immune_flash;
+          animation: 1s infinite immune_flash;
+}
+
+#statusbonus .bonusitem:hover .content, #statusbonus .bonusitem.active .content {
+  opacity: 1;
+}
+
 @-webkit-keyframes animate__prop1 {
   0% {
     -webkit-transform: scale(1);
@@ -578,6 +699,42 @@ body {
   }
 }
 
+@-webkit-keyframes social_flash {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    -webkit-transition: scale 0.2s ease;
+    transition: scale 0.2s ease;
+  }
+  50% {
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    -webkit-transition: scale 0.3s ease;
+    transition: scale 0.3s ease;
+    border: 2px none;
+  }
+}
+
+@keyframes social_flash {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    -webkit-transition: scale 0.2s ease;
+    transition: scale 0.2s ease;
+  }
+  50% {
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    -webkit-transition: scale 0.3s ease;
+    transition: scale 0.3s ease;
+    border: 2px none;
+  }
+}
+
 @-webkit-keyframes rangea_flash {
   0% {
   }
@@ -595,6 +752,68 @@ body {
   }
   100% {
     border: 2px none;
+  }
+}
+
+@-webkit-keyframes immune_flash_rotate {
+  0% {
+    opacity: 1;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    opacity: 0.5;
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes immune_flash_rotate {
+  0% {
+    opacity: 1;
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    opacity: 0.5;
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes immune_flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes immune_flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@-webkit-keyframes rotate_flash {
+  0% {
+  }
+  50% {
+  }
+  100% {
+  }
+}
+
+@keyframes rotate_flash {
+  0% {
+  }
+  50% {
+  }
+  100% {
   }
 }
 /*# sourceMappingURL=base.css.map */

@@ -13,6 +13,7 @@ class Ordinator {
 		this.pauseOn = false
 		this.gameOver = false
 		this.collidingRangeAColor = '#FFFFFF33'
+		this.invertedscreencoolor = false
 		// this.theta = this.get_theta()
 
 		// if(){
@@ -44,16 +45,15 @@ class Ordinator {
 				startgame.parentNode.remove();
 				this.start()
 				this.check_errors()
-				this.DM.appendChild_Board() // menu test one
+				// this.DM.appendChild_Board() // menu test one
 				this.DM.appendChild_Board2() // menu test two 
+				this.DM.appendChild_Bonus() // menu test two 
 			})
 		}
 
 	}
 	start() {
 		this.MF.create_EveryBasics()
-		// this.MF.mobs[0].status.immune = true
-		// this.MF.mobs[0].statusdelay.immune = [1, 4050] //time in msec
 		this.gameOn = true
 		this.pauseOn = false
 		this.tutorialFinish = false
@@ -65,7 +65,16 @@ class Ordinator {
 
 	}
 	escapeKey = () => {
-		if (!this.tutorialFinish) { this.tutorialNum = 999 }
+		this.tutorialNum = 999
+	}
+	invertScreenColor = () => {
+		if (this.invertedscreencoolor) {
+			this.invertedscreencoolor = false
+			document.getElementById('lunar').classList.remove('invertedscreencoolor')
+		} else {
+			this.invertedscreencoolor = true
+			document.getElementById('lunar').classList.add('invertedscreencoolor')
+		}
 	}
 	set_tutorial = (num) => {
 		switch (num) {
@@ -121,7 +130,7 @@ class Ordinator {
 					this.MF.mobs[0].collide.collidealert = false
 					this.MF.mobs[0].collide.colliderangea = false
 					this.MF.mobs[0].status.immune = true
-					this.MF.mobs[0].statusdelay.immune = [1, 50]
+					this.MF.mobs[0].statusdelay.immune = [1, 50000]
 					this.tutorialNum += 1
 					this.set_tutorial(this.tutorialNum)
 				});
@@ -160,13 +169,13 @@ class Ordinator {
 					this.tutorialNum += 1
 					this.tutorialFinish = true
 					this.set_tutorial(this.tutorialNum)
+					this.tutorialFinish = true
 				});
 				break;
 			case 13:
 				this.animateHelpCSS(0, 'fadeOut', false, this.tutorialNum + '/15 Your on your own now !').then((message) => {
 					// this.set_NiceSpeed(this.MF.mobs[0], 5)
 					this.tutorialNum += 1
-					this.tutorialFinish = true
 					this.set_tutorial(this.tutorialNum)
 				});
 				break;
@@ -182,15 +191,17 @@ class Ordinator {
 					this.MF.mobs[0].status.immune = false
 					this.MF.mobs[0].statusdelay.immune = [0, 0]
 					this.MF.mobs[0].lv += 1
+					this.tutorialFinish = true
 					console.log(this.MF.mobs[0])
 				});
 				break;
 			default:
-				this.animateHelpCSS(0, 'empty', true, 'No training today !').then((message) => {
-					this.MF.mobs[0].status.immune = false
-					this.MF.mobs[0].statusdelay.immune = [0, 0]
-					this.tutorialFinish = true
+				this.MF.mobs[0].status.immune = false
+				this.MF.mobs[0].statusdelay.immune = [0, 0]
+				this.tutorialFinish = true
+				this.animateHelpCSS(0, 'left', true, 'No training today !').then((message) => {
 					console.log(this.MF.mobs[0])
+					console.log('tuto ended')
 				});
 				break;
 		}
@@ -288,6 +299,15 @@ class Ordinator {
 			}
 		}
 	}
+	checkStatusDelay = (obj) => {
+		if (obj.status.immune && obj.statusdelay.immune[1] > 0) {
+			obj.statusdelay.immune[0] += 1
+			if (obj.statusdelay.immune[0] >= obj.statusdelay.immune[1]) {
+				obj.statusdelay.immune = [0, 0]
+				obj.status.immune = false
+			}
+		}
+	}
 	reset_obj_tmp = (objs) => {
 		for (let index = 0; index < objs.length; index++) {
 			if (objs[index].objtype != 'player') {
@@ -363,6 +383,7 @@ class Ordinator {
 
 				let obj = this.MF.mobs[index];
 
+
 				if (obj.ia && !obj.parentimmat) {
 					this.set_NewNiceDirection(obj)
 					this.set_NewNicePosition_broken(obj)
@@ -379,10 +400,12 @@ class Ordinator {
 							// CHECK COLLiSION with mobs
 							this.check_collisions(obj, 'mobs')
 							this.check_collisions(obj, 'sobs')
-							this.check_contacts(obj, 'mobs')
-							this.check_contacts(obj, 'sobs')
-							this.check_keyboardArrows(obj)
 						}
+						this.check_contacts(obj, 'mobs')
+						this.check_contacts(obj, 'sobs')
+						this.check_keyboardArrows(obj)
+					} else {
+						// console.log('tuto not ended')
 					}
 					if (this.posTest) {
 						this.set_NewNicePosition_testing(obj)
@@ -392,12 +415,25 @@ class Ordinator {
 					this.check_IsPosOutScreen(obj)
 				}
 
+				this.checkStatusDelay(obj)
 			}
 			for (let index = 0; index < this.MF.sobs.length; index++) {
 				let obj = this.MF.sobs[index];
 				if (obj.parentimmat && obj.direction) {
 					this.get_NextOrbitPos(obj)
 				}
+			}
+		}
+	}
+	get_bonus = (type) => {
+		if (this.gameOn && this.tutorialFinish && !this.gameOver && !this.MF.mobs[0].status.dead) {
+			switch (type) {
+				case 'immune':
+					this.MF.mobs[0].status.immune = true
+					this.MF.mobs[0].statusdelay.immune = [0, 1000]
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -412,10 +448,10 @@ class Ordinator {
 				// social range test
 				let test = ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2));
 				if (distance < test) {
-					obj.contact.social = [0, true];
-					objB.contact.social = [0, true];
-					console.log('contact with :', objB.immat, objB.objname)
-					console.log('x', (test ? 'true' : 'false'), '<', ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2)))
+					obj.contact.social = [0, objB.immat, objB.name];
+					objB.contact.social = [0, 0, 0];
+					// console.log('contact with :', objB.immat, objB.objname)
+					// console.log('x', (test ? 'true' : 'false'), '<', ((obj.ranges.social.d / 2) + (objB.ranges.social.d / 2)))
 				}
 				// }
 			}

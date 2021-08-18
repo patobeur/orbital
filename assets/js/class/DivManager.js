@@ -17,7 +17,7 @@ class DivManager {
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
 		stringcss += ''
-		stringcss += '.player .content {transform:rotate(-45deg)}'
+		stringcss += '.player .content {transform:rotate(-45deg);z-index:100}'
 		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
 		stringcss += '#pause.active {display: initial;}'
@@ -159,6 +159,34 @@ class DivManager {
 		}
 		cosmos.appendChild(speedboard)
 	}
+	appendChild_Bonus() {
+		// all bonus goes in this one
+		let allbonus = this.createEle({ tag: 'div', id: 'statusbonus', className: 'statusbonus' })
+		// immune bonus social
+		let range = this.createEle({ tag: 'div', id: 'visualsocial', className: 'range', })
+		let content = this.createEle({ tag: 'div', id: 'visualsocialcontent', className: 'content', textContent: '👩‍🚀' })
+		let count = this.createEle({ tag: 'div', id: 'visualsocialcount', className: 'count', textContent: '0' })
+		//
+		let bonus = this.createEle({ tag: 'div', id: 'bonussocial', className: 'bonusitem social', })
+		bonus.appendChild(range)
+		bonus.appendChild(content)
+		bonus.appendChild(count)
+		// --
+		allbonus.appendChild(bonus)
+		// immune bonus visual
+		range = this.createEle({ tag: 'div', id: 'visualimmune', className: 'range', })
+		content = this.createEle({ tag: 'div', id: 'visualimmunecontent', className: 'content', textContent: '💎' })
+		count = this.createEle({ tag: 'div', id: 'visualimmunecount', className: 'count', textContent: '0' })
+		//
+		bonus = this.createEle({ tag: 'div', id: 'bonusimmune', className: 'bonusitem immune', })
+		bonus.appendChild(range)
+		bonus.appendChild(content)
+		bonus.appendChild(count)
+		// ---
+		allbonus.appendChild(bonus)
+		// add to cosmos
+		cosmos.appendChild(allbonus)
+	}
 	get_randomPos = (marge = false) => {
 		let mx = marge ? marge[0] : 0
 		let my = marge ? marge[1] : 0
@@ -204,7 +232,6 @@ class DivManager {
 		elem.appendChild(elemhelp)
 	}
 	get_ObjDomElem = (obj) => {
-
 		let classname = obj.classname +
 			(obj.objtype ? ' ' + obj.objtype : '') +
 			(obj.objdiv ? ' ' + obj.objdiv : '')
@@ -474,17 +501,46 @@ class DivManager {
 				// }
 				obj.collide && obj.collide.colliderangea
 					? currentMob.classList.add('rangea')
-					: currentMob.classList.remove('rangea')
+					: currentMob.classList.remove('rangea');
 				obj.collide && obj.collide.collidealert
 					? currentMob.classList.add('alert')
-					: currentMob.classList.remove('alert')
+					: currentMob.classList.remove('alert');
 				obj.contact && obj.contact.social.length > 0
 					? currentMob.classList.add('social')
-					: currentMob.classList.remove('social')
+					: currentMob.classList.remove('social');
 				obj.status.immune && obj.statusdelay.immune[0] > 0
 					? currentMob.classList.add('immune')
-					: currentMob.classList.remove('immune')
+					: currentMob.classList.remove('immune');
 
+				// visual bonus
+
+				if (obj.objtype === 'player') {
+					let bonussocial = document.getElementById('bonussocial')
+					let bonusimmune = document.getElementById('bonusimmune')
+					let visualsocialcount = document.getElementById('visualsocialcount')
+					let visualimmunecount = document.getElementById('visualimmunecount')
+					obj.contact && obj.contact.social.length > 0
+						? bonussocial.classList.add('active')
+						: bonussocial.classList.remove('active');
+					//
+					if (obj.contact && obj.contact.social.length > 0) {
+						bonussocial.classList.add('active')
+						visualsocialcount.textContent = obj.contact.social[2]
+					}
+					else {
+						bonussocial.classList.remove('active')
+						visualsocialcount.textContent = ''
+					}
+					if (obj.status.immune && obj.statusdelay.immune[0] > 0) {
+						bonusimmune.classList.add('active')
+						visualimmunecount.textContent = (obj.statusdelay.immune[1] - obj.statusdelay.immune[0])//(parseInt((obj.statusdelay.immune[0] * 100)) / 1000)
+					}
+					else {
+						bonusimmune.classList.remove('active')
+						visualimmunecount.textContent = ''
+					}
+
+				}
 				// let divsocial = document.getElementById('social' + obj.div + '-' + obj.immat)
 				// // if (obj.objtype === 'player') {
 				// if (divsocial) {
@@ -532,10 +588,10 @@ class DivManager {
 				if (divdata2) {
 					divdata2.textContent = 'deg:' + obj.direction.deg + '°';
 				}
-				let divdata3 = document.getElementById('datafile' + obj.div + '-' + obj.immat)
-				if (divdata3) {
-					divdata3.textContent = 'div:' + obj.div + '°';
-				}
+				// let divdata3 = document.getElementById('datafile' + obj.div + '-' + obj.immat)
+				// if (divdata3) {
+				// 	divdata3.textContent = 'div:' + obj.div + '°';
+				// }
 			}
 			else {
 				errors.push(['this.redrawAllMobs', 'can\'t target ' + obj.objname + obj.div + "-" + obj.immat])
@@ -615,7 +671,7 @@ class DivManager {
 		let nautS = document.createElement('div')
 		nautS.id = 'nautsystem'
 		nautS.textContent = '🚀'
-		nautS.title = 'Anne & Bob Space Ship !'
+		nautS.title = 'Alice & Bob Space Ship !'
 		moonS.appendChild(mooonS)
 		moonS.appendChild(nautS)
 		earthS.appendChild(eaarthS)
