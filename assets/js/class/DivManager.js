@@ -17,8 +17,8 @@ class DivManager {
 		// stringcss += '.sob{z-index: -1;}'
 		// stringcss += '* {outline: 1px dotted rgba(255, 255, 255, 0.2);}'
 		stringcss += ''
-		stringcss += '.player .content {transform:rotate(-45deg);z-index:100}'
-		stringcss += '.center {position: absolute;width: 1px;height: 1px;background-color: rgb(0, 0, 0);}'
+		// stringcss += '.player .content {transform:rotate(-45deg);z-index:100}'
+		stringcss += '.center {position: absolute;width: 2px;height: 2px;background-color: rgba(0, 0, 0, .5);}'
 		stringcss += '#pause {position: absolute;bottom: 20%;left: 50%;width: max-content;height: max-content;transform: translate(-50%, -50%);background-color: rgba(153, 205, 50, 0.3);color: white;border-radius: 0.5rem;padding: 0.5rem;font-size: 1.5rem;display: none;}'
 		stringcss += '#pause.active {display: initial;}'
 		this.addCss(stringcss, 'sobsmobs')
@@ -40,7 +40,8 @@ class DivManager {
 		this.lunarDiv.style.minHeight = "100vh";
 		this.lunarDiv.style.backgroundColor = "rgb(6, 5, 12)";
 		// this.lunarDiv.style.perspective = "100vh";
-		this.lunarDiv.style.overflow = "hidden";
+
+
 		//get 
 		let lunarzone = document.getElementById('lunar').getBoundingClientRect()
 
@@ -68,12 +69,8 @@ class DivManager {
 		cosmos.style.minHeight = this.IniDatas.cosmosSize.h + this.IniDatas.px
 		cosmos.style.marginLeft = this.IniDatas.screenborder.w + this.IniDatas.px
 		cosmos.style.marginTop = this.IniDatas.screenborder.h + this.IniDatas.px
-		cosmos.style.borderRadius = "1rem"
-		cosmos.style.outline = "1px dotted white";
 
-		cosmos.style.position = "relative";
-		// // transform: rotateZ(50%);		
-		// cosmos.style.overflow="hidden";
+		// cosmos.style.position = "relative";
 
 		let mobs = this.createEle({
 			id: 'mobs',
@@ -84,8 +81,8 @@ class DivManager {
 			left: "0",
 			right: "0",
 			bottom: "0",
-			borderRadius: "1rem",
-			overflow: "hidden"
+			// borderRadius: "1rem",
+			// overflow: "hidden"
 		})
 		let sobs = this.createEle({
 			id: 'sobs',
@@ -96,8 +93,8 @@ class DivManager {
 			left: "0",
 			right: "0",
 			bottom: "0",
-			borderRadius: "1rem",
-			overflow: "hidden"
+			// borderRadius: "1rem",
+			// overflow: "hidden"
 		})
 		cosmos.appendChild(sobs)
 		cosmos.appendChild(mobs)
@@ -149,7 +146,8 @@ class DivManager {
 		let speedvisual = this.createEle({ tag: 'div', id: 'speedvisual' })
 		speedboard.appendChild(speedvisual)
 		speedboard.appendChild(speedzero)
-		cosmos.appendChild(speedboard)
+		this.lunarDiv.appendChild(speedboard)
+		// cosmos.appendChild(speedboard)
 	}
 	appendChild_Board2() {
 		let speedboard = this.createEle({ tag: 'div', id: 'speedboard2' })
@@ -157,7 +155,8 @@ class DivManager {
 			let stepdiv = this.createEle({ tag: 'div', id: 'prop' + index, className: 'prop prop' + index })
 			speedboard.prepend(stepdiv)
 		}
-		cosmos.appendChild(speedboard)
+		this.lunarDiv.appendChild(speedboard)
+		// cosmos.appendChild(speedboard)
 	}
 	appendChild_Bonus() {
 		// all bonus goes in this one
@@ -185,7 +184,9 @@ class DivManager {
 		// ---
 		allbonus.appendChild(bonus)
 		// add to cosmos
-		cosmos.appendChild(allbonus)
+
+		this.lunarDiv.appendChild(allbonus)
+		// cosmos.appendChild(allbonus)
 	}
 	get_randomPos = (marge = false) => {
 		let mx = marge ? marge[0] : 0
@@ -655,19 +656,19 @@ class DivManager {
 		let sunS = document.createElement('div')
 		sunS.id = 'sunsystem'
 		sunS.textContent = '🌞'
-		sunS.title = 'This is the Sun !'
+		sunS.title = 'Soleil (Le)'
 		let earthS = document.createElement('div')
 		earthS.id = 'earthsystem'
 		let eaarthS = document.createElement('div')
 		eaarthS.id = 'eaarthsystem'
 		eaarthS.textContent = '🌍'//🌎
-		eaarthS.title = 'This is the Earth !'
+		eaarthS.title = 'Terre (La)'
 		let moonS = document.createElement('div')
 		moonS.id = 'moonsystem'
 		let mooonS = document.createElement('div')
 		mooonS.id = 'mooonsystem'
 		mooonS.textContent = '🌑'
-		mooonS.title = 'This is the Moon !'
+		mooonS.title = 'Lune (La)'
 		let nautS = document.createElement('div')
 		nautS.id = 'nautsystem'
 		nautS.textContent = '🚀'

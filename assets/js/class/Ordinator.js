@@ -14,6 +14,7 @@ class Ordinator {
 		this.gameOver = false
 		this.collidingRangeAColor = '#FFFFFF33'
 		this.invertedscreencoolor = false
+		this.mobiletouch = false
 		// this.theta = this.get_theta()
 
 		// if(){
@@ -40,11 +41,14 @@ class Ordinator {
 	}
 	addStartButtonListener() {
 		let startgame = document.getElementById('startgame')
+		let starter = document.getElementById('starter')
 		if (startgame) {
 			startgame.addEventListener('click', () => {
-				startgame.parentNode.remove();
+				// startgame.parentNode.remove();
+				starter.textContent = ''
 				this.start()
 				this.check_errors()
+				this.invertmobiletouch()
 				// this.DM.appendChild_Board() // menu test one
 				this.DM.appendChild_Board2() // menu test two 
 				this.DM.appendChild_Bonus() // menu test two 
@@ -74,6 +78,16 @@ class Ordinator {
 		} else {
 			this.invertedscreencoolor = true
 			document.getElementById('lunar').classList.add('invertedscreencoolor')
+		}
+	}
+	invertmobiletouch = () => {
+		let touchdir = document.getElementById('touchdir')
+		if (this.mobiletouch) {
+			this.mobiletouch = false
+			touchdir.classList.remove('active')
+		} else {
+			this.mobiletouch = true
+			touchdir.classList.add('active')
 		}
 	}
 	set_tutorial = (num) => {

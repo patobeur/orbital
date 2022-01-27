@@ -1,55 +1,60 @@
 #touchdir {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	bottom: 24%; //calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
-	right: calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
-	z-index: 6;
-	.up,
-	.down,
-	.left,
-	.right {
+	display: none;
+	&.active {
+		display: initial;
 		position: absolute;
-		width: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
-		height: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
-		// background-color: rgba(0, 0, 0, 0.100);
-		border-radius: 50%;
-		left: 0;
-		top: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: rgba(255, 255, 255, 0.5);
-		text-transform: capitalize;
-		&:hover {
-			background-color: rgba(156, 156, 156, 0.111);
-			color: rgba(255, 255, 255, 0.75);
+		width: 1px;
+		height: 1px;
+		bottom: 24%; //calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
+		right: calc(((((100vh + 100vw) / 2) / 100) * 24) + 0px);
+		z-index: 6;
+		.up,
+		.down,
+		.left,
+		.right {
+			position: absolute;
+			width: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+			height: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+			// background-color: rgba(0, 0, 0, 0.100);
+			border-radius: 50%;
+			left: 0;
+			top: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: rgba(255, 255, 255, 0.7);
+			text-transform: capitalize;
+			&:hover {
+				// background-color: rgba(156, 156, 156, 0.111);
+				color: rgba(255, 255, 255, 0.75);
+				font-weight: bold;
+			}
 		}
-	}
-	.up {
-		top: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
-		background-color: rgba(255, 0, 0, 0.234);
-	}
-	.right {
-		left: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
-		background-color: rgba(255, 255, 0, 0.234);
-	}
-	.down {
-		top: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
-		background-color: rgba(0, 255, 255, 0.234);
-	}
-	.left {
-		left: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
-		background-color: rgba(255, 0, 255, 0.234);
-	}
-	.up,
-	.down,
-	.left,
-	.right {
-		&:hover,
-		&:focus {
-			background-color: rgba(156, 156, 156, 0.377);
-			color: rgba(255, 255, 255, 0.651);
+		.up {
+			top: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
+			// background-color: rgba(255, 0, 0, 0.234);
 		}
+		.right {
+			left: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+			// background-color: rgba(255, 255, 0, 0.234);
+		}
+		.down {
+			top: calc(((((100vh + 100vw) / 2) / 100) * 8) + 0px);
+			// background-color: rgba(0, 255, 255, 0.234);
+		}
+		.left {
+			left: calc(((((100vh + 100vw) / 2) / 100) * -8) + 0px);
+			// background-color: rgba(255, 0, 255, 0.234);
+		}
+		// .up,
+		// .down,
+		// .left,
+		// .right {
+		// 	// &:hover,
+		// 	// &:focus {
+		// 	// 	background-color: rgba(156, 156, 156, 0.377);
+		// 	// 	color: rgba(255, 255, 255, 0.651);
+		// 	// }
+		// }
 	}
 }
