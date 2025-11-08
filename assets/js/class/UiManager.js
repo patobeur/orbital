@@ -62,99 +62,55 @@ class UiManager {
             elemcontentbox.prepend(elemprop);
         }
         if (obj.stock) {
-			let elemstock = document.createElement('div')
-			elemstock.id = 'stock' + obj.div + '-' + obj.immat;
-			elemstock.className = 'stock';
+			let elemstock = this.DomManager.createEle({id: 'stock' + obj.div + '-' + obj.immat, className: 'stock'});
 			let itemstock;
 			let itemstockcount;
 			let itemsentence;
 			if (obj.stock.air) {
-				itemstock = document.createElement('div')
-				itemstock.id = 'stockair' + obj.div + '-' + obj.immat;
-				itemstock.className = 'stockitem stockair';
+				itemstock = this.DomManager.createEle({id: 'stockair' + obj.div + '-' + obj.immat, className: 'stockitem stockair', textContent: '☁'});
 				itemsentence = '[' + (obj.stock.air[0] ?? 0) + '] Air Stocks(regen: ' + (obj.stock.air[1] ?? 0) + ' / ' + (obj.stock.air[2] ?? 0) + ')';
 				itemstock.title = itemsentence
-				itemstock.textContent = '☁';//💨
 				itemstock.style.color = 'white';
-				//--
-				itemstockcount = document.createElement('div')
-				itemstockcount.id = 'stockaircount' + obj.div + '-' + obj.immat;
-				itemstockcount.className = 'stockcount';
-				itemstockcount.textContent = itemsentence
-				//--
+				itemstockcount = this.DomManager.createEle({id: 'stockaircount' + obj.div + '-' + obj.immat, className: 'stockcount', textContent: itemsentence});
 				itemstock.appendChild(itemstockcount)
 				elemstock.appendChild(itemstock)
 			}
 			if (obj.stock.water) {
-				itemstock = document.createElement('div')
-				itemstock.id = 'stockwater' + obj.div + '-' + obj.immat;
-				itemstock.className = 'stockitem stockwater';
+				itemstock = this.DomManager.createEle({id: 'stockwater' + obj.div + '-' + obj.immat, className: 'stockitem stockwater', textContent: '🧊'});
 				itemsentence = '[' + (obj.stock.water[0] ?? 0) + '] Water Stocks(regen: ' + (obj.stock.water[1] ?? 0) + ' / ' + (obj.stock.water[2] ?? 0) + ')';
 				itemstock.title = itemsentence
-				itemstock.textContent = '🧊';//
-				//--
-				itemstockcount = document.createElement('div')
-				itemstockcount.id = 'stockwatercount' + obj.div + '-' + obj.immat;
-				itemstockcount.className = 'stockcount';
-				itemstockcount.textContent = itemsentence
-				//--
+				itemstockcount = this.DomManager.createEle({id: 'stockwatercount' + obj.div + '-' + obj.immat, className: 'stockcount', textContent: itemsentence});
 				itemstock.appendChild(itemstockcount)
 				elemstock.appendChild(itemstock)
 			}
 			if (obj.stock.fuel) {
-				itemstock = document.createElement('div')
-				itemstock.id = 'stockfuel' + obj.div + '-' + obj.immat;
-				itemstock.className = 'stockitem stockfuel';
+				itemstock = this.DomManager.createEle({id: 'stockfuel' + obj.div + '-' + obj.immat, className: 'stockitem stockfuel', textContent: '☕'});
 				itemsentence = '[' + (obj.stock.fuel[0] ?? 0) + '] Fuel Stocks(regen: ' + (obj.stock.fuel[1] ?? 0) + ' / ' + (obj.stock.fuel[2] ?? 0) + ')';
 				itemstock.title = itemsentence
-				itemstock.textContent = '☕';//
-				//--
-				itemstockcount = document.createElement('div')
-				itemstockcount.id = 'stockfuelcount' + obj.div + '-' + obj.immat;
-				itemstockcount.className = 'stockcount';
-				itemstockcount.textContent = itemsentence
-				//--
+				itemstockcount = this.DomManager.createEle({id: 'stockfuelcount' + obj.div + '-' + obj.immat, className: 'stockcount', textContent: itemsentence});
 				itemstock.appendChild(itemstockcount)
 				elemstock.appendChild(itemstock)
 			}
 			if (obj.stock.food) {
-				itemstock = document.createElement('div')
-				itemstock.id = 'stockfood' + obj.div + '-' + obj.immat;
-				itemstock.className = 'stockitem stockfood';
+				itemstock = this.DomManager.createEle({id: 'stockfood' + obj.div + '-' + obj.immat, className: 'stockitem stockfood', textContent: '🍽️'});
 				itemsentence = '[' + (obj.stock.food[0] ?? 0) + '] Food Stocks(regen: ' + (obj.stock.food[1] ?? 0) + ' / ' + (obj.stock.food[2] ?? 0) + ')';
 				itemstock.title = itemsentence
-				itemstock.textContent = '🍽️';//🥛
-				//--
-				itemstockcount = document.createElement('div')
-				itemstockcount.id = 'stockfoodcount' + obj.div + '-' + obj.immat;
-				itemstockcount.className = 'stockcount';
-				itemstockcount.textContent = itemsentence
-				//--
+				itemstockcount = this.DomManager.createEle({id: 'stockfoodcount' + obj.div + '-' + obj.immat, className: 'stockcount', textContent: itemsentence});
 				itemstock.appendChild(itemstockcount)
 				elemstock.appendChild(itemstock)
 			}
 			elem.appendChild(elemstock)
 		}
         let eleminfo = this.DomManager.createEle({ id: 'info' + obj.div + '-' + obj.immat, className: 'info' });
-		let elempos = document.createElement('div')
-		elempos.id = 'datafile' + obj.div + '-' + obj.immat;
-		elempos.textContent = '' + obj.name + "";
+		let elempos = this.DomManager.createEle({id: 'datafile' + obj.div + '-' + obj.immat, textContent: '' + obj.name + ""});
 		eleminfo.appendChild(elempos)
-		elempos = document.createElement('div')
-		elempos.id = 'datasx' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'x:0';
+		elempos = this.DomManager.createEle({id: 'datasx' + obj.div + '-' + obj.immat, textContent: 'x:0'});
 		eleminfo.appendChild(elempos)
-		elempos = document.createElement('div')
-		elempos.id = 'datasy' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'y:0';
+		elempos = this.DomManager.createEle({id: 'datasy' + obj.div + '-' + obj.immat, textContent: 'y:0'});
 		eleminfo.appendChild(elempos)
-		elempos = document.createElement('div')
-		elempos.id = 'datasz' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'z:0';
+		elempos = this.DomManager.createEle({id: 'datasz' + obj.div + '-' + obj.immat, textContent: 'z:0'});
 		eleminfo.appendChild(elempos)
-		elempos = document.createElement('div')
-		elempos.id = 'direction' + obj.div + '-' + obj.immat;
-		elempos.textContent = 'deg:' + obj.direction.deg + "°";
+		elempos = this.DomManager.createEle({id: 'direction' + obj.div + '-' + obj.immat, textContent: 'deg:' + obj.direction.deg + "°"});
 		eleminfo.appendChild(elempos)
         elem.appendChild(eleminfo);
         let elemcenter = this.DomManager.createEle({ id: 'center' + obj.div + '-' + obj.immat, className: 'center' });

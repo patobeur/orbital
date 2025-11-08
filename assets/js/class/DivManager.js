@@ -22,15 +22,30 @@ class DivManager {
     }
 
     get_IniDatas = () => {
-        this.lunarDiv.style.position = "relative";
-        this.lunarDiv.style.width = "100vw";
-        this.lunarDiv.style.height = "100vh";
-        let lunarzone = this.lunarDiv.getBoundingClientRect();
-        return {
-            px: 'px',
-            cosmosSize: { 'w': lunarzone.width, 'h': lunarzone.height }
-        };
-    }
+		let screenborder = { w: 0, h: 0, l: 0 }
+		let renderinterval = 30 // render speed 1ms * 30
+
+		this.lunarDiv.style.position = "relative";
+		this.lunarDiv.style.width = "100vw";
+		this.lunarDiv.style.height = "100vh";
+		this.lunarDiv.style.minWidth = "100%";
+		this.lunarDiv.style.minHeight = "100vh";
+		this.lunarDiv.style.backgroundColor = "rgb(6, 5, 12)";
+		// this.lunarDiv.style.perspective = "100vh";
+
+
+		//get
+		let lunarzone = document.getElementById('lunar').getBoundingClientRect()
+
+		return {
+			px: 'px',
+			pt: '%',
+			rem: 'rem',
+			renderinterval: renderinterval,
+			screenborder: screenborder, // twice the value in pixels
+			cosmosSize: { 'w': lunarzone.width - (screenborder.w * 2), 'h': lunarzone.height - (screenborder.h * 2), 'l': lunarzone.width - (screenborder.l * 2) }
+		}
+	}
 
     appendChild_Cosmos() {
         let cosmos = this.DomManager.createEle({ id: 'cosmos', style: { width: '100%', height: '100%' } });
