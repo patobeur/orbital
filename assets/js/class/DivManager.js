@@ -48,9 +48,29 @@ class DivManager {
 	}
 
     appendChild_Cosmos() {
-        let cosmos = this.DomManager.createEle({ id: 'cosmos', style: { width: '100%', height: '100%' } });
-        let sobs = this.DomManager.createEle({ id: 'sobs', className: 'layer' });
-        let mobs = this.DomManager.createEle({ id: 'mobs', className: 'layer' });
+        let cosmos = this.DomManager.createEle({
+            id: 'cosmos',
+            style: {
+                width: this.IniDatas.cosmosSize.w + this.IniDatas.px,
+                height: this.IniDatas.cosmosSize.h + this.IniDatas.px
+            }
+        });
+        let sobs = this.DomManager.createEle({
+            id: 'sobs',
+            className: 'layer',
+            style: {
+                width: this.IniDatas.cosmosSize.w + this.IniDatas.px,
+                height: this.IniDatas.cosmosSize.h + this.IniDatas.px
+            }
+        });
+        let mobs = this.DomManager.createEle({
+            id: 'mobs',
+            className: 'layer',
+            style: {
+                width: this.IniDatas.cosmosSize.w + this.IniDatas.px,
+                height: this.IniDatas.cosmosSize.h + this.IniDatas.px
+            }
+        });
         cosmos.appendChild(sobs);
         cosmos.appendChild(mobs);
         this.lunarDiv.appendChild(cosmos);
