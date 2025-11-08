@@ -80,7 +80,7 @@ body {
   position: relative;
   -webkit-box-shadow: 0 0 30px 20px #03000a inset;
           box-shadow: 0 0 30px 20px #03000a inset;
-  background-image: url("/assets/img/grille_20px.png"), url("../img/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
+  background-image: url("../img/grille_20px.png"), url("../img/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
   background-position: left top, center center;
   background-repeat: repeat, no-repeat;
   background-size: auto, cover;
@@ -416,6 +416,7 @@ body {
   opacity: 1;
   max-height: 98vh;
   overflow-x: auto;
+  background: radial-gradient(ellipse at center, #0a0a23 0%, #000000 100%);
 }
 
 #starter .exemples {
@@ -551,6 +552,7 @@ body {
 #starter header h2,
 #starter header h3 {
   color: #c91313;
+  text-shadow: 0 0 5px #c91313, 0 0 10px #c91313;
   background-color: black;
   padding: 0.5rem;
   margin: 0 0 1rem 0;
