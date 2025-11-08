@@ -8,100 +8,11 @@ class MobFactory {
 	constructor(IniDatas) {
 		this.mobsImmat = [0]
 		this.sobsImmat = [0]
+		this.Data = new Data()
 		this.mobs = []
 		this.sobs = []
 		this.inidatas = IniDatas
 		// console.log('MobFactory IniDatas', this.inidatas)
-	}
-
-	get_ColorByType = (typename, zone) => {
-		let colors = {
-			rangea: {
-				etoile: "rgba(0, 0, 0, 1);",
-				planete: "rgba(255, 255, 255, 0.05)",
-				satellite: "rgba(255, 0, 252, 0.05)",
-				fsaucer: "rgba(255,255, 0, 0.05)",
-				neutral: "rgba(255,255, 0, 0.05)",
-				fruits: "rgba(0,255, 0, 0.05)",
-				player: "rgba(0,00, 255, 0.05)"
-			}
-		}
-		return colors[zone][typename]
-	}
-	set_ObjDatasByZoneAndItemName = (obj, itemname) => {
-		let categories = {
-			sob: {
-				etoile: {
-					rangeacolor: "rgba(255, 255, 255, 0.05);",
-					stock: {
-						unknow: [this.aleaEntreBornes(0, 1000000), 10, 1, 1000000000],
-					}
-				},
-				planete: {
-					rangeacolor: "rgba(255, 255, 255, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					}
-				},
-				satellite: {
-					rangeacolor: "rgba(255, 0, 252, 0.05)",
-					// stock: {
-					// 	water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					// 	air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					// }
-				},
-				meteorite: {
-					rangeacolor: "rgba(255, 0, 252, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					}
-				}
-			},
-			mob: {
-				player: {
-					rangeacolor: "rgba(0,255, 255, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 100), -.1, 0, 100],
-						air: [this.aleaEntreBornes(0, 100), 0, -.1, 100],
-						fuel: [this.aleaEntreBornes(0, 100), 0, -.5, 100],
-						food: [this.aleaEntreBornes(0, 100), 0, -.5, 100],
-					}
-				},
-				fsaucer: {
-					rangeacolor: "rgba(255,255, 0, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					}
-				},
-				neutral: {
-					rangeacolor: "rgba(255,255, 0, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						fuel: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					}
-				},
-				fruits: {
-					rangeacolor: "rgba(0,255, 0, 0.05)",
-					stock: {
-						food: [this.aleaEntreBornes(0, 10)]
-					}
-				},
-				meteorite: {
-					rangeacolor: "rgba(255, 0, 252, 0.05)",
-					stock: {
-						water: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-						air: [this.aleaEntreBornes(0, 1000), .1, 50, 1000],
-					}
-				}
-			},
-		}
-		// console.log(obj.div, obj.objtype, itemname)
-		// console.log(categories)
-		return categories[obj.div][obj.objtype][itemname]
 	}
 	add_obj = (objdatas) => {
 		// obj completition
@@ -120,7 +31,7 @@ class MobFactory {
 			velxyz: objdatas.velxyz ?? { x: 1, y: 1, z: 1, cx: 1, cy: 1, cz: 1 },// own velocity statisticsactuals speeds
 			parentimmat: objdatas.parentimmat ?? false,
 			// movement 
-			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: this.aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 22.5 },
+			direction: objdatas.direction ?? { ratio: 0, degZ: 0, deg: aleaEntreBornes(-360, 360), delay: 50, currentdelay: 0, way: [0, 0, 0, 0, 0, 0], compass: '', agility: 22.5 },
 			status: {
 				etheral: false,
 				dead: false,
@@ -146,8 +57,8 @@ class MobFactory {
 			tetha: objdatas.tetha ?? false,
 			gravity: objdatas.gravity ?? false,
 			orbitdir: objdatas.orbitdir ?? false,
-			stock: objdatas.stock ?? this.set_ObjDatasByZoneAndItemName(objdatas, 'stock'),
-			rangeacolor: objdatas.objtype ? this.set_ObjDatasByZoneAndItemName(objdatas, 'rangeacolor') : false,
+			stock: objdatas.stock ?? this.Data.set_ObjDatasByZoneAndItemName(objdatas, 'stock'),
+			rangeacolor: objdatas.objtype ? this.Data.set_ObjDatasByZoneAndItemName(objdatas, 'rangeacolor') : false,
 			selfr: objdatas.objtype ?? ((objdatas.sizwhl.w + objdatas.sizwhl.h) / 2),
 			ranges: objdatas.ranges ?? {
 				social: {
@@ -328,37 +239,5 @@ class MobFactory {
 		// }
 
 		this.inidatas.create_EveryBasics({ mobs: this.mobs, sobs: this.sobs })
-	}
-	aleaEntreBornes(minimum, maximum) {
-		return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
-	}
-	givemeaniceico = () => {
-		let temporarypersonalfun = [
-			{ ico: "🕶", name: "sunglasses" },
-			{ ico: "🎲", name: "Dice" },
-			{ ico: "🌌", name: "milky way" },
-			{ ico: "🪐", name: "ringed planet" },
-			{ ico: "🌌", name: "milky way" },
-			{ ico: "🩲", name: "sleep" },
-			{ ico: "🍩", name: "Doughnut" },
-			{ ico: "🥥", name: "Coconut" },
-			{ ico: "🍎", name: "Red Apple" },
-			{ ico: "🥝", name: "Kiwi Fruit" },
-			{ ico: "🍆", name: "Eggplant" },
-			{ ico: "🥑", name: "Avocado" },
-			{ ico: "🥔", name: "Potato" },
-			{ ico: "❤️", name: "Red Heart" },
-			{ ico: "💥", name: "Collision" },
-			{ ico: "🦠", name: "Microbe" },
-			{ ico: "🌑", name: "New Moon Crescent Moon " },
-			{ ico: "🌒", name: "Waxing Crescent Quarter Moon " },
-			{ ico: "🌚", name: "New Moon Quarter Moon Face" },
-			{ ico: "⭐", name: "Star  Star  " },
-			{ ico: "🔥", name: "Fire" },
-			{ ico: "💧", name: "Droplet  Wave  " }
-		]
-		let nbico = temporarypersonalfun.length
-		let aleaico = this.aleaEntreBornes(0, nbico - 1)
-		return temporarypersonalfun[aleaico].ico
 	}
 }
