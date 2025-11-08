@@ -8,7 +8,7 @@ class DomManager {
         let tag = false;
         if (attrib) {
             attrib.tag = attrib.tag ?? 'div';
-            attrib.id ? tag = document.createElement(attrib.tag) : '';
+            tag = document.createElement(attrib.tag); // Always create the element
             attrib.id ? tag.id = attrib.id : '';
             attrib.borderRadius ? tag.style.borderRadius = attrib.borderRadius : '';
             attrib.zIndex ? tag.style.zIndex = attrib.zIndex : '';
