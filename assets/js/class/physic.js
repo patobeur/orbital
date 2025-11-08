@@ -81,7 +81,9 @@ class Physic {
             obj.tetha[0] = obj.tetha[0] - 360;
         }
         if (obj.parentimmat) {
-            let center = this.MF.sobs[obj.parentimmat[0]];
+            const center = this.MF.sobs.find(sob => sob.immat === obj.parentimmat[0]);
+            if (!center) return; // Exit if parent not found
+
             let centerX = center.posxyz.x + (obj.sizwhl.w / 2);
             let centerY = center.posxyz.y + (obj.sizwhl.h / 2);
             let centerW = center.gravity.range.w / 2;
@@ -89,7 +91,7 @@ class Physic {
             let x2 = 0;
             let y2 = 0;
             if (obj.objtype === 'player') {
-                distance = this.get_distance(obj, this.MF.sobs[obj.parentimmat[0]]);
+                distance = this.get_distance(obj, center);
             }
             if (distance > 0) {
                 x2 = centerX + Math.round((distance) * (Math.cos(obj.tetha[0])));
