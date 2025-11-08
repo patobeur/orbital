@@ -81,10 +81,11 @@ class DivManager {
     get_randomPos = (marge = false) => {
         let mx = marge ? marge[0] : 0;
         let my = marge ? marge[1] : 0;
+        let mz = marge ? marge[2] : 0;
         return {
             x: aleaEntreBornes(5 + mx, this.IniDatas.cosmosSize.w - 5 - mx),
             y: aleaEntreBornes(5 + my, this.IniDatas.cosmosSize.h - 5 - my),
-            z: 0,
+            z: aleaEntreBornes(5 + mz, this.IniDatas.cosmosSize.l - 5 - mz),
         };
     }
 
@@ -92,7 +93,7 @@ class DivManager {
         let xyz = {
             x: (this.IniDatas.cosmosSize.w / 2) - (poss.w / 2),
             y: (this.IniDatas.cosmosSize.h / 2) - (poss.h / 2),
-            z: 0,
+            z: (this.IniDatas.cosmosSize.l / 2) - (poss.l / 2),
         };
         if (type.x === 'left') { xyz.x = 0; }
         if (type.x === 'right') { xyz.x = (this.IniDatas.cosmosSize.w - poss.w); }

@@ -80,7 +80,7 @@ body {
   position: relative;
   -webkit-box-shadow: 0 0 30px 20px #03000a inset;
           box-shadow: 0 0 30px 20px #03000a inset;
-  background-image: url("/assets/img/grille_20px.png"), url("../img/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
+  background-image: url("../img/grille_20px.png"), url("../img/203-2032005_space-tumblr-wallpapers-high-resolution-for-free-wallpaper.jpg");
   background-position: left top, center center;
   background-repeat: repeat, no-repeat;
   background-size: auto, cover;

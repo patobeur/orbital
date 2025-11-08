@@ -28,6 +28,9 @@ class DomManager {
             attrib.justifyContent ? tag.style.justifyContent = attrib.justifyContent : '';
             attrib.alignItems ? tag.style.alignItems = attrib.alignItems : '';
             attrib.textContent ? tag.textContent = attrib.textContent : '';
+            if (attrib.style) {
+                Object.assign(tag.style, attrib.style);
+            }
         }
         return tag ?? false;
     }
