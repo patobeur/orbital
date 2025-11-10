@@ -306,6 +306,7 @@ class UiManager {
 				obj.status.immune && obj.statusdelay.immune[0] > 0
 					? currentMob.classList.add("immune")
 					: currentMob.classList.remove("immune");
+
 				if (obj.objtype === "player") {
 					let bonussocial = document.getElementById("bonussocial");
 					let bonusimmune = document.getElementById("bonusimmune");
@@ -331,6 +332,33 @@ class UiManager {
 				}
 				currentMob.style.top = obj.posxyz.y + "px";
 				currentMob.style.left = obj.posxyz.x + "px";
+
+				// refresh information of info div
+				let divdatax = document.getElementById(
+					"datasx" + obj.div + "-" + obj.immat
+				);
+				if (divdatax) {
+					divdatax.textContent = "x:" + parseInt(obj.posxyz.x) + "";
+				}
+				let divdatay = document.getElementById(
+					"datasy" + obj.div + "-" + obj.immat
+				);
+				if (divdatay) {
+					divdatay.textContent = "y:" + parseInt(obj.posxyz.y) + "";
+				}
+				let divdataz = document.getElementById(
+					"datasz" + obj.div + "-" + obj.immat
+				);
+				if (divdataz) {
+					divdataz.textContent = "z:" + parseInt(obj.posxyz.z) + "";
+				}
+				// refresh information of info div
+				let divdata2 = document.getElementById(
+					"direction" + obj.div + "-" + obj.immat
+				);
+				if (divdata2) {
+					divdata2.textContent = "deg:" + obj.direction.deg + "°";
+				}
 			}
 		});
 	};
@@ -343,6 +371,26 @@ class UiManager {
 				);
 				currentMob.style.top = obj.posxyz.y + "px";
 				currentMob.style.left = obj.posxyz.x + "px";
+
+				// refresh information of info div
+				let divdatax = document.getElementById(
+					"datasx" + obj.div + "-" + obj.immat
+				);
+				if (divdatax) {
+					divdatax.textContent = "x:" + parseInt(obj.posxyz.x) + "";
+				}
+				let divdatay = document.getElementById(
+					"datasy" + obj.div + "-" + obj.immat
+				);
+				if (divdatay) {
+					divdatay.textContent = "y:" + parseInt(obj.posxyz.y) + "";
+				}
+				let divdataz = document.getElementById(
+					"datasz" + obj.div + "-" + obj.immat
+				);
+				if (divdataz) {
+					divdataz.textContent = "z:" + parseInt(obj.posxyz.z) + "°";
+				}
 			}
 		});
 	};
