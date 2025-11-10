@@ -120,6 +120,13 @@ class UiManager {
     }
 
     redrawAllMobs = (allMobs) => {
+        let mobElements = document.querySelectorAll('.mob');
+        mobElements.forEach(mobElement => {
+            let immat = mobElement.id.split('-')[1];
+            if (!allMobs.find(mob => mob.immat == immat)) {
+                mobElement.remove();
+            }
+        });
         allMobs.forEach(obj => {
             let currentMob = document.getElementById(obj.objname + obj.div + "-" + obj.immat);
             if (currentMob) {
@@ -165,5 +172,23 @@ class UiManager {
                 currentMob.style.left = obj.posxyz.x + 'px';
             }
         });
+    }
+
+    displayHarvestMessage = (resource) => {
+        let messageEle = document.getElementById('harvest-message');
+        if (resource) {
+            if (!messageEle) {
+                messageEle = this.DomManager.createEle({
+                    id: 'harvest-message',
+                    className: 'harvest-message',
+                    textContent: `Press 'E' to harvest ${resource.objtype}`
+                });
+                this.lunarDiv.appendChild(messageEle);
+            }
+        } else {
+            if (messageEle) {
+                messageEle.remove();
+            }
+        }
     }
 }

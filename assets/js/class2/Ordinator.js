@@ -107,6 +107,22 @@ class Ordinator {
                             this.Physic.check_collisions(obj, 'mobs');
                             this.Physic.check_collisions(obj, 'sobs');
                         }
+                        if (obj.collide.proxim_resource && obj.collide.proxim_resource[0]) {
+                            let resource = obj.collide.proxim_resource[1];
+                            if (!resource.velxyz_save) {
+                                resource.velxyz_save = { ...resource.velxyz };
+                                resource.velxyz = { x: 0, y: 0, z: 0, cx: 0, cy: 0, cz: 0 };
+                            }
+                            this.DM.UiManager.displayHarvestMessage(resource);
+                        } else {
+                            this.MF.mobs.forEach(mob => {
+                                if (mob.objtype === 'fruits' && mob.velxyz_save) {
+                                    mob.velxyz = { ...mob.velxyz_save };
+                                    delete mob.velxyz_save;
+                                }
+                            });
+                            this.DM.UiManager.displayHarvestMessage(false);
+                        }
                         this.check_contacts(obj, 'mobs');
                         this.check_contacts(obj, 'sobs');
                         this.PlayerController.check_keyboardArrows(obj);
@@ -175,4 +191,20 @@ class Ordinator {
             }
             node.addEventListener('animationend', handleAnimationEnd, { once: false });
         });
+
+    harvest_resource = () => {
+        if (this.gameOn && this.Tutorial.tutorialFinish && !this.gameOver && this.MF.mobs[0] && !this.MF.mobs[0].status.dead) {
+            let player = this.MF.mobs[0];
+            if (player.collide.proxim_resource && player.collide.proxim_resource[0]) {
+                let resource = player.collide.proxim_resource[1];
+                for (const key in resource.stock) {
+                    if (player.stock[key]) {
+                        player.stock[key][0] += resource.stock[key][0];
+                    }
+                }
+                this.MF.mobs = this.MF.mobs.filter(mob => mob.immat !== resource.immat);
+                this.DM.UiManager.displayHarvestMessage(false);
+            }
+        }
+    }
 }

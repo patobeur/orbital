@@ -8,6 +8,7 @@ class PlayerController {
     init_listeners = () => {
         document.onkeydown = (eventkeydown) => {
             if (eventkeydown.key === "Escape") { this.Ordinator.escapeKey(); }
+            if (eventkeydown.key === "e") { this.Ordinator.harvest_resource(); }
             if (eventkeydown.key === "i") { this.Ordinator.get_bonus('immune'); }
             if (eventkeydown.key === "c") { this.Ordinator.invertScreenColor(); }
             if (eventkeydown.key === "p") { this.Ordinator.setPause(); }

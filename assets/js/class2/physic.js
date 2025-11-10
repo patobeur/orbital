@@ -14,30 +14,39 @@ class Physic {
 
     check_collisions = (obj, typeobj) => {
         let alertedistancebeforedie = 30;
+
+        // Initialize before loop
+        if (obj.objtype === 'player') {
+            obj.collide.proxim_resource = [false, {}];
+        }
+
         this.MF[typeobj].forEach(objB => {
             if (objB.immat != obj.immat) {
                 let distance = this.get_distance(obj, objB);
-                if (obj.objtype === 'player') {
-                    (distance < ((obj.sizwhl.w / 2) + (objB.sizwhl.w / 2)))
-                        ? obj.collide.collideself = true
-                        : '';
+
+                // Direct collision logic
+                if (distance < ((obj.sizwhl.w / 2) + (objB.sizwhl.w / 2))) {
+                    if (obj.objtype === 'player') {
+                        if (objB.objtype === 'fruits') {
+                            // A fruit is close enough to harvest, set the flag.
+                            obj.collide.proxim_resource = [true, objB];
+                        } else {
+                            // It's a collision with something else (deadly)
+                            obj.status.dead = true;
+                            console.log('ooops ! Lost in spaaaaaace !!');
+                        }
+                    }
                 }
-                ((distance - alertedistancebeforedie) < ((obj.sizwhl.w / 2) + (objB.sizwhl.w / 2)))
-                    ? obj.collide.collidealert = true
-                    : '';
-                (distance < ((obj.sizwhl.w * 2) + (objB.sizwhl.w)))
-                    ? obj.collide.colliderangea = true
-                    : '';
-                this.check_collisionsDirectives(obj, objB);
+
+                // Other proximity alerts
+                if ((distance - alertedistancebeforedie) < ((obj.sizwhl.w / 2) + (objB.sizwhl.w / 2))) {
+                    obj.collide.collidealert = true;
+                }
+                if (distance < ((obj.sizwhl.w * 2) + (objB.sizwhl.w))) {
+                    obj.collide.colliderangea = true;
+                }
             }
         });
-    }
-
-    check_collisionsDirectives = (obj, objB) => {
-        if (obj.collide.collideself) {
-            obj.status.dead = true;
-            console.log('ooops ! Lost in spaaaaaace !!');
-        }
     }
 
     set_NewNicePosition_testing = (obj) => {
