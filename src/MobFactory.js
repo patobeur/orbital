@@ -85,6 +85,7 @@ class MobFactory {
 						exchange: objdatas.contact.exchange ?? false,
 				  }
 				: false,
+			proxim: objdatas.proxim ?? false,
 		};
 
 		if (obj.div === "sob") {

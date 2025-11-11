@@ -281,6 +281,33 @@ class UiManager {
 		return elem;
 	};
 
+	harvest_Proximities = (obj) => {
+		let harvestbox = document.getElementById("harvestbox");
+		if (obj.proxim[0]) {
+			if (!harvestbox) {
+				let harvestbox = this.DomManager.createEle({
+					tag: "div",
+					id: "harvestbox",
+					className: "harvestbox",
+				});
+				let harvestsentence = this.DomManager.createEle({
+					tag: "div",
+					id: "harvestsentence",
+					className: "harvestsentence",
+					textContent: "Do you want to harvest " + obj.name + " ?",
+				});
+				harvestbox.appendChild(harvestsentence);
+				this.lunarDiv.appendChild(harvestbox);
+			} else {
+				harvestbox.classList.remove("hidden");
+			}
+		} else {
+			if (harvestbox) {
+				harvestbox.classList.add("hidden");
+			}
+		}
+	};
+
 	redrawAllMobs = (allMobs) => {
 		allMobs.forEach((obj) => {
 			let currentMob = document.getElementById(
