@@ -21,6 +21,7 @@ class Ordinator {
 	harvest_resource = () => {
 		// si il y a une ressource proche alors les ressources sont recupérés et additionés au stock du joueur.
 		// la ressources disparait une fois récupéré.
+		console.log("harvesting...");
 	};
 	addStartButtonListener() {
 		let startgame = document.getElementById("startgame");
