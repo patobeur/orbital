@@ -21,7 +21,20 @@ class Ordinator {
 	harvest_resource = () => {
 		// si il y a une ressource proche alors les ressources sont recupérés et additionés au stock du joueur.
 		// la ressources disparait une fois récupéré.
-		console.log("harvesting...");
+		for (let i = this.MF.mobs.length - 1; i >= 0; i--) {
+			const mob = this.MF.mobs[i];
+			if (mob.objtype === "fruits" && mob.proxim && mob.proxim[0]) {
+				console.log(mob);
+				const foodStock = mob.stock.food[0];
+				this.MF.mobs[0].stock.food[0] += foodStock;
+				const elementId = mob.objname + mob.div + "-" + mob.immat;
+				const mobElement = document.getElementById(elementId);
+				if (mobElement) {
+					mobElement.remove();
+				}
+				this.MF.mobs.splice(i, 1);
+			}
+		}
 	};
 	addStartButtonListener() {
 		let startgame = document.getElementById("startgame");
